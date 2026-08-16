@@ -1,0 +1,2 @@
+import type { Config } from 'tailwindcss';
+export default { content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'], theme: { extend: { colors: { ink:'#18211c', cream:'#f5f2e9', sun:'#f5c84b', rain:'#315b85', snow:'#dbe7ec', cloud:'#9ca3a0', moss:'#5d745f' }, fontFamily:{sans:['var(--font-sans)','sans-serif'],serif:['var(--font-serif)','serif'],display:['"Gowun Dodum"','var(--font-sans)','sans-serif']} } }, plugins: [] } satisfies Config;

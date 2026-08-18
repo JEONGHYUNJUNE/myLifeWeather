@@ -1203,45 +1203,49 @@ function getWeatherProfile(result: Result): WeatherProfile {
   const birthdayWetRatio = result.birthdays.total
       ? (result.birthdays.rainy + result.birthdays.snowy) / result.birthdays.total
       : 0;
+  const birthdayReliability = cap(result.birthdays.total / 10);
+  const birthdaySunnyRatio = result.birthdays.total ? result.birthdays.sunny / result.birthdays.total : 0;
+  const birthdayRainRatio = result.birthdays.total ? result.birthdays.rainy / result.birthdays.total : 0;
+  const birthdaySnowRatio = result.birthdays.total ? result.birthdays.snowy / result.birthdays.total : 0;
 
   const candidates: Array<WeatherProfile & { score: number }> = [
     {
-      score: result.percentages.sunny / 65 + cap(result.longestSunny / 55) * 0.55,
+      score: cap(result.percentages.sunny / 60) * 0.55 + cap(result.longestSunny / 40) * 0.25 + cap(birthdaySunnyRatio / 0.55) * 0.2 * birthdayReliability,
       title: "햇살 수집가", emoji: "☀️", character: 0, record: `맑은 날 ${result.counts.sunny.toLocaleString()}일`,
       comment: `살아온 날의 ${result.percentages.sunny}%가 맑았고, 가장 길게는 ${result.longestSunny}일 연속 햇살이 이어졌어요.`,
     },
     {
-      score: result.percentages.rainy / 18 + cap(result.longestWet / 14) * 0.5 + cap(result.wettest.value / 150) * 0.25,
+      score: cap(result.percentages.rainy / 40) * 0.55 + cap(result.longestWet / 12) * 0.15 + cap(result.wettest.value / 150) * 0.1 + cap(birthdayRainRatio / 0.35) * 0.2 * birthdayReliability,
       title: "비의 연대기 작가", emoji: "🌧️", character: 1, record: `비 오는 날 ${result.counts.rainy.toLocaleString()}일`,
       comment: `비가 인생 날씨의 ${result.percentages.rainy}%를 차지해요. 젖은 계절의 기억이 비교적 선명한 기록입니다.`,
     },
     {
-      score: result.percentages.snowy / 5 + cap(result.snowiest.value / 15) * 0.45 + cap(ratio(result.coldDays) / 0.025) * 0.25,
+      score: cap(result.percentages.snowy / 8) * 0.55 + cap(result.snowiest.value / 15) * 0.15 + cap(ratio(result.coldDays) / 0.025) * 0.1 + cap(birthdaySnowRatio / 0.12) * 0.2 * birthdayReliability,
       title: "설경 보관자", emoji: "❄️", character: 2, record: `눈 오는 날 ${result.counts.snowy.toLocaleString()}일`,
       comment: `눈 내린 날과 차가운 계절의 흔적이 다른 날씨보다 또렷하게 남아 있어요.`,
     },
     {
-      score: cap(ratio(result.hotDays) / 0.025) * 0.8 + cap(ratio(result.tropicalNights) / 0.018) * 0.65 + cap((result.max.value - 32) / 8) * 0.25,
+      score: cap(ratio(result.hotDays) / 0.025) * 0.5 + cap(ratio(result.tropicalNights) / 0.018) * 0.35 + cap((result.max.value - 32) / 8) * 0.15,
       title: "한여름 베테랑", emoji: "🔥", character: 3, record: `폭염성 날 ${result.hotDays.toLocaleString()}일`,
       comment: `뜨거운 낮과 쉽게 식지 않던 밤을 제법 많이 지나온 인생 날씨예요.`,
     },
     {
-      score: cap(ratio(result.coldDays) / 0.018) * 0.9 + cap((-10 - result.min.value) / 15) * 0.45,
+      score: cap(ratio(result.coldDays) / 0.018) * 0.7 + cap((-10 - result.min.value) / 15) * 0.3,
       title: "겨울 생존자", emoji: "🧣", character: 4, record: `강추위 날 ${result.coldDays.toLocaleString()}일`,
       comment: `매서운 겨울을 견딘 기록의 비중이 높아요. 가장 낮은 기온은 ${result.min.value.toFixed(1)}℃였습니다.`,
     },
     {
-      score: cap(Math.max(result.cities.length - 1, 0) / 3) * 0.9 + cap(result.awayPercent / 40) * 0.75,
+      score: cap(Math.max(result.cities.length - 1, 0) / 3) * 0.55 + cap(result.awayPercent / 40) * 0.45,
       title: "기후를 건넌 여행자", emoji: "🧭", character: 5, record: `${result.cities.length}개 생활지역의 날씨`,
       comment: `여러 지역을 오가며 서로 다른 하늘과 계절을 살아온 이동의 기록이 돋보여요.`,
     },
     {
-      score: cap(birthdayWetRatio / 0.35) * (result.birthdays.total >= 5 ? 1.35 : 0.45),
+      score: cap(birthdayWetRatio / 0.45) * (0.35 + birthdayReliability * 0.75),
       title: "생일날 구름 탐험가", emoji: "🎂", character: 6, record: `비·눈 온 생일 ${result.birthdays.rainy + result.birthdays.snowy}번`,
       comment: `유난히 생일마다 비나 눈과 자주 마주쳤어요. 하늘도 날짜를 기억하고 있었나 봐요.`,
     },
     {
-      score: cap(cloudyPercent / 42) * 0.9 + cap((100 - Math.abs(result.percentages.sunny - cloudyPercent)) / 100) * 0.35,
+      score: cap(cloudyPercent / 45) * 0.55 + cap((100 - Math.abs(result.percentages.sunny - result.percentages.rainy)) / 100) * 0.45,
       title: "구름 사이 산책자", emoji: "🌥️", character: 7, record: `구름 낀 날 ${Math.round(cloudyPercent)}%`,
       comment: `쨍한 날만큼 구름이 머문 날도 많았어요. 여러 표정의 하늘이 고르게 섞인 기록입니다.`,
     },

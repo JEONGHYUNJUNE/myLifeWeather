@@ -1265,17 +1265,17 @@ function getWeatherProfile(result: Result): WeatherProfile {
 
   const candidates: Array<WeatherProfile & { score: number }> = [
     {
-      score: cap(result.percentages.sunny / 60) * 0.55 + cap(result.longestSunny / 40) * 0.25 + cap(birthdaySunnyRatio / 0.55) * 0.2 * birthdayReliability,
+      score: cap(Math.max(result.percentages.sunny - 38, 0) / 24) * 0.35 + cap(result.longestSunny / 40) * 0.2 + cap(birthdaySunnyRatio / 0.55) * 0.45 * birthdayReliability,
       title: "햇살 수집가", emoji: "☀️", character: 0, record: `맑은 날 ${result.counts.sunny.toLocaleString()}일`,
-      comment: `살아온 날의 ${result.percentages.sunny}%가 맑았고, 가장 길게는 ${result.longestSunny}일 연속 햇살이 이어졌어요.`,
+      comment: `맑은 날의 전체 비율뿐 아니라 ${result.longestSunny}일 연속 맑음과 맑았던 생일 ${result.birthdays.sunny}번이 함께 만든 결과예요.`,
     },
     {
-      score: cap(result.percentages.rainy / 40) * 0.55 + cap(result.longestWet / 12) * 0.15 + cap(result.wettest.value / 150) * 0.1 + cap(birthdayRainRatio / 0.35) * 0.2 * birthdayReliability,
+      score: cap(Math.max(result.percentages.rainy - 22, 0) / 20) * 0.3 + cap(result.longestWet / 12) * 0.15 + cap(result.wettest.value / 150) * 0.1 + cap(birthdayRainRatio / 0.35) * 0.45 * birthdayReliability,
       title: "비의 연대기 작가", emoji: "🌧️", character: 1, record: `비 오는 날 ${result.counts.rainy.toLocaleString()}일`,
-      comment: `비가 인생 날씨의 ${result.percentages.rainy}%를 차지해요. 젖은 계절의 기억이 비교적 선명한 기록입니다.`,
+      comment: `비 ${result.percentages.rainy}%만으로 정한 칭호가 아니에요. 최장 ${result.longestWet}일의 비·눈, 하루 최대 ${result.wettest.value.toFixed(1)}mm, 비 온 생일 ${result.birthdays.rainy}번을 함께 비교한 결과입니다.`,
     },
     {
-      score: cap(result.percentages.snowy / 8) * 0.55 + cap(result.snowiest.value / 15) * 0.15 + cap(ratio(result.coldDays) / 0.025) * 0.1 + cap(birthdaySnowRatio / 0.12) * 0.2 * birthdayReliability,
+      score: cap(result.percentages.snowy / 8) * 0.35 + cap(result.snowiest.value / 15) * 0.15 + cap(ratio(result.coldDays) / 0.025) * 0.1 + cap(birthdaySnowRatio / 0.12) * 0.4 * birthdayReliability,
       title: "설경 보관자", emoji: "❄️", character: 2, record: `눈 오는 날 ${result.counts.snowy.toLocaleString()}일`,
       comment: `눈 내린 날과 차가운 계절의 흔적이 다른 날씨보다 또렷하게 남아 있어요.`,
     },

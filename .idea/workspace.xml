@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ade911cc-23d2-4671-8bc9-efdd7ef1ef74" name="변경" comment="이미지 추가">
-      <change afterPath="$PROJECT_DIR$/lib/five-elements.test.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/five-elements.ts" afterDir="false" />
+    <list default="true" id="ade911cc-23d2-4671-8bc9-efdd7ef1ef74" name="변경" comment="오행 추가">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +99,23 @@
       <option name="project" value="LOCAL" />
       <updated>1787057522016</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="오행 추가">
+      <option name="closed" value="true" />
+      <created>1787058288572</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1787058288572</updated>
+    </task>
+    <task id="LOCAL-00006" summary="오행 추가">
+      <option name="closed" value="true" />
+      <created>1787059278790</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1787059278790</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,6 +147,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="복수 선택" />
     <MESSAGE value="이미지 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="이미지 추가" />
+    <MESSAGE value="오행 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="오행 추가" />
   </component>
 </project>

@@ -18,6 +18,11 @@ import {
 import { differenceInCalendarDays, format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { analyzeWeather, validatePeriods } from "../lib/weather";
+import {
+  createFiveElementProfile,
+  type BirthMeta,
+  type FiveElementProfile,
+} from "../lib/five-elements";
 import { track } from "../lib/analytics";
 import type {
   DailyWeather,
@@ -82,6 +87,12 @@ const chapterOptions = [
 export default function Home() {
   const [step, setStep] = useState(0);
   const [birthdate, setBirthdate] = useState("");
+  const [birthMeta, setBirthMeta] = useState<BirthMeta>({
+    calendar: "solar",
+    time: "",
+    timeKnown: false,
+    isLeapMonth: false,
+  });
   const [residences, setResidences] = useState<Residence[]>([]);
   const [result, setResult] = useState<Result | null>(null);
   const [error, setError] = useState("");
@@ -96,6 +107,7 @@ export default function Home() {
     try {
       const d = JSON.parse(localStorage.getItem("life-weather-draft") || "{}");
       if (d.birthdate) setBirthdate(d.birthdate);
+      if (d.birthMeta) setBirthMeta(d.birthMeta);
       if (d.residences) setResidences(d.residences);
       if (d.birthPlace) setBirthPlace(d.birthPlace);
       if (d.favoriteSeason) setFavoriteSeason(d.favoriteSeason);
@@ -106,9 +118,14 @@ export default function Home() {
     if (birthdate || residences.length)
       localStorage.setItem(
           "life-weather-draft",
-          JSON.stringify({ birthdate, residences, birthPlace, favoriteSeason, chapters }),
+          JSON.stringify({ birthdate, birthMeta, residences, birthPlace, favoriteSeason, chapters }),
       );
-  }, [birthdate, residences, birthPlace, favoriteSeason, chapters]);
+  }, [birthdate, birthMeta, residences, birthPlace, favoriteSeason, chapters]);
+  const fiveElements = useMemo(
+      () => createFiveElementProfile(birthdate, birthMeta),
+      [birthdate, birthMeta],
+  );
+  const analysisBirthdate = fiveElements?.solarDate || birthdate;
   const go = (n: number) => {
     setError("");
     setStep(n);
@@ -119,6 +136,7 @@ export default function Home() {
     localStorage.removeItem("life-weather-summary");
 
     setBirthdate("");
+    setBirthMeta({ calendar: "solar", time: "", timeKnown: false, isLeapMonth: false });
     setResidences([]);
     setBirthPlace(null);
     setFavoriteSeason("");
@@ -214,8 +232,8 @@ export default function Home() {
             body: JSON.stringify({
               latitude: birthPlace.latitude,
               longitude: birthPlace.longitude,
-              startDate: birthdate,
-              endDate: birthdate,
+              startDate: analysisBirthdate,
+              endDate: analysisBirthdate,
             }),
           });
           const data = await response.json();
@@ -231,7 +249,7 @@ export default function Home() {
         setBirthDayWeather(null);
       }
 
-      const out = analyzeWeather(all, birthdate);
+      const out = analyzeWeather(all, analysisBirthdate);
       setResult(out);
       localStorage.setItem(
           "life-weather-summary",
@@ -264,10 +282,12 @@ export default function Home() {
                   <BirthStep
                       value={birthdate}
                       onChange={setBirthdate}
+                      birthMeta={birthMeta}
+                      onBirthMetaChange={setBirthMeta}
                       birthPlace={birthPlace}
                       onBirthPlaceChange={setBirthPlace}
                       onNext={() => {
-                        if (!birthdate || birthdate > today()) {
+                        if (!fiveElements || analysisBirthdate > today()) {
                           setError("올바른 생년월일을 입력해주세요.");
                           return;
                         }
@@ -280,7 +300,7 @@ export default function Home() {
                               country: "",
                               latitude: 0,
                               longitude: 0,
-                              startDate: birthdate,
+                              startDate: analysisBirthdate,
                               endDate: "",
                               isCurrent: false,
                               activityDays: [1, 2, 3, 4, 5],
@@ -304,7 +324,7 @@ export default function Home() {
               )}{" "}
               {step === 2 && (
                   <ResidenceStep
-                      birthdate={birthdate}
+                      birthdate={analysisBirthdate}
                       items={residences}
                       setItems={setResidences}
                       chapters={chapters}
@@ -326,7 +346,7 @@ export default function Home() {
               )}
               {step === 3 && (
                   <Confirm
-                      birthdate={birthdate}
+                      birthdate={analysisBirthdate}
                       items={residences}
                       birthPlace={birthPlace}
                       favoriteSeason={favoriteSeason}
@@ -350,7 +370,8 @@ export default function Home() {
         {step === 5 && result && (
             <Dashboard
                 result={result}
-                birthdate={birthdate}
+                birthdate={analysisBirthdate}
+                fiveElements={fiveElements}
                 onReset={clear}
                 days={analysisDays}
                 birthDayWeather={birthDayWeather}
@@ -511,6 +532,8 @@ const Primary = ({
 function BirthStep({
                      value,
                      onChange,
+                     birthMeta,
+                     onBirthMetaChange,
                      birthPlace,
                      onBirthPlaceChange,
                      onNext,
@@ -518,6 +541,8 @@ function BirthStep({
                    }: {
   value: string;
   onChange: (s: string) => void;
+  birthMeta: BirthMeta;
+  onBirthMetaChange: (meta: BirthMeta) => void;
   birthPlace: Geo | null;
   onBirthPlaceChange: (place: Geo | null) => void;
   onNext: () => void;
@@ -560,6 +585,18 @@ function BirthStep({
         <p className="mt-4 text-ink/55">당신의 첫 번째 날씨부터 여행을 시작할게요.</p>
 
         <div className="card my-8 min-w-0 overflow-hidden p-6">
+          <p className="mb-3 text-sm font-bold">생일 기준</p>
+          <div className="mb-5 grid grid-cols-2 gap-2">
+            {([['solar','양력'],['lunar','음력']] as const).map(([calendar,label]) => (
+                <button
+                    key={calendar}
+                    type="button"
+                    aria-pressed={birthMeta.calendar === calendar}
+                    onClick={() => onBirthMetaChange({ ...birthMeta, calendar, isLeapMonth: calendar === 'solar' ? false : birthMeta.isLeapMonth })}
+                    className={`focusable rounded-xl border px-4 py-3 text-sm font-bold ${birthMeta.calendar === calendar ? 'border-ink bg-ink text-white' : 'border-ink/15 bg-white'}`}
+                >{label}</button>
+            ))}
+          </div>
           <label className="mb-3 block text-sm font-bold" htmlFor="birthdate">생년월일</label>
           <input
               id="birthdate"
@@ -573,6 +610,24 @@ function BirthStep({
               className="focusable h-14 w-full min-w-0 max-w-full box-border rounded-xl border border-ink/15 bg-white px-4 text-lg tabular-nums"
           />
           <p className="mt-3 text-xs leading-5 text-ink/45">예: 1993.05.21 · 숫자만 입력해도 날짜 형식이 적용돼요.</p>
+
+          {birthMeta.calendar === 'lunar' && (
+              <label className="mt-4 flex cursor-pointer items-center gap-3 text-sm">
+                <input type="checkbox" checked={birthMeta.isLeapMonth} onChange={(e) => onBirthMetaChange({ ...birthMeta, isLeapMonth: e.target.checked })} className="h-4 w-4 accent-ink" />
+                윤달 생일이에요
+              </label>
+          )}
+
+          <div className="mt-6 border-t border-ink/10 pt-5">
+            <label className="flex cursor-pointer items-center gap-3 text-sm font-bold">
+              <input type="checkbox" checked={birthMeta.timeKnown} onChange={(e) => onBirthMetaChange({ ...birthMeta, timeKnown: e.target.checked })} className="h-4 w-4 accent-ink" />
+              태어난 시간을 알고 있어요 <span className="font-normal text-ink/40">(선택)</span>
+            </label>
+            {birthMeta.timeKnown && (
+                <input type="time" value={birthMeta.time} onChange={(e) => onBirthMetaChange({ ...birthMeta, time: e.target.value })} className="focusable mt-3 h-12 w-full rounded-xl border border-ink/15 bg-white px-4 text-base" />
+            )}
+            <p className="mt-2 text-xs leading-5 text-ink/45">시간을 모르면 연·월·일 기준으로만 오행 이미지를 만들어요.</p>
+          </div>
 
           <div className="mt-6 border-t border-ink/10 pt-5">
             <div className="flex items-center justify-between gap-3">
@@ -617,7 +672,7 @@ function BirthStep({
             )}
           </div>
 
-          <p className="mt-5 text-xs leading-5 text-ink/40">현재 분석 가능한 과거 자료 범위를 고려해 최근 100년 이내로 입력해주세요.</p>
+          <p className="mt-5 text-xs leading-5 text-ink/40">현재 분석 가능한 과거 자료 범위를 고려해 최근 100년 이내로 입력해주세요. 입력값은 이 기기 안에만 임시 저장됩니다.</p>
         </div>
 
         {error && <ErrorText text={error} />}
@@ -1366,6 +1421,7 @@ function favoriteSeasonStory(season:Season,result:Result) {
 function Dashboard({
                      result,
                      birthdate,
+                     fiveElements,
                      onReset,
                      days,
                      birthDayWeather,
@@ -1376,6 +1432,7 @@ function Dashboard({
                    }: {
   result: Result;
   birthdate: string;
+  fiveElements: FiveElementProfile | null;
   onReset: () => void;
   days: DailyWeather[];
   birthDayWeather: DailyWeather | null;
@@ -1483,9 +1540,25 @@ function Dashboard({
             <div className="card grid gap-6 p-6 sm:grid-cols-2"><div><p className="text-sm text-ink/45">기록 속 생일</p><p className="mt-2 font-serif text-4xl font-bold">{result.birthdays.total}번</p><p className="mt-4 text-sm leading-7">맑음 {result.birthdays.sunny}번 · 비 {result.birthdays.rainy}번 · 눈 {result.birthdays.snowy}번</p></div><div className="grid gap-3 border-t border-ink/10 pt-5 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0"><BirthdayRecord label="가장 더웠던 생일" day={result.birthdays.hottest} value={result.birthdays.hottest?.temperature_2m_max}/><BirthdayRecord label="가장 추웠던 생일" day={result.birthdays.coldest} value={result.birthdays.coldest?.temperature_2m_min}/><p className="text-xs text-ink/40">2월 29일생은 윤년에만 생일로 집계합니다.</p></div></div>
           </Section>
 
-          <Section eyebrow="07 · Share" title="친구들과 인생 날씨를 공유해보세요">
+          {fiveElements && (
+              <Section eyebrow="07 · Five elements" title="날씨에 겹쳐 본 오행 이미지">
+                <div className="card grid gap-6 p-6 sm:grid-cols-[1fr_auto] sm:items-center">
+                  <div>
+                    <p className="text-xs font-bold text-ink/45">{fiveElementCopy(fiveElements).title}</p>
+                    <p className="mt-3 font-serif text-2xl font-bold leading-relaxed">{fiveElementCopy(fiveElements).body}</p>
+                    <p className="mt-3 text-sm leading-7 text-ink/55">{fiveElements.sentence}</p>
+                    <p className="mt-4 text-xs leading-5 text-ink/40">전통 오행의 상징을 날씨 기록에 빗댄 재미 요소이며, 성격·운세를 단정하는 전문 명리 해석이 아닙니다.</p>
+                  </div>
+                  <div className="flex flex-wrap gap-2 sm:max-w-[190px] sm:justify-end">
+                    {(Object.entries(fiveElements.counts) as [string,number][]).map(([name,count]) => <span key={name} className={`rounded-full px-3 py-2 text-xs font-bold ${name===fiveElements.dominant?'bg-ink text-white':'bg-cream text-ink/55'}`}>{name} {count}</span>)}
+                  </div>
+                </div>
+              </Section>
+          )}
+
+          <Section eyebrow="08 · Share" title="친구들과 인생 날씨를 공유해보세요">
             <p className="-mt-3 mb-6 max-w-xl text-sm leading-6 text-ink/50">나만의 날씨 기록과 특별한 칭호를 카드로 남겨보세요. 친구의 인생 날씨와 비교해보는 것도 재밌어요.</p>
-            <ShareCard result={result} from={yearStart} favoriteSeason={favoriteSeason} />
+            <ShareCard result={result} from={yearStart} favoriteSeason={favoriteSeason} fiveElements={fiveElements} />
           </Section>
 
           <section className="py-12 text-sm leading-7 text-ink/50"><h2 className="font-serif text-xl font-bold text-ink">데이터 기준과 한계</h2><p className="mt-3">Open-Meteo의 도시 좌표 기준 재분석 자료를 사용합니다. 실제 집 앞의 순간적인 날씨와 다를 수 있고, 공식 재난특보 통계가 아닙니다. 생활지역과 인생 챕터는 사용자가 입력한 생활패턴을 기준으로 한 추정입니다.</p></section>
@@ -1494,7 +1567,18 @@ function Dashboard({
   );
 }
 
-function ShareCard({ result, from, favoriteSeason }: { result: Result; from: string; favoriteSeason: Season | "" }) {
+function fiveElementCopy(profile: FiveElementProfile) {
+  const copy: Record<FiveElementProfile["dominant"], { title: string; body: string }> = {
+    목: { title: "목(木) · 자라나는 날씨", body: "계절을 따라 방향을 바꾸며 쌓여온 시간이에요." },
+    화: { title: "화(火) · 선명한 온도의 기억", body: "따뜻했던 순간을 오래 밝히는 날씨를 지녔어요." },
+    토: { title: "토(土) · 계절을 품은 중심", body: "수많은 날씨를 받아내며 단단해진 기록이에요." },
+    금: { title: "금(金) · 또렷한 계절의 결", body: "차고 맑은 공기처럼 장면의 윤곽이 선명해요." },
+    수: { title: "수(水) · 흐르며 남은 기억", body: "비와 눈처럼 기억 사이를 유연하게 흘러왔어요." },
+  };
+  return copy[profile.dominant];
+}
+
+function ShareCard({ result, from, favoriteSeason, fiveElements }: { result: Result; from: string; favoriteSeason: Season | ""; fiveElements: FiveElementProfile | null }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const [format, setFormat] = useState<"story" | "link">("story");
   const profile = getWeatherProfile(result);
@@ -1508,15 +1592,32 @@ function ShareCard({ result, from, favoriteSeason }: { result: Result; from: str
     const x = c.getContext("2d");
     if (!x) return;
     x.fillStyle = "#F5F2E9"; x.fillRect(0,0,c.width,c.height);
-    x.fillStyle = "#F5C84B"; x.beginPath(); x.arc(c.width*.84,c.height*(story ? .15 : .2),story?180:105,0,Math.PI*2); x.fill();
+    // Keep decorations outside the character sprite's opaque rectangular cell.
+    x.fillStyle = "rgba(245, 200, 75, .82)";
+    x.beginPath();
+    x.arc(story ? 1018 : 1170, story ? 245 : 120, story ? 58 : 28, 0, Math.PI * 2);
+    x.fill();
+    x.strokeStyle = "rgba(24, 33, 28, .13)";
+    x.lineWidth = story ? 3 : 2;
+    x.beginPath();
+    x.arc(story ? 145 : 430, story ? 330 : 105, story ? 72 : 34, 0, Math.PI * 2);
+    x.stroke();
+    x.beginPath();
+    x.arc(story ? 145 : 430, story ? 330 : 105, story ? 48 : 22, 0, Math.PI * 2);
+    x.stroke();
+    x.fillStyle = "rgba(73, 122, 144, .18)";
+    const dots = story
+        ? [[85, 470], [123, 470], [161, 470], [85, 508], [123, 508], [161, 508]]
+        : [[720, 88], [745, 88], [770, 88], [720, 113], [745, 113], [770, 113]];
+    dots.forEach(([dotX, dotY]) => { x.beginPath(); x.arc(dotX, dotY, story ? 5 : 3, 0, Math.PI * 2); x.fill(); });
     const character = new Image();
     character.onload = () => {
       const cellWidth = character.naturalWidth / 4;
       const cellHeight = character.naturalHeight / 2;
       const sourceX = (profile.character % 4) * cellWidth;
       const sourceY = Math.floor(profile.character / 4) * cellHeight;
-      if (story) x.drawImage(character, sourceX, sourceY, cellWidth, cellHeight, 690, 130, 255, 340);
-      else x.drawImage(character, sourceX, sourceY, cellWidth, cellHeight, 950, 25, 180, 240);
+      if (story) x.drawImage(character, sourceX, sourceY, cellWidth, cellHeight, 640, 105, 315, 420);
+      else x.drawImage(character, sourceX, sourceY, cellWidth, cellHeight, 910, 10, 225, 300);
     };
     character.src = "/assets/weather-profile-characters.png";
     const left = story ? 90 : 70;
@@ -1540,12 +1641,18 @@ function ShareCard({ result, from, favoriteSeason }: { result: Result; from: str
     x.font=`${story?34:22}px sans-serif`; x.fillStyle="#657068"; x.fillText("맑은 날",left,compY+(story?55:34));
     const cloud=(result.percentages.cloudy||0)+(result.percentages.partly_cloudy||0);
     x.font=`700 ${story?30:18}px sans-serif`; x.fillStyle="#18211C"; x.fillText(`구름 ${cloud}%   ·   비 ${result.percentages.rainy}%   ·   눈 ${result.percentages.snowy}%`,left,compY+(story?135:82));
+    if (story && fiveElements) {
+      const elementCopy = fiveElementCopy(fiveElements);
+      x.fillStyle="#657068"; x.font="700 25px sans-serif"; x.fillText("FIVE ELEMENTS MOOD",left,1320);
+      x.fillStyle="#18211C"; x.font="700 38px serif"; x.fillText(elementCopy.title,left,1380);
+      x.fillStyle="#657068"; x.font="28px sans-serif"; x.fillText(elementCopy.body,left,1435);
+    }
     x.font=`${story?29:18}px sans-serif`; x.fillStyle="#657068";
     x.fillText(`${result.totalDays.toLocaleString()}일의 날씨 · ${from}—${new Date().getFullYear()}`,left,story?1600:545);
     if (favoriteSeason) x.fillText(`좋아하는 계절 · ${seasonEmoji[favoriteSeason]} ${seasonLabels[favoriteSeason]}`,left,story?1650:575);
     x.font=`700 ${story?24:16}px sans-serif`; x.fillStyle="#18211C"; x.fillText("당신의 인생 날씨는 어떤가요?",left,story?1770:605);
     track("share_card_generated",{format});
-  },[format,result,from,favoriteSeason,profile.title,profile.record,profile.emoji,profile.character]);
+  },[format,result,from,favoriteSeason,fiveElements,profile.title,profile.record,profile.emoji,profile.character]);
 
   const blob=()=>new Promise<Blob|null>((r)=>canvas.current?.toBlob(r,"image/png"));
   async function download(){const b=await blob();if(!b)return;const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`my-life-weather-${format}.png`;a.click();URL.revokeObjectURL(a.href);track("image_downloaded",{format});}
@@ -1625,5 +1732,5 @@ function ShareCard({ result, from, favoriteSeason }: { result: Result; from: str
     track("share_clicked", { format, method: "fallback-copy" });
   }
 
-  return <div className="grid gap-5 md:grid-cols-[1fr_280px]"><div className="overflow-hidden rounded-2xl bg-ink/10 p-4"><canvas ref={canvas} className={`mx-auto max-h-[520px] max-w-full rounded-xl shadow-xl ${format==="story"?"aspect-[9/16]":"aspect-[1200/630]"}`} aria-label="공유 이미지 미리보기"/></div><div><div className="mb-5 rounded-2xl bg-sun/20 p-5"><p className="text-xs font-bold text-ink/45">공유 카드에 담기는 기록</p><p className="mt-2 font-serif text-xl font-bold">{profile.title?`${profile.emoji} ${profile.title}`:"나의 인생 날씨"}</p><p className="mt-2 text-xs leading-5 text-ink/50">{profile.title?profile.comment:compositionSentence(result)}</p></div><p className="text-sm font-bold">이미지 비율</p><div className="mt-3 grid grid-cols-2 gap-2">{([["story","스토리 9:16"],["link","링크 1.91:1"]] as const).map(([v,t])=><button key={v} onClick={()=>setFormat(v)} className={`focusable rounded-xl border p-3 text-xs ${format===v?"border-ink bg-ink text-white":"border-ink/15"}`}>{t}</button>)}</div><button onClick={download} className="focusable mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-ink py-4 font-bold text-white"><Download size={18}/>이미지 저장</button><button onClick={share} className="focusable mt-2 flex w-full items-center justify-center gap-2 rounded-xl border border-ink/20 py-4 font-bold"><Share2 size={18}/>친구에게 공유하기</button><p className="mt-4 text-xs leading-5 text-ink/40">생년월일과 상세 생활기간은 공유 이미지에 포함하지 않아요.</p></div></div>;
+  return <div className="grid gap-5 md:grid-cols-[1fr_280px]"><div className="overflow-hidden rounded-2xl bg-ink/10 p-4"><canvas ref={canvas} className={`mx-auto max-h-[520px] max-w-full rounded-xl shadow-xl ${format==="story"?"aspect-[9/16]":"aspect-[1200/630]"}`} aria-label="공유 이미지 미리보기"/></div><div><div className="mb-5 rounded-2xl bg-sun/20 p-5"><p className="text-xs font-bold text-ink/45">공유 카드에 담기는 기록</p><p className="mt-2 font-serif text-xl font-bold">{profile.title?`${profile.emoji} ${profile.title}`:"나의 인생 날씨"}</p><p className="mt-2 text-xs leading-5 text-ink/50">{fiveElements?fiveElementCopy(fiveElements).body:profile.title?profile.comment:compositionSentence(result)}</p></div><p className="text-sm font-bold">이미지 비율</p><div className="mt-3 grid grid-cols-2 gap-2">{([["story","스토리 9:16"],["link","링크 1.91:1"]] as const).map(([v,t])=><button key={v} onClick={()=>setFormat(v)} className={`focusable rounded-xl border p-3 text-xs ${format===v?"border-ink bg-ink text-white":"border-ink/15"}`}>{t}</button>)}</div><button onClick={download} className="focusable mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-ink py-4 font-bold text-white"><Download size={18}/>이미지 저장</button><button onClick={share} className="focusable mt-2 flex w-full items-center justify-center gap-2 rounded-xl border border-ink/20 py-4 font-bold"><Share2 size={18}/>친구에게 공유하기</button><p className="mt-4 text-xs leading-5 text-ink/40">생년월일과 출생시간, 상세 생활기간은 공유 이미지에 포함하지 않아요.</p></div></div>;
 }

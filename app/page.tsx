@@ -1303,15 +1303,31 @@ function buildAgeSummaries(days: DailyWeather[], birthdate: string) {
 }
 
 function buildChapterSummaries(days: DailyWeather[], birthdate: string, residences: Residence[], chapters: Record<string, string>) {
-  const grouped = new Map<string, DailyWeather[]>();
-  residences.forEach((r) => {
-    const chapter = chapters[r.id];
-    if (!chapter || !r.startDate) return;
+  return residences.flatMap((r) => {
+    const labels = (chapters[r.id] || "").split("|").filter(Boolean);
+    if (!labels.length || !r.startDate) return [];
     const end = r.isCurrent ? today() : r.endDate;
     const subset = days.filter((d) => d.date >= r.startDate && d.date <= end);
-    chapter.split("|").filter(Boolean).forEach((label) => grouped.set(label, [...(grouped.get(label) || []), ...subset]));
+    const result = subsetResult(subset, birthdate);
+    return result ? [{ labels, period: `${r.startDate.slice(0,4)}—${end.slice(0,4)}`, result }] : [];
   });
-  return [...grouped.entries()].map(([label, subset]) => ({ label, result: subsetResult(subset, birthdate) })).filter((x) => x.result);
+}
+
+function chapterHighlight(period: Result, overall: Result) {
+  const dayRate = (count:number) => period.totalDays ? count / period.totalDays * 100 : 0;
+  const cloudy = (period.percentages.cloudy || 0) + (period.percentages.partly_cloudy || 0);
+  const tempDiff = period.averageTemp - overall.averageTemp;
+  const choices = [
+    { score: period.percentages.rainy / 17, title: `비가 머문 날 ${period.percentages.rainy}%`, detail: `가장 많은 비는 ${period.wettest.date}의 ${period.wettest.value.toFixed(1)}mm였어요.`, tone: "bg-rain/10 text-rain" },
+    { score: period.percentages.snowy / 4, title: `눈과 함께한 날 ${period.percentages.snowy}%`, detail: `가장 많은 눈은 ${period.snowiest.date}의 ${period.snowiest.value.toFixed(1)}cm였어요.`, tone: "bg-snow text-ink" },
+    { score: dayRate(period.hotDays) / 2.3, title: `폭염성 날 ${period.hotDays.toLocaleString()}일`, detail: `이 시기의 최고기온은 ${period.max.value.toFixed(1)}℃였어요.`, tone: "bg-orange-100 text-orange-800" },
+    { score: dayRate(period.coldDays) / 1.8, title: `강추위 날 ${period.coldDays.toLocaleString()}일`, detail: `이 시기의 최저기온은 ${period.min.value.toFixed(1)}℃였어요.`, tone: "bg-blue-100 text-blue-800" },
+    { score: Math.abs(tempDiff) / 1.8, title: `전체보다 ${Math.abs(tempDiff).toFixed(1)}℃ ${tempDiff >= 0 ? "따뜻했던" : "서늘했던"} 시기`, detail: `사계절 전체 일평균기온은 ${period.averageTemp.toFixed(1)}℃였어요.`, tone: "bg-sun/25 text-ink" },
+    { score: period.longestWet / 8, title: `비·눈이 ${period.longestWet}일 이어진 때`, detail: `젖은 날씨가 가장 길게 이어진 기록이에요.`, tone: "bg-rain/10 text-rain" },
+    { score: cloudy / 44, title: `구름이 머문 날 ${Math.round(cloudy)}%`, detail: `맑음과 흐림 사이, 여러 표정의 하늘을 지나왔어요.`, tone: "bg-gray-200 text-ink" },
+    { score: period.percentages.sunny / 72, title: `햇살이 가장 선명했던 기록`, detail: `맑음 ${period.percentages.sunny}% · 최장 연속 맑음 ${period.longestSunny}일`, tone: "bg-sun/25 text-ink" },
+  ];
+  return choices.sort((a,b)=>b.score-a.score)[0];
 }
 
 function seasonForMonth(month: number): Season {
@@ -1319,6 +1335,29 @@ function seasonForMonth(month: number): Season {
   if ([6,7,8].includes(month)) return "summer";
   if ([9,10,11].includes(month)) return "autumn";
   return "winter";
+}
+function favoriteSeasonStory(season:Season,result:Result) {
+  const cloudy=(result.percentages.cloudy||0)+(result.percentages.partly_cloudy||0);
+  const rate=(count:number)=>result.totalDays?count/result.totalDays*100:0;
+  const candidates=[
+    {kind:"sun",score:result.percentages.sunny/45+Math.min(result.longestSunny/25,1)*.35},
+    {kind:"rain",score:result.percentages.rainy/27+Math.min(result.longestWet/8,1)*.35},
+    {kind:"snow",score:result.percentages.snowy/7+Math.min(result.snowiest.value/10,1)*.3},
+    {kind:"heat",score:rate(result.hotDays)/7+rate(result.tropicalNights)/6},
+    {kind:"cold",score:rate(result.coldDays)/7+Math.min(Math.max(-result.min.value-8,0)/15,1)*.4},
+    {kind:"cloud",score:cloudy/48},
+  ].sort((a,b)=>b.score-a.score);
+  const kind=candidates[0].kind;
+  const seasonName=seasonLabels[season];
+  const stories:Record<string,{title:string;body:string}>={
+    sun:{title:`햇살이 길게 머문 ${seasonName}`,body:`${seasonName}날의 ${result.percentages.sunny}%가 맑았어요. 가장 길게는 ${result.longestSunny}일 연속 햇살이 이어져, 좋아하는 계절다운 밝은 장면을 남겼습니다.`},
+    rain:{title:`빗소리까지 기억하는 ${seasonName}`,body:`비가 내린 날이 ${result.percentages.rainy}%였고, 비·눈은 최장 ${result.longestWet}일 이어졌어요. 가장 많은 비는 ${result.wettest.date.replaceAll("-",".")}의 ${result.wettest.value.toFixed(1)}mm였습니다.`},
+    snow:{title:`하얀 장면이 남은 ${seasonName}`,body:`눈과 함께한 날은 ${result.percentages.snowy}%였어요. ${result.snowiest.date.replaceAll("-",".")}에는 ${result.snowiest.value.toFixed(1)}cm가 내려 이 계절의 가장 선명한 설경으로 남았습니다.`},
+    heat:{title:`뜨거운 기억이 선명한 ${seasonName}`,body:`폭염성 날 ${result.hotDays.toLocaleString()}일, 열대야성 날 ${result.tropicalNights.toLocaleString()}일을 지나왔어요. 가장 뜨거웠던 ${seasonName}날은 ${result.max.date.replaceAll("-",".")}의 ${result.max.value.toFixed(1)}℃였습니다.`},
+    cold:{title:`차가운 공기까지 좋아했던 ${seasonName}`,body:`강추위 날을 ${result.coldDays.toLocaleString()}일 지나왔고, 가장 낮은 기온은 ${result.min.date.replaceAll("-",".")}의 ${result.min.value.toFixed(1)}℃였어요. 포근함보다 선명한 추위가 이 계절의 표정이었습니다.`},
+    cloud:{title:`구름의 표정이 다양했던 ${seasonName}`,body:`맑기만 한 계절은 아니었어요. 구름이 머문 날이 ${Math.round(cloudy)}%로, 흐리고 옅게 갠 하늘까지 여러 표정의 ${seasonName}을 살아왔습니다.`},
+  };
+  return stories[kind];
 }
 function Dashboard({
                      result,
@@ -1351,6 +1390,7 @@ function Dashboard({
     const subset = days.filter((d) => seasonForMonth(Number(d.date.slice(5,7))) === favoriteSeason);
     return subsetResult(subset, birthdate);
   }, [days, birthdate, favoriteSeason]);
+  const favoriteStory = favoriteSeason && favoriteSeasonResult ? favoriteSeasonStory(favoriteSeason,favoriteSeasonResult) : null;
   useEffect(() => track("result_viewed"), []);
 
   return (
@@ -1417,7 +1457,7 @@ function Dashboard({
 
             {chapterSummaries.length > 0 && (<>
               <p className="mb-3 mt-6 text-sm font-bold">내가 이름 붙인 시기</p>
-              <div className="grid gap-3 sm:grid-cols-2">{chapterSummaries.map(({label,result:r}) => r && <div className="card p-5" key={label}><span className="rounded-full bg-sun/25 px-2.5 py-1 text-[11px] font-bold">{label}</span><p className="mt-4 font-serif text-2xl font-bold">맑음 {r.percentages.sunny}%</p><p className="mt-2 text-xs leading-5 text-ink/50">평균 {r.averageTemp.toFixed(1)}℃ · 가장 더웠던 날 {r.max.value.toFixed(1)}℃<br/>가장 긴 연속 맑음 {r.longestSunny}일</p></div>)}</div>
+              <div className="grid gap-3 sm:grid-cols-2">{chapterSummaries.map(({labels:chapterLabels,period,result:r}) => {const insight=chapterHighlight(r,result);return <div className="card overflow-hidden" key={`${period}-${chapterLabels.join("-")}`}><div className={`p-5 ${insight.tone}`}><div className="flex flex-wrap gap-1.5">{chapterLabels.map(label=><span className="rounded-full border border-current/15 bg-white/50 px-2.5 py-1 text-[11px] font-bold" key={label}>{label}</span>)}</div><p className="mt-3 text-[11px] font-bold opacity-55">{period}</p><p className="mt-2 font-serif text-2xl font-bold">{insight.title}</p></div><div className="p-5"><p className="text-sm leading-6 text-ink/55">{insight.detail}</p><div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 border-t border-ink/10 pt-4 text-xs text-ink/45"><span>평균 <b className="text-ink">{r.averageTemp.toFixed(1)}℃</b></span><span>비 <b className="text-ink">{r.percentages.rainy}%</b></span><span>눈 <b className="text-ink">{r.percentages.snowy}%</b></span></div></div></div>})}</div>
             </>)}
 
             {ageSummaries.length > 0 && (<>
@@ -1425,11 +1465,12 @@ function Dashboard({
               <div className="flex gap-3 overflow-x-auto pb-2">{ageSummaries.map(({label,result:r}) => r && <div key={label} className="card min-w-[190px] p-5"><p className="text-xs font-bold text-ink/45">{label}</p><b className="mt-2 block text-xl">평균 {r.averageTemp.toFixed(1)}℃</b><p className="mt-2 text-xs leading-5 text-ink/50">맑음 {r.percentages.sunny}%<br/>비 {r.percentages.rainy}% · 눈 {r.percentages.snowy}%</p></div>)}</div>
             </>)}
 
-            {favoriteSeason && favoriteSeasonResult && (
+            {favoriteSeason && favoriteSeasonResult && favoriteStory && (
                 <div className="mt-7 rounded-2xl border border-ink/10 bg-cream p-6">
                   <p className="label">Your favorite season</p>
-                  <h3 className="mt-2 font-serif text-2xl font-bold">{seasonEmoji[favoriteSeason]} 당신이 좋아하는 {seasonLabels[favoriteSeason]}</h3>
-                  <p className="mt-4 text-sm leading-7 text-ink/60">당신이 살아온 {seasonLabels[favoriteSeason]}은 평균 <b className="text-ink">{favoriteSeasonResult.averageTemp.toFixed(1)}℃</b>였고, 그중 <b className="text-ink">{favoriteSeasonResult.percentages.sunny}%</b>가 맑은 날이었습니다. 취향 속 계절도 당신의 인생 날씨 안에 꽤 많은 장면을 남겼네요.</p>
+                  <h3 className="mt-2 font-serif text-2xl font-bold">{seasonEmoji[favoriteSeason]} {favoriteStory.title}</h3>
+                  <p className="mt-4 text-sm leading-7 text-ink/60">{favoriteStory.body}</p>
+                  <div className="mt-5 flex flex-wrap gap-2 border-t border-ink/10 pt-4 text-xs text-ink/50"><span className="rounded-full bg-white px-3 py-2">평균 <b className="text-ink">{favoriteSeasonResult.averageTemp.toFixed(1)}℃</b></span><span className="rounded-full bg-white px-3 py-2">맑음 <b className="text-ink">{favoriteSeasonResult.percentages.sunny}%</b></span><span className="rounded-full bg-white px-3 py-2">비 <b className="text-ink">{favoriteSeasonResult.percentages.rainy}%</b></span></div>
                 </div>
             )}
           </Section>
@@ -1470,21 +1511,27 @@ function ShareCard({ result, from, favoriteSeason }: { result: Result; from: str
       const cellHeight = character.naturalHeight / 2;
       const sourceX = (profile.character % 4) * cellWidth;
       const sourceY = Math.floor(profile.character / 4) * cellHeight;
-      if (story) x.drawImage(character, sourceX, sourceY, cellWidth, cellHeight, 650, 150, 330, 440);
-      else x.drawImage(character, sourceX, sourceY, cellWidth, cellHeight, 900, 35, 225, 300);
+      if (story) x.drawImage(character, sourceX, sourceY, cellWidth, cellHeight, 690, 130, 255, 340);
+      else x.drawImage(character, sourceX, sourceY, cellWidth, cellHeight, 950, 25, 180, 240);
     };
     character.src = "/assets/weather-profile-characters.png";
     const left = story ? 90 : 70;
     x.fillStyle = "#18211C"; x.font = `700 ${story?34:24}px sans-serif`; x.fillText("MY LIFE WEATHER",left,story?135:72);
-    const titleY = story ? 630 : 205;
+    const titleY = story ? 700 : 220;
     if (profile.title) {
       x.fillStyle="#657068"; x.font=`700 ${story?28:18}px sans-serif`; x.fillText("SPECIAL WEATHER TITLE",left,titleY-90);
-      x.fillStyle="#18211C"; x.font=`700 ${story?76:48}px serif`; x.fillText(`${profile.emoji} ${profile.title}`,left,titleY);
+      const titleText=`${profile.emoji} ${profile.title}`;
+      let titleSize=story?76:48;
+      const titleMaxWidth=story?900:800;
+      x.fillStyle="#18211C";
+      x.font=`700 ${titleSize}px serif`;
+      while(x.measureText(titleText).width>titleMaxWidth&&titleSize>(story?52:34)){titleSize-=2;x.font=`700 ${titleSize}px serif`;}
+      x.fillText(titleText,left,titleY);
       x.font=`700 ${story?42:26}px sans-serif`; x.fillText(profile.record,left,titleY+(story?80:50));
     } else {
       x.font=`700 ${story?64:42}px serif`; x.fillText("나의 인생 날씨",left,titleY);
     }
-    const compY = story ? 980 : 360;
+    const compY = story ? 1040 : 375;
     x.font=`700 ${story?110:64}px serif`; x.fillText(`${result.percentages.sunny}%`,left,compY);
     x.font=`${story?34:22}px sans-serif`; x.fillStyle="#657068"; x.fillText("맑은 날",left,compY+(story?55:34));
     const cloud=(result.percentages.cloudy||0)+(result.percentages.partly_cloudy||0);

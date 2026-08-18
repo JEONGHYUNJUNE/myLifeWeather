@@ -1192,42 +1192,68 @@ type WeatherProfile = {
   emoji: string;
   comment: string;
   record: string;
+  character: number;
 };
 
 function getWeatherProfile(result: Result): WeatherProfile {
-  const coldRatio = result.totalDays ? result.coldDays / result.totalDays : 0;
-  const hotRatio = result.totalDays ? result.hotDays / result.totalDays : 0;
+  const days = Math.max(result.totalDays, 1);
+  const ratio = (value: number) => value / days;
+  const cap = (value: number, max = 1) => Math.min(value, max);
+  const cloudyPercent = (result.percentages.cloudy || 0) + (result.percentages.partly_cloudy || 0);
+  const birthdayWetRatio = result.birthdays.total
+      ? (result.birthdays.rainy + result.birthdays.snowy) / result.birthdays.total
+      : 0;
 
-  if (result.longestSunny >= 30) return {
-    title: "맑은날 날씨요정",
-    emoji: "☀️",
-    record: `${result.longestSunny}일 연속 맑음`,
-    comment: "한 달 가까이 맑은 하늘이 이어진 흔치 않은 기록을 가지고 있어요.",
-  };
-  if (result.longestWet >= 10) return {
-    title: "긴 비의 목격자",
-    emoji: "🌧️",
-    record: `비·눈 ${result.longestWet}일 연속`,
-    comment: "열흘 이상 이어진 젖은 날씨를 지나온 기록이 눈에 띄어요.",
-  };
-  if (result.coldDays >= 300 && coldRatio >= 0.08) return {
-    title: "겨울 생존자",
-    emoji: "❄️",
-    record: `강추위 날 ${result.coldDays.toLocaleString()}일`,
-    comment: "살아온 시간에서 추운 날의 존재감이 꽤 큰 편이에요.",
-  };
-  if (result.hotDays >= 250 && hotRatio >= 0.05) return {
-    title: "한여름 베테랑",
-    emoji: "🔥",
-    record: `폭염성 날 ${result.hotDays.toLocaleString()}일`,
-    comment: "뜨거운 날씨를 꽤 오래 지나온 인생 기록을 가지고 있어요.",
-  };
-  return {
-    title: null,
-    emoji: "🌤️",
-    record: `가장 긴 맑음 ${result.longestSunny}일`,
-    comment: "특정 날씨 하나로 정의하기보다 여러 계절과 하늘이 고르게 섞인 기록이에요.",
-  };
+  const candidates: Array<WeatherProfile & { score: number }> = [
+    {
+      score: result.percentages.sunny / 65 + cap(result.longestSunny / 55) * 0.55,
+      title: "햇살 수집가", emoji: "☀️", character: 0, record: `맑은 날 ${result.counts.sunny.toLocaleString()}일`,
+      comment: `살아온 날의 ${result.percentages.sunny}%가 맑았고, 가장 길게는 ${result.longestSunny}일 연속 햇살이 이어졌어요.`,
+    },
+    {
+      score: result.percentages.rainy / 18 + cap(result.longestWet / 14) * 0.5 + cap(result.wettest.value / 150) * 0.25,
+      title: "비의 연대기 작가", emoji: "🌧️", character: 1, record: `비 오는 날 ${result.counts.rainy.toLocaleString()}일`,
+      comment: `비가 인생 날씨의 ${result.percentages.rainy}%를 차지해요. 젖은 계절의 기억이 비교적 선명한 기록입니다.`,
+    },
+    {
+      score: result.percentages.snowy / 5 + cap(result.snowiest.value / 15) * 0.45 + cap(ratio(result.coldDays) / 0.025) * 0.25,
+      title: "설경 보관자", emoji: "❄️", character: 2, record: `눈 오는 날 ${result.counts.snowy.toLocaleString()}일`,
+      comment: `눈 내린 날과 차가운 계절의 흔적이 다른 날씨보다 또렷하게 남아 있어요.`,
+    },
+    {
+      score: cap(ratio(result.hotDays) / 0.025) * 0.8 + cap(ratio(result.tropicalNights) / 0.018) * 0.65 + cap((result.max.value - 32) / 8) * 0.25,
+      title: "한여름 베테랑", emoji: "🔥", character: 3, record: `폭염성 날 ${result.hotDays.toLocaleString()}일`,
+      comment: `뜨거운 낮과 쉽게 식지 않던 밤을 제법 많이 지나온 인생 날씨예요.`,
+    },
+    {
+      score: cap(ratio(result.coldDays) / 0.018) * 0.9 + cap((-10 - result.min.value) / 15) * 0.45,
+      title: "겨울 생존자", emoji: "🧣", character: 4, record: `강추위 날 ${result.coldDays.toLocaleString()}일`,
+      comment: `매서운 겨울을 견딘 기록의 비중이 높아요. 가장 낮은 기온은 ${result.min.value.toFixed(1)}℃였습니다.`,
+    },
+    {
+      score: cap(Math.max(result.cities.length - 1, 0) / 3) * 0.9 + cap(result.awayPercent / 40) * 0.75,
+      title: "기후를 건넌 여행자", emoji: "🧭", character: 5, record: `${result.cities.length}개 생활지역의 날씨`,
+      comment: `여러 지역을 오가며 서로 다른 하늘과 계절을 살아온 이동의 기록이 돋보여요.`,
+    },
+    {
+      score: cap(birthdayWetRatio / 0.35) * (result.birthdays.total >= 5 ? 1.35 : 0.45),
+      title: "생일날 구름 탐험가", emoji: "🎂", character: 6, record: `비·눈 온 생일 ${result.birthdays.rainy + result.birthdays.snowy}번`,
+      comment: `유난히 생일마다 비나 눈과 자주 마주쳤어요. 하늘도 날짜를 기억하고 있었나 봐요.`,
+    },
+    {
+      score: cap(cloudyPercent / 42) * 0.9 + cap((100 - Math.abs(result.percentages.sunny - cloudyPercent)) / 100) * 0.35,
+      title: "구름 사이 산책자", emoji: "🌥️", character: 7, record: `구름 낀 날 ${Math.round(cloudyPercent)}%`,
+      comment: `쨍한 날만큼 구름이 머문 날도 많았어요. 여러 표정의 하늘이 고르게 섞인 기록입니다.`,
+    },
+  ];
+
+  const winner = candidates.sort((a, b) => b.score - a.score)[0];
+  return { title: winner.title, emoji: winner.emoji, character: winner.character, record: winner.record, comment: winner.comment };
+}
+
+function ProfileCharacter({index,className=""}:{index:number;className?:string}) {
+  const column=index%4;const row=Math.floor(index/4);
+  return <div role="img" aria-label="결과 유형 캐릭터" className={`aspect-[3/4] bg-no-repeat ${className}`} style={{backgroundImage:'url(/assets/weather-profile-characters.png)',backgroundSize:'400% 200%',backgroundPosition:`${column*100/3}% ${row*100}%`}}/>;
 }
 
 function compositionSentence(result: Result) {
@@ -1337,20 +1363,21 @@ function Dashboard({
               <h1 className="mt-5 font-serif text-4xl font-bold leading-tight sm:text-5xl">당신은 지금까지<br/><span className="text-rain">{result.totalDays.toLocaleString()}일</span>의 날씨를<br/>살아왔습니다.</h1>
               <p className="mt-6 max-w-xl leading-7 text-ink/60">{compositionSentence(result)}</p>
             </div>
-            <div className="card relative overflow-hidden p-7 sm:p-8">
+            <div className="card relative overflow-hidden p-7 sm:p-8" style={{backgroundColor:"#F5F2E9"}}>
               <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-sun/35"/>
               <div className="relative flex items-start justify-between"><p className="label">Your weather story</p><WeatherGlyph type={top} size={44}/></div>
-              <div className="relative mt-12">
+              <div className="relative mt-7 grid grid-cols-[1fr_112px] items-end gap-2 sm:grid-cols-[1fr_150px]">
                 {profile.title ? (<>
-                  <p className="text-sm font-bold text-ink/45">특별한 날씨 칭호</p>
-                  <h2 className="mt-2 font-serif text-3xl font-bold">{profile.emoji} {profile.title}</h2>
-                  <p className="mt-4 text-sm leading-6 text-ink/60">{profile.record}<br/>{profile.comment}</p>
+                  <div><p className="text-sm font-bold text-ink/45">특별한 날씨 칭호</p>
+                  <h2 className="mt-2 font-serif text-2xl font-bold sm:text-3xl">{profile.emoji} {profile.title}</h2>
+                  <p className="mt-4 text-sm leading-6 text-ink/60"><b className="text-ink">{profile.record}</b><br/>{profile.comment}</p></div>
+                  <ProfileCharacter index={profile.character} className="w-full self-end"/>
                 </>) : (<>
                   <p className="font-serif text-2xl leading-relaxed">가장 많이 함께한 하늘은<br/><b className="text-4xl">{labels[top]}</b>이었습니다.</p>
                   <p className="mt-4 text-sm leading-6 text-ink/55">{profile.comment}</p>
                 </>)}
               </div>
-              <p className="relative mt-10 text-xs text-ink/40">MY LIFE WEATHER</p>
+              <p className="relative mt-5 text-xs text-ink/40">MY LIFE WEATHER</p>
             </div>
           </div>
         </section>
@@ -1437,6 +1464,16 @@ function ShareCard({ result, from, favoriteSeason }: { result: Result; from: str
     if (!x) return;
     x.fillStyle = "#F5F2E9"; x.fillRect(0,0,c.width,c.height);
     x.fillStyle = "#F5C84B"; x.beginPath(); x.arc(c.width*.84,c.height*(story ? .15 : .2),story?180:105,0,Math.PI*2); x.fill();
+    const character = new Image();
+    character.onload = () => {
+      const cellWidth = character.naturalWidth / 4;
+      const cellHeight = character.naturalHeight / 2;
+      const sourceX = (profile.character % 4) * cellWidth;
+      const sourceY = Math.floor(profile.character / 4) * cellHeight;
+      if (story) x.drawImage(character, sourceX, sourceY, cellWidth, cellHeight, 650, 150, 330, 440);
+      else x.drawImage(character, sourceX, sourceY, cellWidth, cellHeight, 900, 35, 225, 300);
+    };
+    character.src = "/assets/weather-profile-characters.png";
     const left = story ? 90 : 70;
     x.fillStyle = "#18211C"; x.font = `700 ${story?34:24}px sans-serif`; x.fillText("MY LIFE WEATHER",left,story?135:72);
     const titleY = story ? 630 : 205;
@@ -1457,7 +1494,7 @@ function ShareCard({ result, from, favoriteSeason }: { result: Result; from: str
     if (favoriteSeason) x.fillText(`좋아하는 계절 · ${seasonEmoji[favoriteSeason]} ${seasonLabels[favoriteSeason]}`,left,story?1650:575);
     x.font=`700 ${story?24:16}px sans-serif`; x.fillStyle="#18211C"; x.fillText("당신의 인생 날씨는 어떤가요?",left,story?1770:605);
     track("share_card_generated",{format});
-  },[format,result,from,favoriteSeason,profile.title,profile.record,profile.emoji]);
+  },[format,result,from,favoriteSeason,profile.title,profile.record,profile.emoji,profile.character]);
 
   const blob=()=>new Promise<Blob|null>((r)=>canvas.current?.toBlob(r,"image/png"));
   async function download(){const b=await blob();if(!b)return;const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`my-life-weather-${format}.png`;a.click();URL.revokeObjectURL(a.href);track("image_downloaded",{format});}

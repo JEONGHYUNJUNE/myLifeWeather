@@ -1544,9 +1544,10 @@ function Dashboard({
               <Section eyebrow="07 · Five elements" title="날씨에 겹쳐 본 오행 이미지">
                 <div className="card grid gap-6 p-6 sm:grid-cols-[1fr_auto] sm:items-center">
                   <div>
-                    <p className="text-xs font-bold text-ink/45">{fiveElementCopy(fiveElements).title}</p>
-                    <p className="mt-3 font-serif text-2xl font-bold leading-relaxed">{fiveElementCopy(fiveElements).body}</p>
-                    <p className="mt-3 text-sm leading-7 text-ink/55">{fiveElements.sentence}</p>
+                    <p className="text-xs font-bold text-ink/45">{fiveElementCopy(fiveElements, profile).title}</p>
+                    <p className="mt-3 font-serif text-2xl font-bold leading-relaxed">{fiveElementCopy(fiveElements, profile).body}</p>
+                    <p className="mt-3 text-sm leading-7 text-ink/60">{fiveElementCopy(fiveElements, profile).detail}</p>
+                    <p className="mt-3 rounded-xl bg-cream px-4 py-3 text-xs leading-6 text-ink/50">계산 기준 · {fiveElements.sentence}</p>
                     <p className="mt-4 text-xs leading-5 text-ink/40">전통 오행의 상징을 날씨 기록에 빗댄 재미 요소이며, 성격·운세를 단정하는 전문 명리 해석이 아닙니다.</p>
                   </div>
                   <div className="flex flex-wrap gap-2 sm:max-w-[190px] sm:justify-end">
@@ -1567,15 +1568,19 @@ function Dashboard({
   );
 }
 
-function fiveElementCopy(profile: FiveElementProfile) {
-  const copy: Record<FiveElementProfile["dominant"], { title: string; body: string }> = {
-    목: { title: "목(木) · 자라나는 날씨", body: "계절을 따라 방향을 바꾸며 쌓여온 시간이에요." },
-    화: { title: "화(火) · 선명한 온도의 기억", body: "따뜻했던 순간을 오래 밝히는 날씨를 지녔어요." },
-    토: { title: "토(土) · 계절을 품은 중심", body: "수많은 날씨를 받아내며 단단해진 기록이에요." },
-    금: { title: "금(金) · 또렷한 계절의 결", body: "차고 맑은 공기처럼 장면의 윤곽이 선명해요." },
-    수: { title: "수(水) · 흐르며 남은 기억", body: "비와 눈처럼 기억 사이를 유연하게 흘러왔어요." },
+function fiveElementCopy(profile: FiveElementProfile, weather: ReturnType<typeof getWeatherProfile>) {
+  const copy: Record<FiveElementProfile["dominant"], { title: string; body: string; weather: string }> = {
+    목: { title: "일간 목(木) · 성장하는 사람", body: "당신은 새로운 환경에서도 할 일을 찾고, 경험을 쌓으며 앞으로 뻗어가는 이미지에 가까워요.", weather: "새싹을 깨우는 봄비와 바람이 지난 뒤의 맑은 날" },
+    화: { title: "일간 화(火) · 온도를 만드는 사람", body: "당신은 관심과 에너지를 주변에 드러내고, 분위기를 빠르게 밝히는 이미지에 가까워요.", weather: "빛과 온기가 또렷한 초여름의 맑은 날" },
+    토: { title: "일간 토(土) · 중심을 잡는 사람", body: "당신은 변화가 많을 때도 자리를 지키며 사람과 일을 안정적으로 받쳐주는 이미지에 가까워요.", weather: "구름이 있어도 포근하고 오래 머물기 좋은 날" },
+    금: { title: "일간 금(金) · 기준이 분명한 사람", body: "당신은 복잡한 상황에서 필요한 것과 아닌 것을 가르고, 결론을 또렷하게 만드는 이미지에 가까워요.", weather: "공기가 차고 시야가 선명한 가을의 맑은 날" },
+    수: { title: "일간 수(水) · 흐름을 읽는 사람", body: "당신은 상황을 먼저 살피고, 막힌 곳에서도 다른 길을 찾아 생각을 이어가는 이미지에 가까워요.", weather: "소리가 차분하게 들리는 비 오는 날이나 눈 내린 아침" },
   };
-  return copy[profile.dominant];
+  const selected = copy[profile.dayMaster];
+  const weatherResult = weather.title
+      ? `실제 기록에서는 ‘${weather.title}’가 나왔어요. ${weather.record}이라는 기록이 이 성향에 당신만의 날씨 표정을 더합니다.`
+      : `실제 기록에서는 여러 날씨가 고르게 나타나, 한 가지 하늘보다 변화에 적응해온 시간이 더 두드러집니다.`;
+  return { ...selected, detail: `오행 이미지로는 ${selected.weather}과 잘 어울려요. ${weatherResult}` };
 }
 
 function ShareCard({ result, from, favoriteSeason, fiveElements }: { result: Result; from: string; favoriteSeason: Season | ""; fiveElements: FiveElementProfile | null }) {
@@ -1642,10 +1647,10 @@ function ShareCard({ result, from, favoriteSeason, fiveElements }: { result: Res
     const cloud=(result.percentages.cloudy||0)+(result.percentages.partly_cloudy||0);
     x.font=`700 ${story?30:18}px sans-serif`; x.fillStyle="#18211C"; x.fillText(`구름 ${cloud}%   ·   비 ${result.percentages.rainy}%   ·   눈 ${result.percentages.snowy}%`,left,compY+(story?135:82));
     if (story && fiveElements) {
-      const elementCopy = fiveElementCopy(fiveElements);
+      const elementCopy = fiveElementCopy(fiveElements, profile);
       x.fillStyle="#657068"; x.font="700 25px sans-serif"; x.fillText("FIVE ELEMENTS MOOD",left,1320);
       x.fillStyle="#18211C"; x.font="700 38px serif"; x.fillText(elementCopy.title,left,1380);
-      x.fillStyle="#657068"; x.font="28px sans-serif"; x.fillText(elementCopy.body,left,1435);
+      x.fillStyle="#657068"; x.font="26px sans-serif"; x.fillText(`잘 어울리는 날씨 · ${elementCopy.weather}`,left,1435);
     }
     x.font=`${story?29:18}px sans-serif`; x.fillStyle="#657068";
     x.fillText(`${result.totalDays.toLocaleString()}일의 날씨 · ${from}—${new Date().getFullYear()}`,left,story?1600:545);
@@ -1732,5 +1737,5 @@ function ShareCard({ result, from, favoriteSeason, fiveElements }: { result: Res
     track("share_clicked", { format, method: "fallback-copy" });
   }
 
-  return <div className="grid gap-5 md:grid-cols-[1fr_280px]"><div className="overflow-hidden rounded-2xl bg-ink/10 p-4"><canvas ref={canvas} className={`mx-auto max-h-[520px] max-w-full rounded-xl shadow-xl ${format==="story"?"aspect-[9/16]":"aspect-[1200/630]"}`} aria-label="공유 이미지 미리보기"/></div><div><div className="mb-5 rounded-2xl bg-sun/20 p-5"><p className="text-xs font-bold text-ink/45">공유 카드에 담기는 기록</p><p className="mt-2 font-serif text-xl font-bold">{profile.title?`${profile.emoji} ${profile.title}`:"나의 인생 날씨"}</p><p className="mt-2 text-xs leading-5 text-ink/50">{fiveElements?fiveElementCopy(fiveElements).body:profile.title?profile.comment:compositionSentence(result)}</p></div><p className="text-sm font-bold">이미지 비율</p><div className="mt-3 grid grid-cols-2 gap-2">{([["story","스토리 9:16"],["link","링크 1.91:1"]] as const).map(([v,t])=><button key={v} onClick={()=>setFormat(v)} className={`focusable rounded-xl border p-3 text-xs ${format===v?"border-ink bg-ink text-white":"border-ink/15"}`}>{t}</button>)}</div><button onClick={download} className="focusable mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-ink py-4 font-bold text-white"><Download size={18}/>이미지 저장</button><button onClick={share} className="focusable mt-2 flex w-full items-center justify-center gap-2 rounded-xl border border-ink/20 py-4 font-bold"><Share2 size={18}/>친구에게 공유하기</button><p className="mt-4 text-xs leading-5 text-ink/40">생년월일과 출생시간, 상세 생활기간은 공유 이미지에 포함하지 않아요.</p></div></div>;
+  return <div className="grid gap-5 md:grid-cols-[1fr_280px]"><div className="overflow-hidden rounded-2xl bg-ink/10 p-4"><canvas ref={canvas} className={`mx-auto max-h-[520px] max-w-full rounded-xl shadow-xl ${format==="story"?"aspect-[9/16]":"aspect-[1200/630]"}`} aria-label="공유 이미지 미리보기"/></div><div><div className="mb-5 rounded-2xl bg-sun/20 p-5"><p className="text-xs font-bold text-ink/45">공유 카드에 담기는 기록</p><p className="mt-2 font-serif text-xl font-bold">{profile.title?`${profile.emoji} ${profile.title}`:"나의 인생 날씨"}</p><p className="mt-2 text-xs leading-5 text-ink/50">{fiveElements?fiveElementCopy(fiveElements,profile).body:profile.title?profile.comment:compositionSentence(result)}</p></div><p className="text-sm font-bold">이미지 비율</p><div className="mt-3 grid grid-cols-2 gap-2">{([["story","스토리 9:16"],["link","링크 1.91:1"]] as const).map(([v,t])=><button key={v} onClick={()=>setFormat(v)} className={`focusable rounded-xl border p-3 text-xs ${format===v?"border-ink bg-ink text-white":"border-ink/15"}`}>{t}</button>)}</div><button onClick={download} className="focusable mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-ink py-4 font-bold text-white"><Download size={18}/>이미지 저장</button><button onClick={share} className="focusable mt-2 flex w-full items-center justify-center gap-2 rounded-xl border border-ink/20 py-4 font-bold"><Share2 size={18}/>친구에게 공유하기</button><p className="mt-4 text-xs leading-5 text-ink/40">생년월일과 출생시간, 상세 생활기간은 공유 이미지에 포함하지 않아요.</p></div></div>;
 }

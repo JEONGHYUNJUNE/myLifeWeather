@@ -2,10 +2,10 @@ import {Lunar,Solar} from 'lunar-typescript';
 
 export type BirthMeta={calendar:'solar'|'lunar';time:string;timeKnown:boolean;isLeapMonth:boolean};
 export type ElementName='목'|'화'|'토'|'금'|'수';
-export type FiveElementProfile={solarDate:string;dominant:ElementName;counts:Record<ElementName,number>;pillars:string[];sentence:string};
+export type FiveElementProfile={solarDate:string;dominant:ElementName;dayMaster:ElementName;dayStem:string;counts:Record<ElementName,number>;pillars:string[];sentence:string};
 const names:ElementName[]=['목','화','토','금','수'];
 const hanjaToName:Record<string,ElementName>={木:'목',火:'화',土:'토',金:'금',水:'수'};
-const imagery:Record<ElementName,string>={목:'계절을 따라 자라고 방향을 바꾸는 나무',화:'온도와 빛을 또렷하게 남기는 불',토:'여러 계절을 품고 중심을 잡는 땅',금:'날씨의 경계를 선명하게 가르는 금속',수:'비와 눈처럼 기억 사이를 흐르는 물'};
+const stemToName:Record<string,ElementName>={甲:'목',乙:'목',丙:'화',丁:'화',戊:'토',己:'토',庚:'금',辛:'금',壬:'수',癸:'수'};
 const pad=(n:number)=>String(n).padStart(2,'0');
 
 export function createFiveElementProfile(inputDate:string,meta:BirthMeta):FiveElementProfile|null{
@@ -21,6 +21,8 @@ export function createFiveElementProfile(inputDate:string,meta:BirthMeta):FiveEl
     const elements=[...wuxing].map(x=>hanjaToName[x]).filter(Boolean);
     const counts=Object.fromEntries(names.map(name=>[name,elements.filter(x=>x===name).length])) as Record<ElementName,number>;
     const dominant=[...names].sort((a,b)=>counts[b]-counts[a])[0];
-    return{solarDate:`${solar.getYear()}-${pad(solar.getMonth())}-${pad(solar.getDay())}`,dominant,counts,pillars,sentence:`전통 오행의 상징으로 보면 ${dominant}(${({목:'木',화:'火',토:'土',금:'金',수:'水'} as const)[dominant]})의 기운이 가장 많이 나타나요. ${imagery[dominant]}의 이미지처럼, 당신의 날씨 기록도 한 가지 표정보다 시간에 따라 변해온 장면에 가깝습니다.`};
+    const dayStem=eight.getDayGan();
+    const dayMaster=stemToName[dayStem];
+    return{solarDate:`${solar.getYear()}-${pad(solar.getMonth())}-${pad(solar.getDay())}`,dominant,dayMaster,dayStem,counts,pillars,sentence:`태어난 날의 중심 글자인 일간은 ${dayStem}, 오행으로는 ${dayMaster}(${({목:'木',화:'火',토:'土',금:'金',수:'水'} as const)[dayMaster]})에 해당해요. 여덟 글자를 단순 집계하면 ${dominant}이 ${counts[dominant]}개로 가장 많습니다.`};
   }catch{return null}
 }

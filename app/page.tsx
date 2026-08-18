@@ -718,25 +718,35 @@ function ResidenceStep({
 }
 
 function LifeChapterField({ value, onChange }: { value: string; onChange: (value: string) => void }) {
-  const isPreset = chapterOptions.includes(value as (typeof chapterOptions)[number]);
-  const [custom, setCustom] = useState(value && !isPreset ? value : "");
+  const selected = value ? value.split("|").filter(Boolean) : [];
+  const customValues = selected.filter((item) => !chapterOptions.includes(item as (typeof chapterOptions)[number]));
+  const [custom, setCustom] = useState(customValues[0] || "");
+  const toggle = (option: string) => {
+    const next = selected.includes(option)
+        ? selected.filter((item) => item !== option)
+        : [...selected, option];
+    onChange(next.join("|"));
+  };
   return (
       <div className="mt-5 border-t border-ink/10 pt-5">
-        <p className="text-sm font-bold">이 시기는 어떤 때였나요? <span className="font-normal text-ink/40">(선택)</span></p>
-        <p className="mt-1 text-xs leading-5 text-ink/45">지역이 같아도 인생의 장면은 달라요. 결과에서 시기별 날씨를 따로 보여드릴게요.</p>
+        <p className="text-sm font-bold">이 시기는 어떤 때였나요? <span className="font-normal text-ink/40">(복수 선택 가능)</span></p>
+        <p className="mt-1 text-xs leading-5 text-ink/45">한 기간에 해당하는 시기를 여러 개 골라도 돼요. 결과에서 시기별 날씨를 따로 보여드릴게요.</p>
         <div className="mt-3 flex flex-wrap gap-2">
           {chapterOptions.map((option) => (
-              <button key={option} type="button" onClick={() => onChange(value === option ? "" : option)} className={`rounded-full border px-3 py-2 text-xs font-bold ${value === option ? "border-ink bg-ink text-white" : "border-ink/15 bg-white text-ink/65"}`}>{option}</button>
+              <button key={option} type="button" aria-pressed={selected.includes(option)} onClick={() => toggle(option)} className={`rounded-full border px-3 py-2 text-xs font-bold ${selected.includes(option) ? "border-ink bg-ink text-white" : "border-ink/15 bg-white text-ink/65"}`}>{selected.includes(option) && <Check className="mr-1 inline" size={12}/>} {option}</button>
           ))}
         </div>
         <input
             value={custom}
-            onChange={(e) => { setCustom(e.target.value); onChange(e.target.value); }}
-            onFocus={() => { if (isPreset) { setCustom(""); onChange(""); } }}
+            onChange={(e) => {
+              const nextCustom = e.target.value.replaceAll("|", "");
+              setCustom(nextCustom);
+              onChange([...selected.filter((item) => chapterOptions.includes(item as (typeof chapterOptions)[number])), ...(nextCustom ? [nextCustom] : [])].join("|"));
+            }}
             placeholder="직접 입력 · 예: 취준 시절, 워킹홀리데이"
             className="focusable mt-3 h-11 w-full rounded-lg border border-ink/15 bg-white px-3 text-sm"
         />
-        {value && <p className="mt-2 text-xs font-bold text-moss"><Check className="mr-1 inline" size={14} />‘{value}’ 시기로 기록할게요.</p>}
+        {selected.length > 0 && <p className="mt-2 text-xs font-bold text-moss"><Check className="mr-1 inline" size={14} />{selected.map((item) => `‘${item}’`).join(", ")} 시기로 기록할게요.</p>}
       </div>
   );
 }
@@ -1048,7 +1058,7 @@ function Confirm({
                   <div className="min-w-0">
                     <b>{r.name || "도시 미선택"}</b>
                     <p className="mt-1 text-xs text-ink/45">{r.country}</p>
-                    {chapters[r.id] && <span className="mt-2 inline-block rounded-full bg-sun/25 px-2.5 py-1 text-[11px] font-bold">{chapters[r.id]}</span>}
+                    {chapters[r.id] && <div className="mt-2 flex flex-wrap gap-1">{chapters[r.id].split("|").filter(Boolean).map((chapter)=><span key={chapter} className="inline-block rounded-full bg-sun/25 px-2.5 py-1 text-[11px] font-bold">{chapter}</span>)}</div>}
                   </div>
                   <p className="shrink-0 text-right text-xs leading-5 text-ink/55">{r.startDate || "-"}<br />— {r.isCurrent ? "현재" : r.endDate || "-"}</p>
                 </div>
@@ -1170,6 +1180,13 @@ function Stat({
       </div>
   );
 }
+function BirthdayRecord({label,day,value}:{label:string;day?:DailyWeather;value?:number|null}) {
+  return <div className="rounded-xl bg-cream/70 p-4">
+    <p className="text-xs text-ink/45">{label}</p>
+    <p className="mt-1 font-serif text-xl font-bold">{day?.date ? `${day.date.slice(0,4)}년` : "기록 없음"}{value != null ? ` · ${value.toFixed(1)}℃` : ""}</p>
+    {day?.date && <p className="mt-1 text-xs text-ink/45">{day.date.replaceAll("-", ".")} · {day.city || "지역 미상"}</p>}
+  </div>;
+}
 type WeatherProfile = {
   title: string | null;
   emoji: string;
@@ -1266,7 +1283,7 @@ function buildChapterSummaries(days: DailyWeather[], birthdate: string, residenc
     if (!chapter || !r.startDate) return;
     const end = r.isCurrent ? today() : r.endDate;
     const subset = days.filter((d) => d.date >= r.startDate && d.date <= end);
-    grouped.set(chapter, [...(grouped.get(chapter) || []), ...subset]);
+    chapter.split("|").filter(Boolean).forEach((label) => grouped.set(label, [...(grouped.get(label) || []), ...subset]));
   });
   return [...grouped.entries()].map(([label, subset]) => ({ label, result: subsetResult(subset, birthdate) })).filter((x) => x.result);
 }
@@ -1343,7 +1360,7 @@ function Dashboard({
             <div className="grid gap-6 md:grid-cols-2"><div className="card p-4"><WeatherDonut result={result}/></div><div className="grid grid-cols-2 gap-3">{(Object.keys(result.counts) as WeatherCategory[]).filter((k)=>result.counts[k]>0).map((k)=><div className="card flex items-center gap-3 p-4" key={k}><WeatherGlyph type={k}/><div><b>{labels[k]}</b><p className="text-xs text-ink/45">{result.counts[k].toLocaleString()}일 · {result.percentages[k]}%</p></div></div>)}</div></div>
           </Section>
 
-          <Section eyebrow="02 · Temperature" title="인생 기온선"><div className="card p-4"><TempLine result={result}/></div><p className="mt-4 text-sm text-ink/50">전체 평균기온 <b className="text-ink">{result.averageTemp.toFixed(1)}℃</b> · 연도별 관측 일수에 따라 비교합니다.</p></Section>
+          <Section eyebrow="02 · Temperature" title="인생 기온선"><div className="card p-4"><TempLine result={result}/></div><div className="mt-4 rounded-xl bg-white/50 p-4 text-sm leading-6 text-ink/50"><p>사계절 전체 일평균기온 <b className="text-ink">{result.averageTemp.toFixed(1)}℃</b></p><p className="mt-1 text-xs">여름의 높은 기온과 겨울의 영하 기온을 포함해, 분석된 모든 날짜의 일평균기온을 합산한 값이에요.</p></div></Section>
 
           <Section eyebrow="03 · Records" title="기억할 만한 날씨 기록">
             <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
@@ -1391,7 +1408,7 @@ function Dashboard({
           </Section>
 
           <Section eyebrow="06 · Birthdays" title="나의 생일 날씨">
-            <div className="card grid gap-6 p-6 sm:grid-cols-2"><div><p className="text-sm text-ink/45">기록 속 생일</p><p className="mt-2 font-serif text-4xl font-bold">{result.birthdays.total}번</p><p className="mt-4 text-sm leading-7">맑음 {result.birthdays.sunny}번 · 비 {result.birthdays.rainy}번 · 눈 {result.birthdays.snowy}번</p></div><div className="border-t border-ink/10 pt-5 text-sm leading-8 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0"><p>가장 더웠던 생일 <b>{result.birthdays.hottest?.date ? `${result.birthdays.hottest.date.slice(0,4)}년 · ` : ""}{result.birthdays.hottest?.temperature_2m_max?.toFixed(1) ?? "-"}℃</b></p><p>가장 추웠던 생일 <b>{result.birthdays.coldest?.date ? `${result.birthdays.coldest.date.slice(0,4)}년 · ` : ""}{result.birthdays.coldest?.temperature_2m_min?.toFixed(1) ?? "-"}℃</b></p><p className="mt-2 text-xs text-ink/40">2월 29일생은 윤년에만 생일로 집계합니다.</p></div></div>
+            <div className="card grid gap-6 p-6 sm:grid-cols-2"><div><p className="text-sm text-ink/45">기록 속 생일</p><p className="mt-2 font-serif text-4xl font-bold">{result.birthdays.total}번</p><p className="mt-4 text-sm leading-7">맑음 {result.birthdays.sunny}번 · 비 {result.birthdays.rainy}번 · 눈 {result.birthdays.snowy}번</p></div><div className="grid gap-3 border-t border-ink/10 pt-5 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0"><BirthdayRecord label="가장 더웠던 생일" day={result.birthdays.hottest} value={result.birthdays.hottest?.temperature_2m_max}/><BirthdayRecord label="가장 추웠던 생일" day={result.birthdays.coldest} value={result.birthdays.coldest?.temperature_2m_min}/><p className="text-xs text-ink/40">2월 29일생은 윤년에만 생일로 집계합니다.</p></div></div>
           </Section>
 
           <Section eyebrow="07 · Share" title="친구들과 인생 날씨를 공유해보세요">

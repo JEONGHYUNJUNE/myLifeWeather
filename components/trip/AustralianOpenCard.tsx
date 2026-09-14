@@ -1,0 +1,14 @@
+import { Check, CircleDollarSign, Ticket, Trophy } from "lucide-react";
+import { trip } from "@/data/trip";
+const won = new Intl.NumberFormat("ko-KR");
+
+export function AustralianOpenCard() {
+  const max = Math.max(...trip.australianOpen.tickets.map(t => t.max));
+  return <section id="tennis" className="overflow-hidden rounded-[34px] bg-[#123e4a] text-white">
+    <div className="grid lg:grid-cols-[.8fr_1.2fr]"><div className="relative min-h-[360px]"><img src={trip.images.tennis} alt="Australian Open tennis court" className="absolute inset-0 h-full w-full object-cover opacity-65"/><div className="absolute inset-0 bg-gradient-to-t from-[#123e4a] via-transparent"/><div className="absolute bottom-8 left-7 right-7"><span className="inline-flex items-center gap-2 rounded-full bg-[#f2bb4d] px-4 py-2 text-xs font-black text-[#163e43]"><Trophy size={15}/> MATCH PLAN</span><h2 className="mt-4 font-display text-4xl font-bold">Men&apos;s matches<br/>only.</h2><p className="mt-3 text-sm text-white/65">Jan 26 QF · Jan 29 SF</p></div></div>
+      <div className="p-6 sm:p-9"><h3 className="text-xl font-bold">Official tournament schedule</h3><div className="mt-5 grid gap-2">{trip.australianOpen.schedule.map(item=><div key={item.round} className={`flex items-center justify-between gap-3 rounded-2xl border p-3.5 ${item.selected?"border-[#f2bb4d] bg-[#f2bb4d]/15":"border-white/10 text-white/45"}`}><div><b className="text-sm">{item.round}</b><p className="mt-1 text-[11px]">{item.note}</p></div><div className="flex items-center gap-2 text-xs font-bold">{item.date}{item.selected&&<span className="grid h-6 w-6 place-items-center rounded-full bg-[#f2bb4d] text-[#163e43]"><Check size={14}/></span>}</div></div>)}</div>
+        <div className="mt-8"><div className="flex items-center justify-between"><h3 className="flex items-center gap-2 font-bold"><Ticket size={18}/> Ticket budget</h3><b className="text-[#f2bb4d]">Target ₩{won.format(trip.australianOpen.targetBudget)}</b></div><div className="mt-5 space-y-4">{trip.australianOpen.tickets.map(ticket=><div key={ticket.label}><div className="mb-1.5 flex justify-between gap-3 text-xs"><span><b>{ticket.label}</b> · {ticket.date}</span><span>₩{won.format(ticket.min)}–{won.format(ticket.max)}</span></div><div className="h-2 overflow-hidden rounded-full bg-white/10"><div className="h-full rounded-full bg-gradient-to-r from-[#ef7b61] to-[#f2bb4d]" style={{width:`${ticket.max/max*100}%`}}/></div><p className="mt-1 text-[10px] text-white/40">{ticket.seat}</p></div>)}</div></div>
+        <p className="mt-6 flex gap-2 rounded-2xl bg-white/5 p-4 text-xs leading-5 text-white/55"><CircleDollarSign className="shrink-0" size={17}/>{trip.australianOpen.notice}</p>
+      </div></div>
+  </section>;
+}

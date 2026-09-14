@@ -32,7 +32,7 @@ export const trip = {
   departureNote: "1월 22일 저녁 한국 출발",
   returnNote: "1월 31일 오전 호주 출발",
   purpose: "Sydney first · Australian Open finale in Melbourne",
-  travelers: 1,
+  travelers: 2,
   images: {
     hero: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=2000&q=88",
     melbourne: "https://images.unsplash.com/photo-1514395462725-fb4566210144?auto=format&fit=crop&w=1400&q=85",
@@ -66,13 +66,13 @@ export const trip = {
     notice: "2027 경기 세션과 티켓 가격은 공식 판매 일정 발표 후 다시 확인해야 합니다.",
   },
   budget: [
-    { id: "ao", label: "Australian Open", amount: 1000000, color: "#f4b942" },
-    { id: "stay", label: "Accommodation", amount: 700000, color: "#f0d6a5" },
-    { id: "food", label: "Food", amount: 400000, color: "#ee8d72" },
-    { id: "flight", label: "Domestic flight", amount: 150000, color: "#5f9fb3" },
-    { id: "transport", label: "Public transport", amount: 120000, color: "#86b6a2" },
-    { id: "tour", label: "Tours / Attractions", amount: 250000, color: "#7294c4" },
-    { id: "other", label: "Other", amount: 150000, color: "#a99ac4" },
+    { id: "ao", label: "Australian Open · 2인", amount: 2000000, color: "#f4b942" },
+    { id: "stay", label: "Hotels · 8박 / 객실 1개", amount: 2300000, color: "#f0d6a5" },
+    { id: "food", label: "Food · 2인", amount: 800000, color: "#ee8d72" },
+    { id: "flight", label: "Domestic flight · 2인", amount: 300000, color: "#5f9fb3" },
+    { id: "transport", label: "Public transport · 2인", amount: 240000, color: "#86b6a2" },
+    { id: "tour", label: "Tours / Attractions · 2인", amount: 500000, color: "#7294c4" },
+    { id: "other", label: "Other · 2인", amount: 300000, color: "#a99ac4" },
   ],
 } as const;
 

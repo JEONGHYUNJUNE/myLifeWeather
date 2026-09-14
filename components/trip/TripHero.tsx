@@ -23,7 +23,7 @@ export function TripHero() {
         <div className="mt-8 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-3">
           <HeroStat icon={<CalendarDays size={18}/>} label="여행 기간" value="Jan 22 → Jan 31" />
           <HeroStat icon={<MapPin size={18}/>} label="도시" value="2 cities · 10 days" />
-          <HeroStat icon={<Trophy size={18}/>} label="1인 예상 예산" value={`₩${won.format(total)}`} wide />
+          <HeroStat icon={<Trophy size={18}/>} label="2인 예상 예산" value={`₩${won.format(total)}`} wide />
         </div>
         <p className="mt-5 text-xs text-white/65">항공권 제외 · {trip.departureNote} · {trip.returnNote}</p>
       </div>

@@ -66,13 +66,13 @@ export const trip = {
     notice: "2027 경기 세션과 티켓 가격은 공식 판매 일정 발표 후 다시 확인해야 합니다.",
   },
   budget: [
-    { id: "ao", label: "Australian Open · 2인", amount: 2000000, color: "#f4b942" },
-    { id: "stay", label: "Hotels · 8박 / 객실 1개", amount: 2300000, color: "#f0d6a5" },
-    { id: "food", label: "Food · 2인", amount: 800000, color: "#ee8d72" },
-    { id: "flight", label: "Domestic flight · 2인", amount: 300000, color: "#5f9fb3" },
-    { id: "transport", label: "Public transport · 2인", amount: 240000, color: "#86b6a2" },
-    { id: "tour", label: "Tours / Attractions · 2인", amount: 500000, color: "#7294c4" },
-    { id: "other", label: "Other · 2인", amount: 300000, color: "#a99ac4" },
+    { id: "ao", label: "Australian Open · 호주오픈 관람 2인", amount: 2000000, color: "#f4b942" },
+    { id: "stay", label: "Hotels · 호텔 8박 / 객실 1개", amount: 2300000, color: "#f0d6a5" },
+    { id: "food", label: "Food · 2인 식비", amount: 800000, color: "#ee8d72" },
+    { id: "flight", label: "Domestic flight · 시드니→멜버른 항공 2인", amount: 300000, color: "#5f9fb3" },
+    { id: "transport", label: "Public transport · 현지 교통 2인", amount: 240000, color: "#86b6a2" },
+    { id: "tour", label: "Tours / Attractions · 투어·관광 2인", amount: 500000, color: "#7294c4" },
+    { id: "other", label: "Other · 쇼핑·예비비", amount: 300000, color: "#a99ac4" },
   ],
 } as const;
 

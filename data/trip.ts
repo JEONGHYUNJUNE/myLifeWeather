@@ -64,11 +64,7 @@ export const trip = {
       { label: "Food / merchandise", date: "현장", min: 80000, max: 120000, selected: true, seat: "식음료 위주, 굿즈는 한도 안에서" },
     ],
     targetBudget: 1500000,
-    seatGuide: [
-      { rank: "1순위", sections: "14 · 15", description: "사이드라인 중앙. 코트 전체와 선수 움직임을 가장 균형 있게 볼 수 있어요." },
-      { rank: "2순위", sections: "13 · 16", description: "중앙에서 조금 벗어나지만 시야가 좋고 1순위보다 가격 부담이 낮아요." },
-      { rank: "가성비", sections: "12 · 17 · 8", description: "코너 각도. 서브와 랠리 깊이가 잘 보이고 비교적 선택지가 많아요." },
-    ],
+    ticketDelivery: "모든 티켓은 모바일 전용이며 2026년 11월 Ticketmaster 계정에 표시될 예정입니다. 바코드가 열리면 Apple Wallet 또는 Google Wallet에 저장하세요.",
     selectedSeats: [
       { date: "Jan 26", session: "Quarterfinal · Night", section: "45", view: "sideline" as const, note: "2층 사이드라인 · 코트 전체와 좌우 움직임이 잘 보임", shade: "Night · 햇빛 걱정 없음" },
       { date: "Jan 29", session: "Men's Semifinal · Day", section: "54", view: "baseline" as const, note: "2층 베이스라인 · 서브 방향과 랠리 깊이가 잘 보임", shade: "Ticketmaster 그늘 좌석 선택" },

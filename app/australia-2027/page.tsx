@@ -6,11 +6,12 @@ import { DayTimeline } from "@/components/trip/DayTimeline";
 import { TripHero } from "@/components/trip/TripHero";
 import { TripMap } from "@/components/trip/TripMap";
 import { TripSummary } from "@/components/trip/TripSummary";
+import { FlightDetails } from "@/components/trip/FlightDetails";
 import { trip } from "@/data/trip";
 
 export const metadata: Metadata = {
-  title: "Australia 2027 · Melbourne to Sydney",
-  description: "Australian Open과 함께하는 10일간의 Melbourne–Sydney 여행 플랜",
+  title: "Australia 2027 · Sydney–Melbourne",
+  description: "Australian Open과 함께하는 10일간의 Sydney–Melbourne 여행 플랜",
 };
 
 export default function Australia2027Page() {
@@ -18,13 +19,14 @@ export default function Australia2027Page() {
     <TripHero />
     <div className="relative z-10 mx-auto -mt-14 max-w-6xl px-4 pb-24 sm:px-8">
       <TripSummary />
+      <FlightDetails />
       <TripMap />
 
       <section className="py-20">
         <div className="mb-8"><p className="text-[11px] font-bold uppercase tracking-[.18em] text-[#d06950]">Two moods, one journey</p><h2 className="mt-2 font-display text-4xl font-bold tracking-tight">도시가 바뀌면 여행의 온도도 바뀐다</h2></div>
         <div className="grid gap-4 md:grid-cols-2">
-          <City image={trip.images.sydney} city="Sydney" days="Jan 23—25" copy="하버의 밤, Blue Mountains와 Bondi. 도착 직후 여행의 밀도를 높여요."/>
-          <City image={trip.images.melbourne} city="Melbourne" days="Jan 25—31" copy="커피와 골목, Great Ocean Road, 그리고 두 번의 남자 단식 빅매치."/>
+          <City image={trip.images.sydney} city="Sydney" days="Jan 23—25 · Jan 30—31" copy="하버의 밤, Blue Mountains와 Bondi. 귀국 전날 다시 돌아와 공항 가까이에서 1박해요."/>
+          <City image={trip.images.melbourne} city="Melbourne" days="Jan 25—30" copy="커피와 골목, Great Ocean Road, 그리고 두 번의 남자 단식 빅매치."/>
         </div>
       </section>
 

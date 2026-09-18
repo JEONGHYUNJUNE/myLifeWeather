@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
-import { ArrowDown, CalendarDays, CircleDollarSign, MapPinned, Trophy } from "lucide-react";
-import { AustralianOpenCard } from "@/components/trip/AustralianOpenCard";
-import { BudgetSummary } from "@/components/trip/BudgetSummary";
-import { DayTimeline } from "@/components/trip/DayTimeline";
+import { ArrowDown } from "lucide-react";
 import { TripHero } from "@/components/trip/TripHero";
 import { TripMap } from "@/components/trip/TripMap";
 import { TripSummary } from "@/components/trip/TripSummary";
 import { FlightDetails } from "@/components/trip/FlightDetails";
+import { TripBottomNav } from "@/components/trip/TripBottomNav";
 import { trip } from "@/data/trip";
 
 export const metadata: Metadata = {
@@ -30,29 +28,16 @@ export default function Australia2027Page() {
         </div>
       </section>
 
-      <AustralianOpenCard />
-      <DayTimeline />
-      <BudgetSummary />
-
       <footer className="rounded-[30px] bg-[#0b5360] px-6 py-9 text-white sm:flex sm:items-end sm:justify-between sm:px-9">
         <div><p className="text-xs font-bold uppercase tracking-[.18em] text-[#9dd5d0]">Australia 2027</p><h2 className="mt-3 font-display text-3xl font-bold">Pack light. Book smart.<br/>Watch great tennis.</h2></div>
         <a href="#map" className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#efbd58] px-5 py-3 text-sm font-bold text-[#163b41] sm:mt-0">경로 다시 보기 <ArrowDown size={16}/></a>
       </footer>
     </div>
 
-    <nav className="fixed inset-x-3 bottom-3 z-50 grid grid-cols-4 rounded-2xl border border-white/30 bg-[#123e4a]/95 p-2 text-white shadow-2xl backdrop-blur md:hidden">
-      <MobileLink href="#map" icon={<MapPinned size={17}/>} label="지도"/>
-      <MobileLink href="#itinerary" icon={<CalendarDays size={17}/>} label="일정"/>
-      <MobileLink href="#tennis" icon={<Trophy size={17}/>} label="테니스"/>
-      <MobileLink href="#budget" icon={<CircleDollarSign size={17}/>} label="예산"/>
-    </nav>
+    <TripBottomNav/>
   </main>;
 }
 
 function City({image,city,days,copy}:{image:string;city:string;days:string;copy:string}) {
   return <article className="group relative min-h-[380px] overflow-hidden rounded-[30px] text-white"><img src={image} alt={city} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"/><div className="absolute inset-0 bg-gradient-to-t from-[#0a3d46]/95 via-transparent"/><div className="absolute inset-x-0 bottom-0 p-7"><p className="text-xs font-bold text-[#f3c875]">{days}</p><h3 className="mt-2 font-display text-4xl font-bold">{city}</h3><p className="mt-3 max-w-sm text-sm leading-6 text-white/70">{copy}</p></div></article>;
-}
-
-function MobileLink({href,icon,label}:{href:string;icon:React.ReactNode;label:string}) {
-  return <a href={href} className="flex flex-col items-center gap-1 rounded-xl py-2 text-[10px] font-bold">{icon}{label}</a>;
 }

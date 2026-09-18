@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { ArrowLeft, CalendarDays, ChevronDown, Clock3, ExternalLink, MapPin, Plane, Route, Wallet } from "lucide-react";
 import Link from "next/link";
 import { trip, tripDays, type TripActivity } from "@/data/trip";
+import { TripBottomNav } from "./TripBottomNav";
 
 const won = new Intl.NumberFormat("ko-KR");
 const googleMap = (activity: TripActivity) => `https://www.google.com/maps/search/?api=1&query=${activity.coordinates[0]},${activity.coordinates[1]}`;
@@ -19,7 +20,7 @@ export function ScheduleBoard() {
       <div className="sticky top-3 z-30 -mt-6 rounded-2xl border border-black/10 bg-white/90 p-3 shadow-xl backdrop-blur sm:mt-[-28px]"><label className="flex items-center gap-3"><CalendarDays size={18} className="ml-1 text-[#d06950]"/><span className="hidden text-xs font-bold sm:block">날짜 선택</span><div className="relative min-w-0 flex-1"><select value={selected} onChange={e=>setSelected(e.target.value)} className="h-11 w-full appearance-none rounded-xl bg-[#f7f2e8] px-4 pr-10 text-sm font-bold outline-none"><option value="all">전체 10일 시간표</option>{tripDays.map(day=><option key={day.date} value={day.date}>DAY {day.day} · {day.date.slice(5).replace("-","/")} · {day.title}</option>)}</select><ChevronDown size={16} className="pointer-events-none absolute right-3 top-3.5"/></div></label></div>
       <div className="space-y-8 py-12">{visible.map(day=><DaySchedule key={day.date} day={day}/>)}</div>
       <div className="rounded-3xl bg-[#efbd58] p-6 sm:flex sm:items-center sm:justify-between"><div><b className="text-lg">지도는 Google Maps로 열립니다</b><p className="mt-1 text-xs text-black/55">해외에서 데이터 연결이 불안할 수 있으니 출국 전에 Melbourne·Sydney 오프라인 지도를 저장해두세요.</p></div><a href="https://www.google.com/maps/dir/Sydney+NSW/Melbourne+VIC" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#163b41] px-5 py-3 text-xs font-bold text-white sm:mt-0"><Route size={15}/> 전체 경로 열기</a></div>
-    </div>
+    </div><TripBottomNav/>
   </main>;
 }
 

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Check, ClipboardCheck, RotateCcw, Save, Users } from "lucide-react";
 import { checklistCategories, tripChecklist, type ChecklistOwner } from "@/data/tripChecklist";
+import { TripBottomNav } from "./TripBottomNav";
 
 const STORAGE_KEY = "australia-2027-checklist-v1";
 const owners: ChecklistOwner[] = ["유진", "현준"];
@@ -62,6 +63,6 @@ export function PackingChecklist() {
       </div>
 
       <section className="rounded-[26px] bg-[#efbd58] p-6"><b>저장 방식 안내</b><p className="mt-2 text-xs leading-5 text-black/55">현재는 이 기기의 브라우저에 저장됩니다. 같은 휴대폰에서는 새로고침하거나 다시 접속해도 유지되지만, 유진·현준의 서로 다른 휴대폰 사이에는 자동 동기화되지 않아요.</p><button onClick={reset} className="mt-5 inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2.5 text-xs font-bold"><RotateCcw size={14}/> 전체 체크 초기화</button></section>
-    </div>
+    </div><TripBottomNav/>
   </main>;
 }

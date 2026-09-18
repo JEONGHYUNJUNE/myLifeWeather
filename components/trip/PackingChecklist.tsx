@@ -43,8 +43,8 @@ export function PackingChecklist() {
       <div className="relative mx-auto max-w-5xl"><Link href="/australia-2027" className="inline-flex items-center gap-2 text-xs font-bold text-white/65 hover:text-white"><ArrowLeft size={16}/> 여행 대시보드</Link><p className="mt-12 text-[11px] font-black uppercase tracking-[.2em] text-[#9dd5d0]">Packing together</p><h1 className="mt-3 font-display text-4xl font-bold tracking-tight sm:text-6xl">유진 &amp; 현준<br/>호주 준비 체크리스트</h1><p className="mt-4 text-sm text-white/60">2027. 1. 22—31 · 체크한 내용은 이 브라우저에 자동 저장돼요.</p></div>
     </header>
 
-    <div className="mx-auto max-w-5xl px-4 sm:px-8">
-      <section className="-mt-10 rounded-[28px] bg-white p-5 shadow-xl sm:p-7">
+    <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-8">
+      <section className="-mt-5 rounded-[28px] bg-white p-5 shadow-xl sm:-mt-10 sm:p-7">
         <div className="flex items-center justify-between gap-4"><div><p className="text-xs font-bold text-black/45">전체 준비 현황</p><p className="mt-1 text-2xl font-black">{allDone} / {tripChecklist.length}</p></div><div className="flex items-center gap-2 text-xs font-bold text-[#0b5360]"><Save size={16}/>{loaded ? "자동 저장 중" : "불러오는 중"}</div></div>
         <div className="mt-4 h-2 overflow-hidden rounded-full bg-[#edf0ea]"><div className="h-full rounded-full bg-[#efbd58] transition-all" style={{width:`${allDone / tripChecklist.length * 100}%`}}/></div>
       </section>

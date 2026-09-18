@@ -47,7 +47,7 @@ export const trip = {
     mountains: "https://images.unsplash.com/photo-1598948485421-33a1655d3c18?auto=format&fit=crop&w=1400&q=85",
   },
   mapStops: [
-    { number: 1, name: "Sydney", note: "Jan 23–25", coordinates: [-33.8688, 151.2093] as [number, number] },
+    { number: 1, name: "Sydney", note: "Jan 23–25 · 30–31", coordinates: [-33.8688, 151.2093] as [number, number] },
     { number: 2, name: "Blue Mountains", note: "Jan 24", coordinates: [-33.732, 150.312] as [number, number] },
     { number: 3, name: "Melbourne", note: "Jan 25–30", coordinates: [-37.8136, 144.9631] as [number, number] },
     { number: 4, name: "Great Ocean Road", note: "Jan 28", coordinates: [-38.6659, 143.1045] as [number, number] },
@@ -76,7 +76,7 @@ export const trip = {
     notice: "2027 경기 세션과 티켓 가격은 공식 판매 일정 발표 후 다시 확인해야 합니다.",
   },
   budget: [
-    { id: "ao", label: "Australian Open · 남자 경기 3세션 2인", amount: 3000000, color: "#f4b942" },
+    { id: "ao", label: "Australian Open · 남자 지정석 2회 + Ground Pass 2인", amount: 3000000, color: "#f4b942" },
     { id: "stay", label: "Hotels · 호텔 8박 / 객실 1개", amount: 2300000, color: "#f0d6a5" },
     { id: "food", label: "Food · 2인 식비", amount: 800000, color: "#ee8d72" },
     { id: "flight", label: "Domestic flights · 시드니↔멜버른 항공 2인", amount: 600000, color: "#5f9fb3" },
@@ -94,7 +94,7 @@ export const tripDays: TripDay[] = [
   { day:2,date:"2027-01-23",city:"Sydney",title:"하버에서 시작",summary:"10:05 도착 후 오페라하우스와 항구의 밤",activities:[a("syd-arrive","10:05","Sydney Airport T1","JQ048편 도착. 입국 수속 후 공항철도로 CBD 호텔에 짐을 맡겨요.","1시간 30분","CBD까지 약 20분","기차",20000,4,[-33.9399,151.1753],img.sydney),a("harbour","14:00","Circular Quay · The Rocks","오페라하우스, 하버브리지와 오래된 골목을 한 동선으로 걸어요.","4시간","도보","도보",30000,5,[-33.861,151.2127],img.sydney)]},
   { day:3,date:"2027-01-24",city:"Blue Mountains",title:"산의 푸른 안개",summary:"시드니 체류 중 가장 긴 당일 여행",activities:[a("blue","07:30","Blue Mountains","Three Sisters와 숲길. 시야가 나쁘면 다음 날 Bondi 일정과 교체해요.","종일","기차 약 2시간","기차",90000,5,[-33.732,150.312],img.mountains)]},
   { day:4,date:"2027-01-25",city:"Sydney → Melbourne",title:"바다를 걷고 멜버른으로",summary:"Bondi 산책 후 오후 국내선 이동",activities:[a("bondi","08:00","Bondi to Coogee Walk","이른 시간 해안 산책 후 호텔에서 짐을 찾아 공항으로 이동해요.","3시간","버스 35분","차량",25000,5,[-33.8915,151.2767],img.bondi),a("syd-mel","15:30","Sydney → Melbourne","준준결승 전날 멜버른에 도착해 이동 변수를 없애요.","1시간 35분","공항 이동 20분","항공",150000,5,[-37.669,144.841],img.melbourne)]},
-  { day:5,date:"2027-01-26",city:"Melbourne",title:"Men's Quarterfinal · Night",summary:"분위기와 시야를 함께 잡는 첫 Australian Open",activities:[a("ao-qf","17:00","Rod Laver Arena","13·16구역 중간열을 우선으로 보고, 예산을 넘으면 12·17구역으로 조정해요.","야간 세션","CBD에서 15분","트램",900000,5,[-37.8216,144.9785],img.tennis)]},
+  { day:5,date:"2027-01-26",city:"Melbourne",title:"Men's Quarterfinal · Night",summary:"45구역에서 만나는 첫 Australian Open",activities:[a("ao-qf","17:00","Rod Laver Arena · Section 45","45구역 앞쪽 좌석에서 코트 전체와 좌우 움직임을 보며 Night Session을 관람해요.","야간 세션","CBD에서 15분","트램",900000,5,[-37.8216,144.9785],img.tennis)]},
   { day:6,date:"2027-01-27",city:"Melbourne",title:"Ground Pass 또는 휴식",summary:"지정석 없이 컨디션에 맞춰 즐기는 날",activities:[a("ao-ground","11:00","Australian Open Precinct","연습 코트와 복식·주니어 경기를 보거나, 전날 Night 경기 피로가 있으면 도심에서 쉬어요.","자유 일정","CBD에서 15분","트램",0,4,[-37.8216,144.9785],img.tennis)]},
   { day:7,date:"2027-01-28",city:"Great Ocean Road",title:"절벽과 남극해",summary:"준준결승과 준결승 사이의 대표 당일 여행",activities:[a("gor","07:00","Great Ocean Road","멜버른 CBD 출발 투어. 전날 경기 종료 시간에 따라 출발 시간을 확인해요.","종일","왕복 약 6시간","차량",280000,5,[-38.6806,143.391],img.oceanRoad),a("apostles","15:00","Twelve Apostles · Loch Ard Gorge","오후의 해안 절벽과 남극해를 감상해요.","2시간","차량 15분","차량",0,5,[-38.6659,143.1045],img.oceanRoad)]},
   { day:8,date:"2027-01-29",city:"Melbourne",title:"Men's Semifinal · Day",summary:"54구역 그늘 좌석에서 보는 남자 준결승",activities:[a("ao-sf","11:00","Rod Laver Arena · Section 54","Ground Pass로 먼저 입장한 뒤 오후 2시 30분 Day Session을 관람해요. 54구역에서도 Ticketmaster의 그늘 표시를 확인합니다.","오후 2:30 세션","CBD에서 15분","트램",950000,5,[-37.8216,144.9785],img.tennis)]},

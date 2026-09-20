@@ -64,7 +64,11 @@ export function WorkoutCard({
           <span className="fitness-record-caption">
             {record.date ? dateLabel(record.date) : "운동 날짜를 선택해 주세요"}
             {workout.kind === "weights"
-              ? ` · ${checked}/${total}세트`
+              ? record.completionMode === "simple"
+                ? complete
+                  ? " · 완료 · 간단 기록"
+                  : " · 아직 운동 전"
+                : ` · ${checked}/${total}세트`
               : complete
                 ? " · 완료"
                 : ""}
@@ -96,56 +100,86 @@ export function WorkoutCard({
           </p>
         )}
         {workout.kind === "weights" ? (
-          <div className="fitness-exercises">
-            {workout.exercises.map((ex) => {
-              const count = setCount(ex, week);
-              const done = Array.from(
-                { length: count },
-                (_, i) => record.sets[ex.id]?.[i],
-              ).filter(Boolean).length;
-              return (
-                <div key={ex.id} className="fitness-exercise">
-                  <div className="fitness-row">
-                    <b>
-                      {done === count && <Check size={14} />} {ex.name}
-                    </b>
-                    <small>
-                      {done}/{count}
-                    </small>
-                  </div>
-                  <p>
-                    {ex.reps || "코어 운동"} · {count}세트
-                    {week.number <= 2 ? " · 적응 기간" : ""}
-                  </p>
-                  <div className="fitness-sets">
-                    {Array.from({ length: count }, (_, i) => (
-                      <button
-                        key={i}
-                        disabled={!record.date}
-                        aria-label={`${workout.name} ${ex.name} ${i + 1}세트`}
-                        aria-pressed={record.sets[ex.id]?.[i] === true}
-                        onClick={() => {
-                          const values = Array.from(
-                            { length: count },
-                            (_, j) => record.sets[ex.id]?.[j] === true,
-                          );
-                          values[i] = !values[i];
-                          save({ sets: { ...record.sets, [ex.id]: values } });
-                        }}
-                      >
-                        {record.sets[ex.id]?.[i] ? (
-                          <Check size={16} />
-                        ) : (
-                          <span>{i + 1}</span>
-                        )}
-                        <small>{i + 1}세트</small>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <>
+            <label className="fitness-simple-check">
+              <input
+                type="checkbox"
+                disabled={!record.date}
+                checked={complete}
+                aria-label={`${workout.name} 이날 운동했어요`}
+                onChange={(event) =>
+                  save({
+                    completionMode: "simple",
+                    completed: event.target.checked,
+                  })
+                }
+              />
+              <span>
+                <b>이날 운동했어요</b>
+                <small>이것만 체크해도 운동 1회로 기록돼요.</small>
+              </span>
+            </label>
+            <details className="fitness-set-details">
+              <summary>
+                세트별로 기록하기 <small>선택</small>
+                <ChevronDown size={16} />
+              </summary>
+              <div className="fitness-exercises">
+                {workout.exercises.map((ex) => {
+                  const count = setCount(ex, week);
+                  const done = Array.from(
+                    { length: count },
+                    (_, i) => record.sets[ex.id]?.[i],
+                  ).filter(Boolean).length;
+                  return (
+                    <div key={ex.id} className="fitness-exercise">
+                      <div className="fitness-row">
+                        <b>
+                          {done === count && <Check size={14} />} {ex.name}
+                        </b>
+                        <small>
+                          {done}/{count}
+                        </small>
+                      </div>
+                      <p>
+                        {ex.reps || "코어 운동"} · {count}세트
+                        {week.number <= 2 ? " · 적응 기간" : ""}
+                      </p>
+                      <div className="fitness-sets">
+                        {Array.from({ length: count }, (_, i) => (
+                          <button
+                            key={i}
+                            disabled={!record.date}
+                            aria-label={`${workout.name} ${ex.name} ${i + 1}세트`}
+                            aria-pressed={record.sets[ex.id]?.[i] === true}
+                            onClick={() => {
+                              const values = Array.from(
+                                { length: count },
+                                (_, j) => record.sets[ex.id]?.[j] === true,
+                              );
+                              values[i] = !values[i];
+                              save({
+                                completionMode: "sets",
+                                completed: false,
+                                sets: { ...record.sets, [ex.id]: values },
+                              });
+                            }}
+                          >
+                            {record.sets[ex.id]?.[i] ? (
+                              <Check size={16} />
+                            ) : (
+                              <span>{i + 1}</span>
+                            )}
+                            <small>{i + 1}세트</small>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </details>
+          </>
         ) : (
           <>
             <div className="fitness-activity-note">
@@ -201,7 +235,7 @@ export function WorkoutCard({
               onClick={() => save({ completed: !record.completed })}
             >
               <Check size={17} />
-              {record.completed ? "운동 완료 · 누르면 취소" : "오늘 운동 완료"}
+              {record.completed ? "운동 완료 · 누르면 취소" : "이날 운동했어요"}
             </button>
           </>
         )}

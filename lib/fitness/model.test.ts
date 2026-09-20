@@ -61,6 +61,37 @@ describe("fitness calendar", () => {
   });
 });
 describe("fitness records", () => {
+  it("supports quick completion, preserves sets on undo and never double counts", () => {
+    const week = weeks[0];
+    let store = updateRecord(emptyStore(), "hyunjun", week, "a", {
+      completionMode: "simple",
+      completed: true,
+    });
+    expect(weekSummary(store, "hyunjun", week).count).toBe(0);
+    store = updateRecord(store, "hyunjun", week, "a", { date: week.start });
+    expect(overallSummary(store, "hyunjun").total).toBe(1);
+    expect(
+      overallSummary(parseStore(JSON.stringify(store)), "hyunjun"),
+    ).toEqual(overallSummary(store, "hyunjun"));
+    store = completeWeights(store, week, "a");
+    expect(overallSummary(store, "hyunjun").total).toBe(1);
+    const sets = store.records.hyunjun[week.id].a.sets;
+    store = updateRecord(store, "hyunjun", week, "a", {
+      completed: false,
+      completionMode: "simple",
+    });
+    expect(weekSummary(store, "hyunjun", week).count).toBe(0);
+    expect(store.records.hyunjun[week.id].a.sets).toEqual(sets);
+    expect(
+      weekSummary(parseStore(JSON.stringify(store)), "hyunjun", week).count,
+    ).toBe(0);
+    store = updateRecord(store, "hyunjun", week, "a", {
+      completionMode: "sets",
+    });
+    expect(weekSummary(store, "hyunjun", week).count).toBe(1);
+    expect(overallSummary(store, "yujin").total).toBe(0);
+  });
+
   it("applies two sets for first two weeks, prescribed sets from third", () => {
     const exercises = programs.hyunjun.flatMap((w) => w.exercises);
     exercises.forEach((ex) => {

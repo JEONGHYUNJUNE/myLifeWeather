@@ -16,6 +16,7 @@ export type Week = {
 export type WorkoutRecord = {
   date: string;
   completed: boolean;
+  completionMode?: "simple" | "sets";
   sets: Record<string, boolean[]>;
   minutes?: number;
   distance?: number;
@@ -76,6 +77,7 @@ export function isComplete(
   week: Week,
 ) {
   if (!record || !week.dates.includes(record.date)) return false;
+  if (record.completionMode === "simple") return record.completed;
   return workout.kind === "weights"
     ? workout.exercises.every((ex) =>
         Array.from(
@@ -164,6 +166,11 @@ export function parseStore(raw: string | null): FitnessStore {
         const clean = emptyRecord();
         clean.date = week.dates.includes(record.date) ? record.date : "";
         clean.completed = record.completed === true;
+        if (
+          record.completionMode === "simple" ||
+          record.completionMode === "sets"
+        )
+          clean.completionMode = record.completionMode;
         for (const ex of workout.exercises)
           clean.sets[ex.id] = Array.from(
             { length: setCount(ex, week) },

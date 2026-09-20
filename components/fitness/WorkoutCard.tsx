@@ -1,4 +1,12 @@
-import { Check, ChevronDown, CalendarDays, Timer, Route } from "lucide-react";
+import {
+  ExternalLink,
+  Play,
+  Check,
+  ChevronDown,
+  CalendarDays,
+  Timer,
+  Route,
+} from "lucide-react";
 import { runningPlans, type Workout } from "@/data/fitness";
 import {
   dateLabel,
@@ -121,9 +129,13 @@ export function WorkoutCard({
             </label>
             <details className="fitness-set-details">
               <summary>
-                세트별로 기록하기 <small>선택</small>
+                운동 방법 · 세트별 기록 <small>선택</small>
                 <ChevronDown size={16} />
               </summary>
+              <p className="fitness-video-hint">
+                종목별 운동 방법을 YouTube에서 찾아봐요. 링크는 새 탭으로
+                열려요.
+              </p>
               <div className="fitness-exercises">
                 {workout.exercises.map((ex) => {
                   const count = setCount(ex, week);
@@ -145,6 +157,22 @@ export function WorkoutCard({
                         {ex.reps || "코어 운동"} · {count}세트
                         {week.number <= 2 ? " · 적응 기간" : ""}
                       </p>
+                      <div className="fitness-exercise-guides">
+                        {ex.guides.map((guide) => (
+                          <a
+                            key={guide.label}
+                            href={guide.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${guide.label} 운동 방법 YouTube 검색 (새 탭)`}
+                          >
+                            <Play size={13} />
+                            {ex.guides.length > 1 ? guide.label : "운동 방법"}
+                            <span>YouTube</span>
+                            <ExternalLink size={12} />
+                          </a>
+                        ))}
+                      </div>
                       <div className="fitness-sets">
                         {Array.from({ length: count }, (_, i) => (
                           <button

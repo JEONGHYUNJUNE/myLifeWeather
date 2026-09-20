@@ -4,6 +4,7 @@ export type Exercise = {
   name: string;
   sets: number;
   reps?: string;
+  guides: { label: string; url: string }[];
 };
 export type Workout = {
   id: string;
@@ -38,11 +39,21 @@ export const people = {
     ],
   },
 } as const;
+const exerciseAlternatives: Record<string, string[]> = {
+  squat: ["스쿼트", "레그프레스"],
+  rear: ["리어델트 플라이", "페이스풀"],
+};
+export const youtubeExerciseSearch = (name: string) =>
+  `https://www.youtube.com/results?search_query=${encodeURIComponent(`${name} 초보자 올바른 자세 운동 방법`)}`;
 const ex = (id: string, name: string, sets = 3, reps = "8~12회"): Exercise => ({
   id,
   name,
   sets,
   reps,
+  guides: (exerciseAlternatives[id] ?? [name]).map((label) => ({
+    label,
+    url: youtubeExerciseSearch(label),
+  })),
 });
 export const programs: Record<Person, Workout[]> = {
   hyunjun: [

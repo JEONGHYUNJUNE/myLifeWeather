@@ -1440,3 +1440,35 @@
     opacity: 0.6;
   }
 }
+
+.fitness-video-hint {
+  font-size: 10px;
+  color: #78836e;
+  line-height: 1.8;
+  margin-top: 12px;
+}
+.fitness-exercise-guides {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 9px;
+}
+.fitness-exercise-guides a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 7px 11px;
+  border: 1px solid #273e3420;
+  border-radius: 10px;
+  color: var(--accent);
+  font-size: 11px;
+  background: var(--soft);
+}
+.fitness-exercise-guides a > span {
+  font-size: 9px;
+  opacity: 0.65;
+}
+.fitness-exercise-guides a:hover {
+  filter: brightness(0.97);
+}

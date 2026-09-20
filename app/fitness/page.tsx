@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { FitnessGuideButton } from "@/components/fitness/FitnessGuide";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, Sparkles } from "lucide-react";
 import { people } from "@/data/fitness";
@@ -16,9 +17,7 @@ export default function FitnessPage() {
           <Link href="/">
             <ArrowLeft size={15} /> 내 인생 날씨
           </Link>
-          <span>
-            OUR LITTLE ROUTINE <span className="fitness-header-dot" />
-          </span>
+          <FitnessGuideButton />
         </header>
         <div className="fitness-entry-title">
           <p className="fitness-eyebrow">OCT 2026 — JAN 2027</p>

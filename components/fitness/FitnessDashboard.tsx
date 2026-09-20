@@ -1,4 +1,5 @@
 "use client";
+import { FitnessGuideButton } from "@/components/fitness/FitnessGuide";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -109,9 +110,7 @@ export function FitnessDashboard({ person }: { person: Person }) {
           <Link href="/fitness">
             <ArrowLeft size={15} /> 사용자 변경
           </Link>
-          <span>
-            OUR LITTLE ROUTINE <span className="fitness-header-dot" />
-          </span>
+          <FitnessGuideButton />
         </header>
         <div className="fitness-title-row">
           <div>

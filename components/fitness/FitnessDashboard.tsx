@@ -1,7 +1,7 @@
 "use client";
 import { FitnessGuideButton } from "@/components/fitness/FitnessGuide";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -19,6 +19,9 @@ import {
 } from "@/data/fitness";
 import {
   dayDifference,
+  isComplete,
+  updateRecord,
+  type WorkoutRecord,
   overallSummary,
   shortDate,
   weekIndex,
@@ -30,6 +33,7 @@ import { FitnessCharacter } from "./FitnessCharacter";
 import { JourneyProgress } from "./JourneyProgress";
 import { WeeklyProgress } from "./WeeklyProgress";
 import { WorkoutCard } from "./WorkoutCard";
+import { WorkoutCelebration } from "./WorkoutCelebration";
 
 export function FitnessDashboard({ person }: { person: Person }) {
   const c = useFitnessController(person);
@@ -38,44 +42,33 @@ export function FitnessDashboard({ person }: { person: Person }) {
   const weekly = weekSummary(c.store, c.person, c.week);
   const currentIndex = c.today ? weekIndex(c.today) : 0;
   const currentWeekly = weekSummary(c.store, c.person, weeks[currentIndex]);
-  const [celebration, setCelebration] = useState("");
-  const previous = useRef({ key: "", count: 0, achieved: false, progress: 0 });
-  useEffect(() => {
-    if (!c.ready) return;
-    const key = `${c.person}/${c.week.id}`;
-    const prev = previous.current;
-    let timer: ReturnType<typeof setTimeout> | undefined;
+  const [celebration, setCelebration] = useState<{ message: string } | null>(
+    null,
+  );
+  const dismissCelebration = useCallback(() => setCelebration(null), []);
+  function saveWithReaction(id: string, patch: Partial<WorkoutRecord>) {
+    const workout = programs[c.person].find((item) => item.id === id)!;
+    const before = c.store.records[c.person][c.week.id]?.[id];
+    const next = updateRecord(c.store, c.person, c.week, id, patch);
+    c.saveRecord(id, patch);
     if (
-      prev.key === key &&
-      ((weekly.achieved && !prev.achieved) ||
-        (weekly.bonus && weekly.count > prev.count) ||
-        (overall.progress === 100 && prev.progress < 100))
+      !isComplete(workout, before, c.week) &&
+      isComplete(workout, next.records[c.person][c.week.id]?.[id], c.week)
     ) {
-      setCelebration(
-        overall.progress === 100
-          ? "1월 목표 도착!"
-          : weekly.bonus
-            ? "이번 주 목표 초과 달성!"
-            : "이번 주 목표 달성!",
-      );
-      timer = setTimeout(() => setCelebration(""), 1400);
-    } else setCelebration("");
-    previous.current = {
-      key,
-      count: weekly.count,
-      achieved: weekly.achieved,
-      progress: overall.progress,
-    };
-    return () => clearTimeout(timer);
-  }, [
-    c.ready,
-    c.person,
-    c.week.id,
-    weekly.count,
-    weekly.achieved,
-    weekly.bonus,
-    overall.progress,
-  ]);
+      const nextOverall = overallSummary(next, c.person);
+      const nextWeekly = weekSummary(next, c.person, c.week);
+      setCelebration({
+        message:
+          nextOverall.progress === 100 && overall.progress < 100
+            ? "30회 달성! 여기까지 해냈어요"
+            : nextWeekly.bonus
+              ? "이번 주 목표 초과 달성!"
+              : nextWeekly.achieved
+                ? "이번 주 목표 달성!"
+                : "오늘도 해냈다!",
+      });
+    }
+  }
   if (!c.ready)
     return (
       <main className="fitness-page">
@@ -269,7 +262,7 @@ export function FitnessDashboard({ person }: { person: Person }) {
                 workout={workout}
                 week={c.week}
                 record={c.store.records[c.person][c.week.id]?.[workout.id]}
-                save={(patch) => c.saveRecord(workout.id, patch)}
+                save={(patch) => saveWithReaction(workout.id, patch)}
               />
             ))}
           </div>
@@ -311,14 +304,13 @@ export function FitnessDashboard({ person }: { person: Person }) {
         </footer>
       </div>
       {celebration && (
-        <div
-          role="status"
-          className={`fitness-celebration ${overall.progress === 100 ? "final" : ""}`}
-        >
-          <span>✧</span>
-          <b>{celebration}</b>
-          <span>✧</span>
-        </div>
+        <WorkoutCelebration
+          person={c.person}
+          progress={overall.progress}
+          stage={overall.stage}
+          message={celebration.message}
+          onDismiss={dismissCelebration}
+        />
       )}
     </main>
   );

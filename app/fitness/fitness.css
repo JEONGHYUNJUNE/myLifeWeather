@@ -1261,3 +1261,182 @@
 .fitness-set-details > summary svg {
   margin-left: auto;
 }
+
+.fitness-reaction {
+  width: min(380px, calc(100% - 36px));
+  max-height: calc(100dvh - 40px);
+  margin: auto;
+  padding: 38px 18px 24px;
+  border: 1px solid #273e341a;
+  border-radius: 30px;
+  background: #fffdf6;
+  color: #233f35;
+  text-align: center;
+  overflow: auto;
+  box-shadow: 0 20px 80px #203c3433;
+  animation: fitness-reaction-enter 0.3s ease both;
+  font-family: var(--font-sans);
+}
+.fitness-reaction::backdrop {
+  background: #19372d59;
+  backdrop-filter: blur(3px);
+}
+.fitness-reaction-active {
+  background: #fff8f1;
+  color: #734b3e;
+}
+.fitness-reaction-close {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #6d7c6a;
+}
+.fitness-reaction-close:focus-visible {
+  outline: 3px solid #e7bd61;
+  outline-offset: 2px;
+}
+.fitness-reaction-eyebrow {
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  margin: 20px 0 5px;
+  color: #68816e;
+}
+.fitness-reaction-scene {
+  position: relative;
+}
+.fitness-reaction .fitness-character {
+  height: auto;
+  max-height: 240px;
+  width: 100%;
+  overflow: visible;
+}
+.fitness-reaction h2 {
+  font-family: "Gowun Dodum", sans-serif;
+  font-size: 24px;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  margin-top: 8px;
+}
+.fitness-reaction p#fitness-reaction-description {
+  font-size: 12px;
+  line-height: 1.9;
+  color: #72806a;
+  margin-top: 10px;
+}
+.fitness-reaction-hint {
+  display: block;
+  font-size: 10px;
+  color: #87927e;
+  margin-top: 22px;
+}
+.fitness-reaction-spark {
+  position: absolute;
+  color: #d4a33d;
+  animation: fitness-proud-spark 1.1s ease both;
+  pointer-events: none;
+}
+.spark-one {
+  left: 18%;
+  top: 16%;
+  font-size: 26px;
+  animation-delay: 0.15s;
+}
+.spark-two {
+  right: 13%;
+  top: 40%;
+  font-size: 31px;
+  animation-delay: 0.3s;
+}
+.spark-three {
+  left: 26%;
+  bottom: 15%;
+  font-size: 17px;
+  animation-delay: 0.4s;
+}
+.fitness-character-celebrating .fitness-character-body {
+  transform-origin: 210px 216px;
+  animation: fitness-proud-hop 1.1s ease-in-out 2;
+}
+.fitness-character-celebrating .fitness-character-arm-left {
+  transform-origin: 188px 102px;
+  animation: fitness-proud-left 1.1s ease-in-out 2;
+}
+.fitness-character-celebrating .fitness-character-arm-right {
+  transform-origin: 233px 102px;
+  animation: fitness-proud-right 1.1s ease-in-out 2;
+}
+@keyframes fitness-reaction-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fitness-proud-hop {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  20% {
+    transform: translateY(2px) scale(1.02, 0.97);
+  }
+  45% {
+    transform: translateY(-15px) scale(0.99, 1.02);
+  }
+  70% {
+    transform: translateY(0) scale(1.02, 0.98);
+  }
+}
+@keyframes fitness-proud-left {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  35%,
+  65% {
+    transform: rotate(38deg);
+  }
+}
+@keyframes fitness-proud-right {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  35%,
+  65% {
+    transform: rotate(-38deg);
+  }
+}
+@keyframes fitness-proud-spark {
+  0% {
+    opacity: 0;
+    transform: scale(0.4) translateY(8px);
+  }
+  35%,
+  65% {
+    opacity: 1;
+    transform: scale(1.2) translateY(-5px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.7) translateY(-20px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fitness-reaction,
+  .fitness-reaction * {
+    animation: none !important;
+    transition: none !important;
+  }
+  .fitness-reaction-spark {
+    opacity: 0.6;
+  }
+}

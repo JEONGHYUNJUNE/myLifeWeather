@@ -96,6 +96,7 @@ export function FitnessDashboard({ person }: { person: Person }) {
                   : "이번 주 첫 운동을 시작해보자";
   return (
     <main
+      data-prevent-auto-refresh={c.storageError ? "true" : undefined}
       className={`fitness-page ${c.person === "yujin" ? "fitness-active" : ""}`}
     >
       <div className="fitness-shell">

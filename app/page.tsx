@@ -400,7 +400,7 @@ function Landing({ onStart }: { onStart: () => void }) {
       <div className="mx-auto max-w-6xl px-5 sm:px-7">
         <header className="flex items-center justify-between py-5 sm:py-6">
           <Logo />
-          <span className="label hidden sm:block">Personal climate archive</span>
+          <a href="/fitness" className="focusable rounded-full border border-ink/15 px-4 py-2.5 text-xs font-bold text-moss">운동의 계절 ↗</a>
         </header>
         <section className="grid items-center gap-9 pb-14 pt-8 sm:gap-12 sm:py-14 md:min-h-[78vh] md:grid-cols-[1.12fr_.88fr]">
           <div className="fade">

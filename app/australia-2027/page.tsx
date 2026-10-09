@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ArrowDown } from "lucide-react";
 import { TripHero } from "@/components/trip/TripHero";
 import { TripMap } from "@/components/trip/TripMap";
+import { HotelGuide } from "@/components/trip/HotelGuide";
 import { TripSummary } from "@/components/trip/TripSummary";
 import { FlightDetails } from "@/components/trip/FlightDetails";
 import { TripBottomNav } from "@/components/trip/TripBottomNav";
@@ -17,7 +18,9 @@ export default function Australia2027Page() {
     <TripHero />
     <div className="relative z-10 mx-auto -mt-14 max-w-6xl px-4 pb-24 sm:px-8">
       <TripSummary />
+      <a href="#hotels" className="mb-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-[#0b5360] px-5 text-sm font-bold text-white">호텔 · 주변 지도 바로 보기 <ArrowDown size={16}/></a>
       <FlightDetails />
+      <HotelGuide />
       <TripMap />
 
       <section className="py-20">

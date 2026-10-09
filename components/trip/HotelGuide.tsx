@@ -1,0 +1,20 @@
+import { ArrowUpRight, BedDouble, ExternalLink, MapPin, Phone } from "lucide-react";
+import { hotelDirectionsUrl, hotelMapUrl, tripHotels } from "@/data/tripHotels";
+
+export function HotelGuide() {
+  return <section id="hotels" className="scroll-mt-6 py-12 sm:py-16">
+    <div className="mb-6"><p className="text-[11px] font-bold uppercase tracking-[.18em] text-[#d06950]">Our city bases</p><h2 className="mt-2 font-display text-3xl font-bold sm:text-4xl">호텔에서 시작하는 도시 산책</h2><p className="mt-3 text-sm leading-6 text-black/60">시드니의 하버, 멜버른의 골목. 우리 숙소와 주변 명소를 한눈에 확인해요.</p></div>
+    <figure className="mb-6 overflow-hidden rounded-[28px] border border-black/10 bg-white">
+      <a href="/images/trip/australia-hotel-map.jpg" target="_blank" rel="noopener noreferrer" aria-label="시드니·멜버른 호텔 주변 지도 원본 크게 보기 (새 창)"><img src="/images/trip/australia-hotel-map.jpg" width={1280} height={853} alt="시드니 하얏트 리젠시와 멜버른 만트라 온 리틀 부르크를 중심으로 주변 명소와 이동 시간을 안내하는 지도" className="h-auto w-full"/></a>
+      <figcaption className="flex flex-wrap items-center justify-between gap-2 px-5 py-4 text-xs text-black/60"><span>호텔 주변 참고 지도 · 보내주신 이미지</span><a href="/images/trip/australia-hotel-map.jpg" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 font-bold text-[#0b5360]">원본 크게 보기 <ExternalLink size={14}/></a></figcaption>
+    </figure>
+    <p className="mb-5 text-xs leading-5 text-black/60">아래 이동 시간은 사진에 적힌 참고 예상치예요. 실제 경로·교통 상황에 따라 달라지므로 명소를 눌러 Google Maps에서 확인해주세요. 숙박 날짜는 현재 여행 일정 기준이며 예약 확정 정보는 아니에요.</p>
+    <div className="grid gap-5 lg:grid-cols-2">{tripHotels.map(hotel => <article key={hotel.id} id={`hotel-${hotel.id}`} className="scroll-mt-6 overflow-hidden rounded-[28px] border border-black/10 bg-white/80">
+      <div className="bg-[#0b5360] p-5 text-white sm:p-6"><div className="flex flex-wrap items-center justify-between gap-3"><p className="text-xs font-bold uppercase tracking-widest text-[#9dd5d0]">{hotel.city}</p><span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 text-xs"><BedDouble size={14}/>{hotel.stay}</span></div><h3 className="mt-5 font-display text-2xl font-bold">{hotel.name}</h3><p className="mt-1 text-xs text-white/70">{hotel.englishName}</p></div>
+      <div className="p-5 sm:p-6"><p className="flex items-start gap-2 text-sm leading-6"><MapPin size={17} className="mt-1 shrink-0 text-[#d06950]"/>{hotel.address}</p><div className="mt-4 flex flex-wrap gap-2"><a href={hotelMapUrl(hotel)} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#efbd58] px-4 text-xs font-bold">호텔 지도 <ArrowUpRight size={15}/></a><a href={hotel.officialUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#f7f2e8] px-4 text-xs font-bold">공식 호텔 정보 <ExternalLink size={14}/></a><a href={`tel:${hotel.phone.replaceAll(" ", "")}`} aria-label={`${hotel.name} 전화 ${hotel.phone}`} className="inline-flex min-h-11 items-center gap-2 px-2 text-xs"><Phone size={14}/>{hotel.phone}</a></div>
+        <h4 className="mb-2 mt-6 text-sm font-bold">호텔에서 출발 · 주변 명소</h4><ul className="divide-y divide-black/5">{hotel.destinations.map(destination => <li key={destination.query}><a href={hotelDirectionsUrl(hotel, destination)} target="_blank" rel="noopener noreferrer" aria-label={`${hotel.name}에서 ${destination.name} 길찾기 (새 창)`} className="flex min-h-12 items-center gap-2 py-3 text-xs hover:text-[#d06950]"><span className="flex-1 font-bold">{destination.name}</span><span className="shrink-0 text-black/55">{destination.estimate}</span><ArrowUpRight size={14} className="shrink-0"/></a></li>)}</ul>
+      </div>
+    </article>)}</div>
+    <div className="mt-5 flex items-start gap-3 rounded-2xl bg-[#efe6d5] p-5"><BedDouble size={20} className="mt-0.5 shrink-0 text-[#d06950]"/><div><p className="text-sm font-bold">1/30 → 1/31 · 시드니 공항 근처 1박</p><p className="mt-1 text-xs leading-5 text-black/60">귀국 전날 숙소는 아직 미정이에요. 1월 31일 OZ602 국제선 T1 출발 일정에 맞춰 확인해주세요.</p></div></div>
+  </section>;
+}

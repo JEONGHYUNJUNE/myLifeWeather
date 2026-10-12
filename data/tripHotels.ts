@@ -9,6 +9,7 @@ export type TripHotel = {
   until: string;
   phone: string;
   officialUrl: string;
+  confirmation?: { documentUrl: string; issued: string; room: string; guests: string; meals: string; checkIn: string; checkOut: string };
   destinations: { name: string; query: string; estimate: string; mode: "walking" | "driving" }[];
 };
 
@@ -34,6 +35,11 @@ export const tripHotels: TripHotel[] = [
     address: "471 Little Bourke Street, Melbourne VIC 3000, Australia",
     stay: "1/25 → 1/30 · 5박", from: "2027-01-25", until: "2027-01-30",
     phone: "+61 3 9607 3000", officialUrl: "https://www.mantraonlittlebourke.com.au/contact-us/",
+    confirmation: {
+      documentUrl: "/documents/trip/mantra-booking-confirmation.pdf", issued: "2026-10-12",
+      room: "Executive Studio · 1객실", guests: "성인 2명", meals: "조식 불포함",
+      checkIn: "1/25 · 14:00부터", checkOut: "1/30 · 10:00까지",
+    },
     destinations: [
       { name: "부르크 스트리트 몰", query: "Bourke Street Mall Melbourne", estimate: "도보 약 5분", mode: "walking" },
       { name: "멜버른 센트럴역", query: "Melbourne Central Station", estimate: "도보 약 8분", mode: "walking" },

@@ -36,7 +36,7 @@ export const tripHotels: TripHotel[] = [
     stay: "1/25 → 1/30 · 5박", from: "2027-01-25", until: "2027-01-30",
     phone: "+61 3 9607 3000", officialUrl: "https://www.mantraonlittlebourke.com.au/contact-us/",
     confirmation: {
-      documentUrl: "/documents/trip/mantra-booking-confirmation.pdf", issued: "2026-10-12",
+      documentUrl: "/documents/trip/mantra-booking-confirmation.pdf?v=protected", issued: "2026-10-12",
       room: "Executive Studio · 1객실", guests: "성인 2명", meals: "조식 불포함",
       checkIn: "1/25 · 14:00부터", checkOut: "1/30 · 10:00까지",
     },

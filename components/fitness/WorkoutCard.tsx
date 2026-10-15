@@ -50,7 +50,7 @@ export function WorkoutCard({
           {complete ? (
             <Check size={23} />
           ) : workout.kind === "weights" ? (
-            workout.id.toUpperCase()
+            workout.id.split("-")[0].toUpperCase()
           ) : workout.kind === "pilates" ? (
             "P"
           ) : (
@@ -76,7 +76,7 @@ export function WorkoutCard({
                 ? complete
                   ? " · 완료 · 간단 기록"
                   : " · 아직 운동 전"
-                : ` · ${checked}/${total}세트`
+                : ` · ${checked}/${total}체크`
               : complete
                 ? " · 완료"
                 : ""}
@@ -147,16 +147,17 @@ export function WorkoutCard({
                     <div key={ex.id} className="fitness-exercise">
                       <div className="fitness-row">
                         <b>
-                          {done === count && <Check size={14} />} {ex.name}
+                          {done === count && <Check size={14} />} {ex.name}{ex.optional && " (선택)"}
                         </b>
                         <small>
                           {done}/{count}
                         </small>
                       </div>
                       <p>
-                        {ex.reps || "코어 운동"} · {count}세트
-                        {week.number <= 2 ? " · 적응 기간" : ""}
+                        {ex.reps || "코어 운동"}{!ex.timed && ` · ${count}세트`}
+                        {!ex.fixedSets && week.number <= 2 ? " · 적응 기간" : ""}
                       </p>
+                      {ex.note && <p>{ex.note}</p>}
                       <div className="fitness-exercise-guides">
                         {ex.guides.map((guide) => (
                           <a
@@ -178,7 +179,7 @@ export function WorkoutCard({
                           <button
                             key={i}
                             disabled={!record.date}
-                            aria-label={`${workout.name} ${ex.name} ${i + 1}세트`}
+                            aria-label={`${workout.name} ${ex.name}{ex.optional && " (선택)"} ${ex.timed ? "완료" : `${i + 1}세트`}`}
                             aria-pressed={record.sets[ex.id]?.[i] === true}
                             onClick={() => {
                               const values = Array.from(
@@ -198,7 +199,7 @@ export function WorkoutCard({
                             ) : (
                               <span>{i + 1}</span>
                             )}
-                            <small>{i + 1}세트</small>
+                            <small>{ex.timed ? "완료" : `${i + 1}세트`}</small>
                           </button>
                         ))}
                       </div>

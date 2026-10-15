@@ -4,6 +4,10 @@ export type Exercise = {
   name: string;
   sets: number;
   reps?: string;
+  optional?: boolean;
+  timed?: boolean;
+  fixedSets?: boolean;
+  note?: string;
   guides: { label: string; url: string }[];
 };
 export type Workout = {
@@ -55,7 +59,7 @@ const ex = (id: string, name: string, sets = 3, reps = "8~12회"): Exercise => (
     url: youtubeExerciseSearch(label),
   })),
 });
-export const programs: Record<Person, Workout[]> = {
+export const legacyPrograms: Record<Person, Workout[]> = {
   hyunjun: [
     {
       id: "a",
@@ -140,6 +144,43 @@ export const programs: Record<Person, Workout[]> = {
     },
   ],
 };
+// New IDs keep historical sets and completions attached to their original routine.
+export const ROUTINE_UPDATED = "2026-10-15";
+const routineExercise = (id: string, name: string, sets: number, reps: string, extra: Partial<Exercise> = {}): Exercise => ({
+  ...ex(id, name, sets, reps), fixedSets: true, ...extra,
+});
+const warmup = () => routineExercise("walk", "러닝머신 걷기", 1, "5~10분", { timed: true });
+const cooldown = () => routineExercise("stretch", "가벼운 스트레칭", 1, "5분", { timed: true });
+const core = () => routineExercise("knee-raise", "캡틴스 체어 니 레이즈", 3, "10회", {
+  note: "손목에 부담되면 데드버그로 대체해요.",
+  guides: ["캡틴스 체어 니 레이즈", "데드버그"].map(label => ({ label, url: youtubeExerciseSearch(label) })),
+});
+export const programs: Record<Person, Workout[]> = {
+  yujin: legacyPrograms.yujin,
+  hyunjun: [
+    { id: "a-v2", name: "DAY A — 월요일", subtitle: "가슴 + 등 + 하체 + 복근 · 40~55분", optional: false, kind: "weights", exercises: [
+      warmup(), routineExercise("leg-press", "레그 프레스", 3, "12회"),
+      routineExercise("lat", "랫풀다운", 3, "12회"), routineExercise("chest", "체스트 프레스", 3, "12회"), core(), cooldown(),
+    ] },
+    { id: "b-v2", name: "DAY B — 목요일", subtitle: "어깨 + 등 + 가슴 + 하체 + 복근 · 40~55분", optional: false, kind: "weights", exercises: [
+      warmup(), routineExercise("leg-press", "레그 프레스", 3, "12회"),
+      routineExercise("row", "시티드 로우", 3, "12회"), routineExercise("chest", "체스트 프레스", 3, "12회"),
+      routineExercise("lateral-machine", "레터럴 레이즈 머신", 2, "12회", { optional: true }), core(), cooldown(),
+    ] },
+  ],
+};
+export const workoutCatalog: Record<Person, Workout[]> = {
+  hyunjun: [...legacyPrograms.hyunjun, ...programs.hyunjun], yujin: programs.yujin,
+};
+export const hyunjunRules = [
+  "세트 사이 휴식은 60~90초",
+  "시작 무게는 12회 반복 후 2~3회 더 할 수 있는 정도",
+  "첫 1~2주는 가벼운 무게로 정확한 자세 익히기",
+  "3세트 모두 여유롭게 성공하면 조금씩 증량",
+  "주 2회 · 운동 사이 2~3일 휴식",
+  "손목에 통증이 생기거나 심해지는 동작은 중단",
+  "캡틴스 체어가 손목에 부담되면 데드버그로 대체",
+];
 export const runningPlans: Record<string, string> = {
   "10": "20~30분 · 걷기 + 가벼운 러닝",
   "11": "25~35분 · 편안한 페이스의 러닝",

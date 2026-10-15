@@ -13,11 +13,14 @@ import {
   END,
   START,
   people,
-  programs,
+  workoutCatalog,
+  ROUTINE_UPDATED,
+  hyunjunRules,
   stageMessages,
   type Person,
 } from "@/data/fitness";
 import {
+  visibleWorkouts,
   dayDifference,
   isComplete,
   updateRecord,
@@ -38,6 +41,8 @@ import { WorkoutCelebration } from "./WorkoutCelebration";
 export function FitnessDashboard({ person }: { person: Person }) {
   const c = useFitnessController(person);
   const user = people[c.person];
+  const workouts = visibleWorkouts(c.store, c.person, c.week);
+  const newRoutine = c.person === "hyunjun" && c.week.end >= ROUTINE_UPDATED;
   const overall = overallSummary(c.store, c.person);
   const weekly = weekSummary(c.store, c.person, c.week);
   const currentIndex = c.today ? weekIndex(c.today) : 0;
@@ -47,7 +52,7 @@ export function FitnessDashboard({ person }: { person: Person }) {
   );
   const dismissCelebration = useCallback(() => setCelebration(null), []);
   function saveWithReaction(id: string, patch: Partial<WorkoutRecord>) {
-    const workout = programs[c.person].find((item) => item.id === id)!;
+    const workout = workoutCatalog[c.person].find((item) => item.id === id)!;
     const before = c.store.records[c.person][c.week.id]?.[id];
     const next = updateRecord(c.store, c.person, c.week, id, patch);
     c.saveRecord(id, patch);
@@ -243,21 +248,32 @@ export function FitnessDashboard({ person }: { person: Person }) {
             count={weekly.count}
             achieved={weekly.achieved}
             bonus={weekly.bonus}
-            workouts={programs[c.person]}
+            workouts={workouts}
+            target={newRoutine ? 2 : 3}
             done={weekly.done}
           />
           <div className="fitness-week-note">
             {c.person === "hyunjun"
-              ? c.week.number <= 2
+              ? newRoutine
+                ? "월요일 A · 목요일 B · 주 2회. 실제 운동 날짜는 자유롭게 선택해요. 준비·마무리 포함, 선택 종목은 건너뛰어도 완료!"
+                : c.week.number <= 2
                 ? "🌱 적응 기간 · 모든 종목을 2세트씩. A + B면 기본 목표 달성!"
                 : "A + B는 필수, C는 여유 있을 때. 주 2회부터 꾸준히."
               : "필라테스 1~2회 + 러닝 1~2회. 합계 2회면 기본 목표 달성!"}
           </div>
+          {newRoutine && <details className="fitness-routine-guide">
+            <summary>처음에는 무게보다 자세! · 운동 기본 규칙</summary>
+            <p>상체 근육 증가 · 어깨 발달 · 전신 근력 강화<br/>헬스 초보 / 테니스 병행 · 1회 약 40~55분</p>
+            <ul>{hyunjunRules.map(rule => <li key={rule}>{rule}</li>)}</ul>
+            <h3>새 루틴 첫 달 목표</h3>
+            <p>1~2주: 머신 사용법과 자세 익히기<br/>3~4주: 자세가 안정되면 무게 조금씩 증가<br/>4주 후: 운동 강도와 종목 재조정</p>
+            <small>새 루틴은 표시된 세트 수대로 진행해요. 적응 기간에는 무게를 가볍게 하고 자세에 집중해요.</small>
+          </details>}
           <div
             className="fitness-workout-list"
             key={`${c.person}-${c.week.id}`}
           >
-            {programs[c.person].map((workout) => (
+            {workouts.map((workout) => (
               <WorkoutCard
                 key={workout.id}
                 workout={workout}

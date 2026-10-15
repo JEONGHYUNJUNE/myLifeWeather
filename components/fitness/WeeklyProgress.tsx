@@ -1,12 +1,14 @@
 import { Check, Circle } from "lucide-react";
 import type { Workout } from "@/data/fitness";
 export function WeeklyProgress({
+  target = 3,
   count,
   achieved,
   bonus,
   workouts,
   done,
 }: {
+  target?: number;
   count: number;
   achieved: boolean;
   bonus: boolean;
@@ -22,7 +24,7 @@ export function WeeklyProgress({
             이번 주{" "}
             <strong>
               {count}
-              <small> / 3회</small>
+              <small> / {target}회</small>
             </strong>
           </h3>
         </div>
@@ -38,11 +40,11 @@ export function WeeklyProgress({
         className="fitness-meter"
         role="progressbar"
         aria-label="주간 운동 진행률"
-        aria-valuenow={Math.min(count, 3)}
+        aria-valuenow={Math.min(count, target)}
         aria-valuemin={0}
-        aria-valuemax={3}
+        aria-valuemax={target}
       >
-        <span style={{ width: `${Math.min(count / 3, 1) * 100}%` }} />
+        <span style={{ width: `${Math.min(count / target, 1) * 100}%` }} />
       </div>
       <div className="fitness-weekly-chips">
         {workouts.map((w) => {

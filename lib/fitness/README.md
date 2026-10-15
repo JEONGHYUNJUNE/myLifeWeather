@@ -48,3 +48,9 @@
 `npm run typecheck`, `npm test`, `npm run build`.
 
 날짜 경계, 적응 세트, 자동 완료, 주간 목표, 누적 30회 계산, 추가 운동 포함, 사용자별 분리, 5단계 성장과 취소, 100% 상한, 기존 데이터 이전과 저장 충돌 방지를 테스트한다.
+
+### 2026-10-15 Hyunjun routine revision
+- `a-v2` / `b-v2` hold the new Monday/Thursday routine. Original `a` / `b` / `c` definitions remain in `legacyPrograms`; the storage keys and schema version are unchanged.
+- Weeks ending before the revision display the old program. From the revision week onward, show new workouts plus any saved old workout cards. Parsing and cumulative totals always support both versions.
+- In transition/new weeks, two completed sessions achieve the weekly target; earlier weeks retain the original A+B rule.
+- New exercises use fixed prescribed sets, with one completion check for walking/stretching. Optional exercises do not block workout completion. Adaptation is lighter weight, not reduced sets.

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { programs } from "../../data/fitness";
+import { legacyPrograms as programs } from "../../data/fitness";
 import {
   addDays,
   dayDifference,

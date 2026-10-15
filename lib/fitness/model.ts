@@ -2,6 +2,9 @@ import {
   END,
   START,
   programs,
+  legacyPrograms,
+  workoutCatalog,
+  ROUTINE_UPDATED,
   type Exercise,
   type Person,
   type Workout,
@@ -70,7 +73,7 @@ export const shortDate = (date: string) =>
 export const dateLabel = (date: string) =>
   `${Number(date.slice(5, 7))}월 ${Number(date.slice(8))}일 ${"일월화수목금토"[utc(date).getUTCDay()]}요일`;
 export const setCount = (exercise: Exercise, week: Week) =>
-  week.number <= 2 ? 2 : exercise.sets;
+  exercise.fixedSets ? exercise.sets : week.number <= 2 ? 2 : exercise.sets;
 export function isComplete(
   workout: Workout,
   record: WorkoutRecord | undefined,
@@ -79,7 +82,7 @@ export function isComplete(
   if (!record || !week.dates.includes(record.date)) return false;
   if (record.completionMode === "simple") return record.completed;
   return workout.kind === "weights"
-    ? workout.exercises.every((ex) =>
+    ? workout.exercises.filter((ex) => !ex.optional).every((ex) =>
         Array.from(
           { length: setCount(ex, week) },
           (_, i) => record.sets[ex.id]?.[i] === true,
@@ -89,13 +92,15 @@ export function isComplete(
 }
 export function weekSummary(store: FitnessStore, person: Person, week: Week) {
   const records = store.records[person][week.id] || {};
-  const done = programs[person].filter((w) =>
+  const done = workoutCatalog[person].filter((w) =>
     isComplete(w, records[w.id], week),
   );
   // A/B cover the required muscle groups; C never replaces either required session.
   const achieved =
     person === "hyunjun"
-      ? ["a", "b"].every((id) => done.some((w) => w.id === id))
+      ? (week.end < ROUTINE_UPDATED
+          ? ["a", "b"].every((id) => done.some((w) => w.id === id))
+          : done.length >= 2)
       : done.length >= 2;
   return {
     count: done.length,
@@ -124,7 +129,7 @@ export function updateRecord(
   workoutId: string,
   patch: Partial<WorkoutRecord>,
 ): FitnessStore {
-  if (!programs[person].some((w) => w.id === workoutId)) return store;
+  if (!workoutCatalog[person].some((w) => w.id === workoutId)) return store;
   if (
     patch.date !== undefined &&
     patch.date !== "" &&
@@ -160,7 +165,7 @@ export function parseStore(raw: string | null): FitnessStore {
   if (data.selectedPerson === "yujin") store.selectedPerson = "yujin";
   for (const person of ["hyunjun", "yujin"] as const)
     for (const week of weeks)
-      for (const workout of programs[person]) {
+      for (const workout of workoutCatalog[person]) {
         const record = data.records?.[person]?.[week.id]?.[workout.id];
         if (!record || typeof record !== "object") continue;
         const clean = emptyRecord();
@@ -187,4 +192,11 @@ export function parseStore(raw: string | null): FitnessStore {
         store.records[person][week.id][workout.id] = clean;
       }
   return store;
+}
+
+export function visibleWorkouts(store: FitnessStore, person: Person, week: Week): Workout[] {
+  if (person === "yujin") return programs.yujin;
+  if (week.end < ROUTINE_UPDATED) return legacyPrograms.hyunjun;
+  const archived = legacyPrograms.hyunjun.filter(w => store.records.hyunjun[week.id]?.[w.id]);
+  return [...programs.hyunjun, ...archived.map(w => ({ ...w, name: `${w.name} · 이전 루틴` }))];
 }

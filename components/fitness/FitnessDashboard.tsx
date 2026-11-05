@@ -1,9 +1,7 @@
 "use client";
 import { FitnessGuideButton } from "@/components/fitness/FitnessGuide";
-import Link from "next/link";
 import { useCallback, useState } from "react";
 import {
-  ArrowLeft,
   ArrowUpRight,
   ChevronLeft,
   ChevronRight,
@@ -106,9 +104,6 @@ export function FitnessDashboard({ person }: { person: Person }) {
     >
       <div className="fitness-shell">
         <header className="fitness-header">
-          <Link href="/">
-            <ArrowLeft size={15} /> 내 인생 날씨
-          </Link>
           <FitnessGuideButton />
         </header>
         <div className="fitness-title-row">

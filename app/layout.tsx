@@ -3,8 +3,10 @@ import type { Metadata } from "next";
 import "@fontsource/gowun-dodum/400.css";
 import "./globals.css";
 export const metadata: Metadata = {
-  title: "내 인생 날씨",
-  description: "태어난 날부터 오늘까지, 내가 살아온 날씨의 기록",
+  title: "Chung-Website",
+  description: "호주여행, 운동 기록, Hey Tablo 영어 학습을 한곳에서.",
+  applicationName: "Chung-Website",
+  icons: { icon: "/chung-icon.svg" },
 };
 export default function RootLayout({
   children,

@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { CalendarDays, MapPin, Trophy } from "lucide-react";
 import { trip } from "@/data/trip";
 
@@ -15,7 +16,7 @@ export function TripHero() {
     <div className="absolute inset-0 bg-gradient-to-r from-[#073e49]/95 via-[#073e49]/65 to-transparent" />
     <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#f7f2e8] to-transparent" />
     <div className="relative mx-auto flex min-h-[620px] max-w-6xl flex-col justify-between px-5 pb-24 pt-7 sm:min-h-[680px] sm:px-8 sm:pt-10">
-      <nav className="flex items-center justify-between"><span className="text-sm font-bold tracking-[.18em]">TRIP / 2027</span><span className="rounded-full border border-white/30 bg-white/10 px-4 py-2 text-xs font-bold backdrop-blur">{ddayLabel}</span></nav>
+      <nav className="flex items-center justify-between"><Link href="/" className="focusable py-2 text-sm font-bold">← Chung-Website</Link><span className="rounded-full border border-white/30 bg-white/10 px-4 py-2 text-xs font-bold backdrop-blur">{ddayLabel}</span></nav>
       <div className="max-w-3xl pb-8">
         <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-[#f3b83f] px-4 py-2 text-xs font-extrabold text-[#18363c]"><Trophy size={15}/> AUSTRALIAN OPEN 2027</div>
         <h1 className="font-display text-5xl leading-[.98] tracking-[-.05em] sm:text-7xl">Australia<br/>2027</h1>

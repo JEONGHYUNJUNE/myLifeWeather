@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function HeyTabloPage() {
   const sorted = [...episodes].sort((a,b) => b.number-a.number);
   return <main className="tablo-home">
-    <Link className="tablo-back" href="/">← 내 인생 날씨</Link>
+    <Link className="tablo-back" href="/">← Chung-Website</Link>
     <header><p className="tablo-kicker">LISTEN · READ · SPEAK</p><h1>Hey Tablo<br/>영어 노트</h1>
       <p className="tablo-intro">한 문장씩 읽고, 내 이야기로 말해 보세요.<br/>영어 바로 아래 한국어, 필요한 표현은 한곳에.</p>
       <p className="tablo-schedule">매주 수요일 오전 9시 · 새 회차 확인</p>

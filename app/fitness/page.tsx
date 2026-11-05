@@ -15,7 +15,7 @@ export default function FitnessPage() {
       <div className="fitness-shell">
         <header className="fitness-header">
           <Link href="/">
-            <ArrowLeft size={15} /> 내 인생 날씨
+            <ArrowLeft size={15} /> Chung-Website
           </Link>
           <FitnessGuideButton />
         </header>

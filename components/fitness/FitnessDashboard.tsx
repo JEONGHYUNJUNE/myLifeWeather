@@ -106,15 +106,14 @@ export function FitnessDashboard({ person }: { person: Person }) {
     >
       <div className="fitness-shell">
         <header className="fitness-header">
-          <Link href="/fitness">
-            <ArrowLeft size={15} /> 사용자 변경
+          <Link href="/">
+            <ArrowLeft size={15} /> 내 인생 날씨
           </Link>
           <FitnessGuideButton />
         </header>
         <div className="fitness-title-row">
           <div>
             <p className="fitness-eyebrow">OCT 2026 — JAN 2027</p>
-            <h1>{user.name}의 운동의 계절</h1>
           </div>
           <Sparkles size={23} />
         </div>

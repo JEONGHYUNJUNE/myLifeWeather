@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { FitnessGuideButton } from "@/components/fitness/FitnessGuide";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Sparkles } from "lucide-react";
+import { ArrowUpRight, Sparkles } from "lucide-react";
 import { people } from "@/data/fitness";
 import { FitnessCharacter } from "@/components/fitness/FitnessCharacter";
 export const metadata: Metadata = {
@@ -13,10 +13,7 @@ export default function FitnessPage() {
   return (
     <main className="fitness-page fitness-entry">
       <div className="fitness-shell">
-        <header className="fitness-header">
-          <Link href="/">
-            <ArrowLeft size={15} /> Chung-Website
-          </Link>
+        <header className="fitness-header" style={{ justifyContent: "flex-end" }}>
           <FitnessGuideButton />
         </header>
         <div className="fitness-entry-title">

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Register a reviewed episode bundle. Run from any directory. No network or deploy."""
 import argparse, html, json, re
+from study_playback import add_playback
 from pathlib import Path
 parser=argparse.ArgumentParser()
 parser.add_argument('--source',required=True,type=Path)
@@ -32,6 +33,7 @@ copybox='''<section id="gpt-copy"><h2>GPT와 공부하기</h2><p class="note">�
 copyjs='''<script>document.getElementById('copy-study').onclick=async function(){const t=document.getElementById('copy-text');const status=document.getElementById('copy-status');try{if(!navigator.clipboard)throw Error('unavailable');await navigator.clipboard.writeText(t.value);status.textContent='복사했어요. GPT 대화창에 붙여넣으세요.';}catch(e){t.closest('details').open=true;t.focus();t.select();status.textContent='텍스트를 선택했어요. 복사 메뉴 또는 Ctrl/Cmd+C로 복사하세요.';}};</script>'''
 style='''<style>.delivery-bar{display:flex;flex-wrap:wrap;gap:15px;margin-bottom:26px;font-size:13px}.delivery-bar a{color:#176b53}#gpt-copy{scroll-margin-top:140px}#copy-study{background:#24583f;color:white;border:0;border-radius:8px;padding:13px 18px;font:inherit;cursor:pointer}#copy-text{display:block;width:100%;height:240px;margin-top:12px;padding:12px;font:14px/1.6 system-ui;resize:vertical;border:1px solid #b8cbbf;border-radius:6px;white-space:pre-wrap}button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #aa9856;outline-offset:3px}@media print{.delivery-bar,#gpt-copy{display:none}}</style>'''
 page=page.replace('</head>','<meta name="robots" content="noindex,nofollow,noarchive">'+style+'</head>').replace('<main>','<main>'+extra,1).replace('<h2>전체 영한 대본</h2>',copybox+'<h2>전체 영한 대본</h2>',1).replace('</body>',copyjs+'</body>')
+page=add_playback(page, a.episode, a.video_id, root)
 if 'id="gpt-copy"' not in page:parser.error('Copy block not inserted')
 entry={'number':a.episode,'title':a.title,'titleKo':a.title_ko,'description':a.description,'videoId':a.video_id,'updatedAt':a.updated_at,'sourceKind':a.source_kind,'pairs':len(pairs),'expressions':len(learning['expressions']),'words':len(learning['words'])}
 manifest=root/'data/hey-tablo/episodes.json'

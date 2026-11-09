@@ -6,7 +6,7 @@
 - 회차: https://chung-website.vercel.app/hey-tablo/45 (숫자는 회차 번호)
 - 내려받기: /hey-tablo/ep-45.html
 - 복사용 원문: /hey-tablo/ep-45.txt
-- 기존 Codex heartbeat `automation`: 매주 수요일 오전 9시 Asia/Seoul. 이 작업은 Codex 자동화이며 Vercel 자체 cron이 아니다.
+- 기존 Codex heartbeat `automation`: 매주 화요일 낮 12시 Asia/Seoul. 이 작업은 Codex 자동화이며 Vercel 자체 cron이 아니다.
 - 운영 저장소: JEONGHYUNJUNE/myLifeWeather, main 변경 시 기존 Vercel 연동으로 배포.
 
 ## 회차 생성

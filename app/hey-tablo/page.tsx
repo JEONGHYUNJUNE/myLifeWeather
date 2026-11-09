@@ -13,7 +13,7 @@ export default function HeyTabloPage() {
   return <main className="tablo-home">
     <header><p className="tablo-kicker">LISTEN · READ · SPEAK</p><h1>Hey Tablo<br/>영어 노트</h1>
       <p className="tablo-intro">한 문장씩 읽고, 내 이야기로 말해 보세요.<br/>영어 바로 아래 한국어, 필요한 표현은 한곳에.</p>
-      <p className="tablo-schedule">매주 수요일 오전 9시 · 새 회차 확인</p>
+      <p className="tablo-schedule">매주 화요일 낮 12시 · 새 회차 확인</p>
     </header>
     <section aria-label="에피소드 목록" className="tablo-episodes">{sorted.map((ep,i) => <article key={ep.number}>
       <div className="tablo-card-top"><span>EP. {ep.number}</span>{i===0 && <span className="tablo-badge">최근 학습 노트</span>}</div>

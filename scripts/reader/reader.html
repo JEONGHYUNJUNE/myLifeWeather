@@ -14,7 +14,10 @@
   </details>
 </section>
 <section id="reader-dock" aria-label="대본 자동 스크롤 도구" hidden>
-  <div id="reader-player" hidden><div id="reader-player-target"></div></div>
+  <div id="reader-player-panel" hidden>
+    <button type="button" id="reader-player-toggle" aria-expanded="true" aria-controls="reader-player">플레이어 접기 ▴</button>
+    <div id="reader-player"><div id="reader-player-target"></div></div>
+  </div>
   <div class="reader-heading"><strong>대본 따라가기</strong><output id="reader-clock">00:00</output><button type="button" id="reader-close" aria-label="자동 스크롤 도구 닫기">닫기</button></div>
   <div class="reader-row">
     <select id="reader-mode" aria-label="재생 방식"><option value="manual">다른 앱으로 듣기 · 수동 시간</option><option value="youtube">이 페이지에서 YouTube</option><option value="spotify">Spotify · 재생 제한 가능</option></select>

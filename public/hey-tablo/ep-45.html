@@ -1704,8 +1704,13 @@ document.getElementById('search').oninput=function(){const q=this.value.trim().t
 #reader-cloud{border:1px solid #b4cabb;border-radius:12px;padding:12px;margin:12px 0}#reader-cloud summary{cursor:pointer;font-weight:600}#reader-cloud form,#reader-cloud-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:end}#reader-cloud [hidden]{display:none!important}#reader-cloud label{display:flex;flex-direction:column;gap:5px;min-width:0;flex:1}#reader-cloud input,#reader-cloud button{font:inherit;box-sizing:border-box;padding:10px;border:1px solid #b4cabb;border-radius:8px;min-width:0;max-width:100%;background:#fff}#reader-cloud button{cursor:pointer}#reader-cloud-status{font-size:13px;color:#37654c}#reader-account{flex-basis:100%;margin:4px 0}@media(max-width:600px){#reader-cloud label{flex-basis:100%}}
 
 #reader-cloud input{width:100%}
+
+#reader-player-panel[hidden]{display:none!important}#reader-player-toggle{width:100%;margin-bottom:8px;text-align:left;font-size:13px!important;background:#f3f6ef!important}#reader-player.reader-player-collapsed{height:0;overflow:hidden;margin:0;pointer-events:none}
 </style><section id="reader-dock" aria-label="대본 자동 스크롤 도구" hidden>
-  <div id="reader-player" hidden><div id="reader-player-target"></div></div>
+  <div id="reader-player-panel" hidden>
+    <button type="button" id="reader-player-toggle" aria-expanded="true" aria-controls="reader-player">플레이어 접기 ▴</button>
+    <div id="reader-player"><div id="reader-player-target"></div></div>
+  </div>
   <div class="reader-heading"><strong>대본 따라가기</strong><output id="reader-clock">00:00</output><button type="button" id="reader-close" aria-label="자동 스크롤 도구 닫기">닫기</button></div>
   <div class="reader-row">
     <select id="reader-mode" aria-label="재생 방식"><option value="manual">다른 앱으로 듣기 · 수동 시간</option><option value="youtube">이 페이지에서 YouTube</option><option value="spotify">Spotify · 재생 제한 가능</option></select>
@@ -1968,13 +1973,21 @@ window.attachTabloCloud = function(config, reader) {
       script.src = src; document.head.appendChild(script);
     });
   }
+  function setPlayerExpanded(expanded) {
+    $('player-toggle').setAttribute('aria-expanded', String(expanded));
+    $('player-toggle').textContent = expanded ? '플레이어 접기 ▴' : '플레이어 펼치기 ▾';
+    $('player').classList.toggle('reader-player-collapsed', !expanded);
+    $('player').inert = !expanded;
+  }
+  $('player-toggle').onclick = () => setPlayerExpanded($('player-toggle').getAttribute('aria-expanded') !== 'true');
   async function changeMode() {
     position = now(); stopPlayer();
     const previous = player; player = null;
     try { previous?.destroy(); } catch {}
     const token = ++generation; clearTimeout(loadTimer);
     mode = $('mode').value; ready = mode === 'manual';
-    $('player').hidden = ready;
+    $('player-panel').hidden = ready;
+    setPlayerExpanded(true);
     $('rate-label').hidden = !ready;
     $('player').innerHTML = '<div id="reader-player-target"></div>';
     setPlaying(false);

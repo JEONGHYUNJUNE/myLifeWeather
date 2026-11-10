@@ -93,13 +93,21 @@
       script.src = src; document.head.appendChild(script);
     });
   }
+  function setPlayerExpanded(expanded) {
+    $('player-toggle').setAttribute('aria-expanded', String(expanded));
+    $('player-toggle').textContent = expanded ? '플레이어 접기 ▴' : '플레이어 펼치기 ▾';
+    $('player').classList.toggle('reader-player-collapsed', !expanded);
+    $('player').inert = !expanded;
+  }
+  $('player-toggle').onclick = () => setPlayerExpanded($('player-toggle').getAttribute('aria-expanded') !== 'true');
   async function changeMode() {
     position = now(); stopPlayer();
     const previous = player; player = null;
     try { previous?.destroy(); } catch {}
     const token = ++generation; clearTimeout(loadTimer);
     mode = $('mode').value; ready = mode === 'manual';
-    $('player').hidden = ready;
+    $('player-panel').hidden = ready;
+    setPlayerExpanded(true);
     $('rate-label').hidden = !ready;
     $('player').innerHTML = '<div id="reader-player-target"></div>';
     setPlaying(false);

@@ -3,3 +3,5 @@
 #reader-cloud{border:1px solid #b4cabb;border-radius:12px;padding:12px;margin:12px 0}#reader-cloud summary{cursor:pointer;font-weight:600}#reader-cloud form,#reader-cloud-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:end}#reader-cloud [hidden]{display:none!important}#reader-cloud label{display:flex;flex-direction:column;gap:5px;min-width:0;flex:1}#reader-cloud input,#reader-cloud button{font:inherit;box-sizing:border-box;padding:10px;border:1px solid #b4cabb;border-radius:8px;min-width:0;max-width:100%;background:#fff}#reader-cloud button{cursor:pointer}#reader-cloud-status{font-size:13px;color:#37654c}#reader-account{flex-basis:100%;margin:4px 0}@media(max-width:600px){#reader-cloud label{flex-basis:100%}}
 
 #reader-cloud input{width:100%}
+
+#reader-player-panel[hidden]{display:none!important}#reader-player-toggle{width:100%;margin-bottom:8px;text-align:left;font-size:13px!important;background:#f3f6ef!important}#reader-player.reader-player-collapsed{height:0;overflow:hidden;margin:0;pointer-events:none}

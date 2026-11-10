@@ -1775,19 +1775,14 @@ document.getElementById('search').oninput=function(){const q=this.value.trim().t
       active = index;
     }
     if (!follow || index < 0 || (!playing && !force) || cues[index].el.closest('[hidden]')) return;
-    const el = cues[index].el;
-    let top = el.getBoundingClientRect().top + window.scrollY;
-    const next = cues[index+1];
-    if (precise.length && next && next.time > cues[index].time) {
-      const fraction = Math.min(1, (scriptTime - cues[index].time) / (next.time - cues[index].time));
-      top += (next.el.getBoundingClientRect().top + window.scrollY - top) * fraction;
-    }
-    const target = Math.max(0, top - 34);
-    if (force || (precise.length && Math.abs(target-lastScroll)>3) || (!precise.length && target!==lastScroll)) {
-      window.scrollTo({top: target, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
-      lastScroll = target;
+    // Hold the current sentence still; move only when its cue changes.
+    if (force || index !== lastScroll) {
+      const top = cues[index].el.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({top: Math.max(0, top - 34), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+      lastScroll = index;
     }
   }
+
   function seek(value) {
     if (!Number.isFinite(value) || value < 0) { note('00:00 형식 또는 초 숫자로 입력해 주세요.'); return; }
     position = value; anchor = value; anchorAt = performance.now();

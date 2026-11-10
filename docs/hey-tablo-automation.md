@@ -55,3 +55,5 @@ python3 scripts/import-hey-tablo.py --source /absolute/path/to/bundle --episode 
 - YouTube 실제 재생·시간 수신·일시정지를 브라우저에서 확인했다. Spotify는 API 초기화는 되었으나 검수 브라우저에서 재생 오류가 나 실제 진행 동기화는 미확인이다. 재생 제한 안내와 수동 모드를 유지한다. 모바일 실기기의 앱 연동이나 자동 재생을 보장하지 않는다.
 - 검수: 390px 가로 넘침 없음, 07:25 입력 시 해당 문장 선택, +5초 보정 시 대본 07:30, 잘못된 07:99 거절, 45회 11:13 구간 선택 확인. 타임라인 순수 함수 회귀 테스트는 `scripts/reader/reader-core.test.ts`에 있다.
 - API 근거: https://developers.google.com/youtube/iframe_api_reference 및 https://developer.spotify.com/documentation/embeds/references/iframe-api
+
+- 스크롤은 현재 문장(기존 회차는 구간)이 재생되는 동안 고정하고, 다음 시작 시각에만 부드럽게 한 번 이동한다. 문장 사이를 시간 비율로 계속 스크롤하지 않는다.

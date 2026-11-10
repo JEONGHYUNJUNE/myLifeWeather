@@ -4,7 +4,7 @@ import { runInNewContext } from 'node:vm';
 
 const sandbox: Record<string, any> = {};
 runInNewContext(readFileSync('scripts/reader/reader-core.js', 'utf8'), sandbox);
-const { parseTime, formatTime, cueIndex, advance } = sandbox.TabloReaderCore;
+const { parseTime, formatTime, cueIndex, advance, cleanProgress } = sandbox.TabloReaderCore;
 
 describe('timed transcript clock', () => {
   it('accepts seconds and valid colon timestamps without silently accepting malformed times', () => {
@@ -30,5 +30,14 @@ describe('timed transcript clock', () => {
     expect(advance(atPause, 5000, 2)).toBe(76);
     expect(advance(0, 90000, 0.5)).toBe(45);
     expect(formatTime(3723.7)).toBe('62:03');
+  });
+});
+
+
+describe('saved reading progress', () => {
+  it('restores seek positions rather than taking the furthest point, and sanitizes corrupt settings', () => {
+    expect(cleanProgress({position: 445, mode: 'youtube', offset: 5, rate: 1.5, bookmarks: [500, 445.9, 445, -1, 'bad']})).toEqual({position:445, mode:'youtube', offset:5, rate:1.5, bookmarks:[445,500]});
+    expect(cleanProgress({position: 0, mode: 'bad', offset: Infinity, rate: 99})).toEqual({position:0, mode:'manual', offset:0, rate:1, bookmarks:[]});
+    for (const value of [null, {}, {position:-1}, {position:Infinity}, {position:'445'}, {position:90000}]) expect(cleanProgress(value)).toBeNull();
   });
 });

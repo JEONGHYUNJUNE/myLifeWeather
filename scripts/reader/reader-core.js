@@ -20,5 +20,16 @@
     return found;
   };
   const advance = (anchor, elapsedMs, rate) => Math.max(0, anchor + elapsedMs / 1000 * rate);
-  root.TabloReaderCore = { parseTime, formatTime, cueIndex, advance };
+  const cleanProgress = value => {
+    if (!value || typeof value !== 'object') return null;
+    if (!Number.isFinite(value.position) || value.position < 0 || value.position > 86400) return null;
+    return {
+      position: value.position,
+      mode: ['manual', 'youtube', 'spotify'].includes(value.mode) ? value.mode : 'manual',
+      offset: Number.isFinite(value.offset) ? Math.max(-600, Math.min(600, value.offset)) : 0,
+      rate: [0.5,0.75,1,1.25,1.5,1.75,2].includes(value.rate) ? value.rate : 1,
+      bookmarks: Array.isArray(value.bookmarks) ? [...new Set(value.bookmarks.filter(n => Number.isFinite(n) && n >= 0 && n <= 86400).map(Math.floor))].sort((a,b) => a-b).slice(0,100) : []
+    };
+  };
+  root.TabloReaderCore = { parseTime, formatTime, cueIndex, advance, cleanProgress };
 })(typeof window !== 'undefined' ? window : globalThis);

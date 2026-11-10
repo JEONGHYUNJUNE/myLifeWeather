@@ -57,3 +57,10 @@ python3 scripts/import-hey-tablo.py --source /absolute/path/to/bundle --episode 
 - API 근거: https://developers.google.com/youtube/iframe_api_reference 및 https://developer.spotify.com/documentation/embeds/references/iframe-api
 
 - 스크롤은 현재 문장(기존 회차는 구간)이 재생되는 동안 고정하고, 다음 시작 시각에만 부드럽게 한 번 이동한다. 문장 사이를 시간 비율로 계속 스크롤하지 않는다.
+
+
+### 재생 위치와 책갈피 (2026-11-10)
+- 공통 reader는 회차의 YouTube videoId별로 브라우저 localStorage에 위치·모드·보정·수동 배속·최대 100개 책갈피를 저장한다.
+- 다시 열면 저장한 시각에서 일시정지 상태로 복원하며, 외부 앱 수동 모드는 듣는 앱 시각도 직접 맞춰야 한다.
+- 2초 간격, 탐색·일시정지·닫기·페이지 숨김/이탈 시 저장한다. 처음으로는 위치와 보정만 초기화하고 책갈피는 유지한다.
+- 현재 Supabase 연결 및 로그인은 미구현이다. 다른 기기/브라우저/도메인 간 동기화는 되지 않는다. 브라우저 데이터 삭제 시 기록도 삭제된다.

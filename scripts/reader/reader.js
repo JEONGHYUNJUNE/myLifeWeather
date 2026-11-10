@@ -1,6 +1,6 @@
 (() => {
   const config = READER_CONFIG;
-  const {parseTime, formatTime, cueIndex, advance} = window.TabloReaderCore;
+  const {parseTime, formatTime, cueIndex, advance, cleanProgress} = window.TabloReaderCore;
   const $ = id => document.getElementById('reader-' + id);
   const secondsFromLink = link => {
     if (!link) return null;
@@ -15,6 +15,19 @@
   let mode = 'manual', position = 0, anchor = 0, anchorAt = performance.now(), rate = 1;
   let playing = false, follow = true, offset = 0, ready = true, player = null, generation = 0;
   let active = -1, lastScroll = -1, youtubeAPI, spotifyAPI, loadTimer;
+  const storageKey = 'hey-tablo:reader:v1:' + config.youtube;
+  let bookmarks = [], restored = false;
+  function saveProgress() {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify({position: now(), mode, offset, rate, bookmarks}));
+      $('saved').textContent = `${formatTime(now())}까지 이 브라우저에 저장됨 · 기기 간 동기화 미연결`;
+      $('open').textContent = now() >= 1 ? `▶ ${formatTime(now())}부터 이어보기` : '▶ 들으면서 대본 따라가기';
+    } catch { $('saved').textContent = '브라우저 저장이 차단되어 있어요. 페이지를 닫으면 재생 위치를 기억하지 못합니다.'; }
+  }
+  function drawBookmarks() {
+    $('bookmarks').replaceChildren(new Option('책갈피 선택', ''));
+    for (const time of bookmarks) $('bookmarks').append(new Option(formatTime(time), String(time)));
+  }
   const note = message => { $('status').textContent = message; };
   const now = () => mode === 'manual' && playing ? advance(anchor, performance.now() - anchorAt, rate) : position;
   function setPlaying(value) {
@@ -61,11 +74,11 @@
     }
     setFollow(true);
     note(mode === 'manual' ? '타이머를 맞췄어요. 듣는 앱도 같은 시각으로 맞춰 주세요.' : '선택한 재생 시각으로 이동합니다.');
-    render(true);
+    render(true); saveProgress();
   }
   function stopPlayer() {
     if (player) { try { mode === 'youtube' ? player.pauseVideo() : player.pause(); } catch {} }
-    setPlaying(false);
+    setPlaying(false); saveProgress();
   }
   function loadScript(src, callbackName, existing) {
     if (existing) return Promise.resolve(existing);
@@ -142,7 +155,8 @@
   $('open').onclick = () => {
     $('dock').hidden = false; document.body.classList.add('reader-open');
     if (mode !== 'manual' && !player) changeMode();
-    $('play').focus(); render();
+    $('play').focus(); render(true);
+    if (restored && mode === 'manual') note('저장한 시각부터 이어갑니다. 듣는 앱도 같은 시각으로 맞춘 뒤 시작하세요.');
   };
   $('close').onclick = () => {
     stopPlayer(); ++generation; clearTimeout(loadTimer);
@@ -159,6 +173,8 @@
       else { mode === 'youtube' ? player.playVideo() : player.resume(); setFollow(true); note('재생 요청을 보냈어요. 시작되지 않으면 플레이어 안의 재생 버튼을 누르세요.'); }
     }
   };
+  const togglePlayback = $('play').onclick;
+  $('play').onclick = () => { togglePlayback(); saveProgress(); };
   $('follow').onclick = () => setFollow(!follow);
   $('seek').onclick = () => { const time = parseTime($('time').value); if (time === null) note('분:초(예: 07:25) 또는 초 숫자를 입력해 주세요.'); else seek(time); };
   $('time').onkeydown = e => { if (e.key === 'Enter') $('seek').click(); };
@@ -170,11 +186,11 @@
     if (raw === '' || raw === '-' || !Number.isFinite(Number(raw))) return;
     offset=Math.max(-600,Math.min(600,Number(raw)));
     if(normalize) $('offset').value=String(offset);
-    render(true);
+    render(true); saveProgress();
   }
   $('offset').oninput = () => updateOffset(false);
   $('offset').onchange = () => updateOffset(true);
-  $('rate').onchange = () => { position=now(); anchor=position; anchorAt=performance.now(); rate=Number($('rate').value); };
+  $('rate').onchange = () => { position=now(); anchor=position; anchorAt=performance.now(); rate=Number($('rate').value); saveProgress(); };
   function manualBrowse(e) {
     if ($('dock').hidden || $('dock').contains(e.target) || !follow) return;
     setFollow(false); note('직접 스크롤 중입니다. 다시 따라가기를 누르면 현재 대본으로 돌아갑니다.');
@@ -191,11 +207,39 @@
   document.addEventListener('keydown', e => {if (['PageDown','PageUp','ArrowDown','ArrowUp','Home','End'].includes(e.key) && !/INPUT|SELECT|TEXTAREA/.test(e.target.tagName)) manualBrowse(e);});
   document.getElementById('search')?.addEventListener('input', e => { if(e.target.value && !$('dock').hidden) {setFollow(false); note('검색 중에는 자동 스크롤을 쉬어요. 다시 따라가기를 누르면 검색을 지웁니다.');} });
   document.getElementById('jump')?.addEventListener('change', () => {if (!$('dock').hidden) setFollow(false);});
+  try {
+    const saved = cleanProgress(JSON.parse(localStorage.getItem(storageKey)));
+    if (saved) {
+      position = anchor = saved.position; offset = saved.offset; rate = saved.rate;
+      mode = saved.mode === 'spotify' && !config.spotify ? 'manual' : saved.mode;
+      bookmarks = saved.bookmarks; restored = true;
+      $('mode').value = mode; $('offset').value = String(offset); $('rate').value = String(rate);
+      $('open').textContent = `▶ ${formatTime(position)}부터 이어보기`;
+      $('saved').textContent = `${formatTime(position)}까지 이 브라우저에 저장됨 · 기기 간 동기화 미연결`;
+    }
+  } catch { /* Corrupt or unavailable storage must not prevent reading. */ }
+  drawBookmarks();
+  $('bookmark').onclick = () => {
+    const time = Math.floor(now());
+    if (!bookmarks.includes(time)) {
+      if (bookmarks.length >= 100) { note('책갈피는 회차마다 100개까지 저장할 수 있어요.'); return; }
+      bookmarks.push(time); bookmarks.sort((a,b) => a-b);
+    }
+    drawBookmarks(); $('bookmarks').value = String(time); saveProgress(); note(`${formatTime(time)} 책갈피를 저장했어요.`);
+  };
+  $('bookmarks').onchange = () => { if ($('bookmarks').value !== '') seek(Number($('bookmarks').value)); };
+  $('delete-bookmark').onclick = () => {
+    if ($('bookmarks').value === '') { note('삭제할 책갈피를 먼저 선택하세요.'); return; }
+    bookmarks = bookmarks.filter(t => t !== Number($('bookmarks').value)); drawBookmarks(); saveProgress(); note('책갈피를 삭제했어요.');
+  };
+  setInterval(() => { if (!$('dock').hidden) saveProgress(); }, 2000);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && !$('dock').hidden) saveProgress(); });
+  window.addEventListener('pagehide', () => { if (!$('dock').hidden) saveProgress(); });
   new ResizeObserver(() => document.body.style.setProperty('--reader-space', ($('dock').offsetHeight+35)+'px')).observe($('dock'));
   setInterval(() => {
     if ($('dock').hidden) return;
     if (mode === 'youtube' && ready && player?.getCurrentTime) {
-      const value=player.getCurrentTime(); if (Number.isFinite(value)) position=value;
+      const value=player.getCurrentTime(); if ([0,1,2].includes(player.getPlayerState()) && Number.isFinite(value)) position=value;
     }
     render();
   },200);

@@ -63,4 +63,11 @@ python3 scripts/import-hey-tablo.py --source /absolute/path/to/bundle --episode 
 - 공통 reader는 회차의 YouTube videoId별로 브라우저 localStorage에 위치·모드·보정·수동 배속·최대 100개 책갈피를 저장한다.
 - 다시 열면 저장한 시각에서 일시정지 상태로 복원하며, 외부 앱 수동 모드는 듣는 앱 시각도 직접 맞춰야 한다.
 - 2초 간격, 탐색·일시정지·닫기·페이지 숨김/이탈 시 저장한다. 처음으로는 위치와 보정만 초기화하고 책갈피는 유지한다.
-- 현재 Supabase 연결 및 로그인은 미구현이다. 다른 기기/브라우저/도메인 간 동기화는 되지 않는다. 브라우저 데이터 삭제 시 기록도 삭제된다.
+- 비로그인 기록은 브라우저에만 저장된다. 로그인 후에는 기존 onsTennis Supabase 프로젝트의 별도 `hey_tablo_progress` 테이블에 동기화한다. 테니스 테이블은 읽거나 수정하지 않는다.
+- Supabase JS 2.108.2 MIT 배포본은 `scripts/reader/vendor`에 보관하고 HTML에 포함한다. 설정은 공개용 publishable key만 담은 `data/hey-tablo/supabase-public.json`이다. 서비스 역할 키를 넣지 않는다.
+- 아이디는 테니스와 같은 `아이디@ot-tennis.app`으로 로그인한다. Google도 지원하며 두 기기에서 같은 인증 계정을 사용해야 한다. 테니스 앱의 별도 프로필 연결 기능으로 묶인 서로 다른 auth UID는 여기서 동일 계정으로 합치지 않는다.
+- 청 웹사이트의 `/hey-tablo/**`만 Google 복귀 허용 목록에 추가했다. 기존 테니스 site_url은 유지한다. Google 로그인은 청 웹사이트에서 사용한다.
+- 로컬 저장 키도 로그인 사용자별로 분리한다. 클라우드를 우선 불러오고 불러오기 전 기기 기록은 명시적인 '이 기기 기록 올리기'로 복원 가능하다. 편집 후에는 현재 기록을 올린다.
+- 변경된 기록은 5초 간격으로 동기화한다. 네트워크 오류 시 기기 기록을 유지하고 재시도한다. 페이지 종료 직전 요청은 브라우저가 중단할 수 있으므로 클라우드 저장됨 표시를 확인한다.
+- 서버 revision이 다르면 자동 덮어쓰기를 멈추고 불러오기/올리기 선택을 안내한다. `supabase/migrations/20261110_hey_tablo_progress.sql`을 대상 DB에 한 번 적용했다. 일반 테니스 마이그레이션 전체를 실행하지 않는다.
+- RLS는 auth.uid()가 자신의 user_id인 레코드만 읽고 쓰도록 제한한다. SQL 검수는 `supabase/tests/hey_tablo_progress.sql`의 롤백 트랜잭션을 사용한다.

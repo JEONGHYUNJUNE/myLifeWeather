@@ -15,12 +15,14 @@
   let mode = 'manual', position = 0, anchor = 0, anchorAt = performance.now(), rate = 1;
   let playing = false, follow = true, offset = 0, ready = true, player = null, generation = 0;
   let active = -1, lastScroll = -1, youtubeAPI, spotifyAPI, loadTimer;
-  const storageKey = 'hey-tablo:reader:v1:' + config.youtube;
+  const baseStorageKey = 'hey-tablo:reader:v1:' + config.youtube;
+  let storageKey = baseStorageKey, accountId = null, cloud = null;
   let bookmarks = [], restored = false;
+  const readProgress = () => ({position: now(), mode, offset, rate, bookmarks: [...bookmarks]});
   function saveProgress() {
     try {
-      localStorage.setItem(storageKey, JSON.stringify({position: now(), mode, offset, rate, bookmarks}));
-      $('saved').textContent = `${formatTime(now())}까지 이 브라우저에 저장됨 · 기기 간 동기화 미연결`;
+      localStorage.setItem(storageKey, JSON.stringify(readProgress()));
+      $('saved').textContent = `${formatTime(now())}까지 이 브라우저에 저장됨 · 클라우드 상태는 로그인 메뉴에서 확인`;
       $('open').textContent = now() >= 1 ? `▶ ${formatTime(now())}부터 이어보기` : '▶ 들으면서 대본 따라가기';
     } catch { $('saved').textContent = '브라우저 저장이 차단되어 있어요. 페이지를 닫으면 재생 위치를 기억하지 못합니다.'; }
   }
@@ -33,6 +35,7 @@
   function setPlaying(value) {
     if (mode === 'manual') { position = now(); anchor = position; anchorAt = performance.now(); }
     playing = value;
+    if (value) cloud?.changed();
     $('play').textContent = playing ? '일시정지' : '시작';
     $('play').disabled = !ready;
   }
@@ -74,7 +77,7 @@
     }
     setFollow(true);
     note(mode === 'manual' ? '타이머를 맞췄어요. 듣는 앱도 같은 시각으로 맞춰 주세요.' : '선택한 재생 시각으로 이동합니다.');
-    render(true); saveProgress();
+    render(true); saveProgress(); cloud?.changed();
   }
   function stopPlayer() {
     if (player) { try { mode === 'youtube' ? player.pauseVideo() : player.pause(); } catch {} }
@@ -174,7 +177,7 @@
     }
   };
   const togglePlayback = $('play').onclick;
-  $('play').onclick = () => { togglePlayback(); saveProgress(); };
+  $('play').onclick = () => { togglePlayback(); saveProgress(); cloud?.changed(); };
   $('follow').onclick = () => setFollow(!follow);
   $('seek').onclick = () => { const time = parseTime($('time').value); if (time === null) note('분:초(예: 07:25) 또는 초 숫자를 입력해 주세요.'); else seek(time); };
   $('time').onkeydown = e => { if (e.key === 'Enter') $('seek').click(); };
@@ -186,11 +189,11 @@
     if (raw === '' || raw === '-' || !Number.isFinite(Number(raw))) return;
     offset=Math.max(-600,Math.min(600,Number(raw)));
     if(normalize) $('offset').value=String(offset);
-    render(true); saveProgress();
+    render(true); saveProgress(); cloud?.changed();
   }
   $('offset').oninput = () => updateOffset(false);
   $('offset').onchange = () => updateOffset(true);
-  $('rate').onchange = () => { position=now(); anchor=position; anchorAt=performance.now(); rate=Number($('rate').value); saveProgress(); };
+  $('rate').onchange = () => { position=now(); anchor=position; anchorAt=performance.now(); rate=Number($('rate').value); saveProgress(); cloud?.changed(); };
   function manualBrowse(e) {
     if ($('dock').hidden || $('dock').contains(e.target) || !follow) return;
     setFollow(false); note('직접 스크롤 중입니다. 다시 따라가기를 누르면 현재 대본으로 돌아갑니다.');
@@ -215,9 +218,29 @@
       bookmarks = saved.bookmarks; restored = true;
       $('mode').value = mode; $('offset').value = String(offset); $('rate').value = String(rate);
       $('open').textContent = `▶ ${formatTime(position)}부터 이어보기`;
-      $('saved').textContent = `${formatTime(position)}까지 이 브라우저에 저장됨 · 기기 간 동기화 미연결`;
+      $('saved').textContent = `${formatTime(position)}까지 이 브라우저에 저장됨 · 클라우드 상태는 로그인 메뉴에서 확인`;
     }
   } catch { /* Corrupt or unavailable storage must not prevent reading. */ }
+  function applyProgress(saved) {
+    stopPlayer();
+    position = anchor = saved.position; anchorAt = performance.now(); offset = saved.offset; rate = saved.rate;
+    bookmarks = [...saved.bookmarks]; restored = true;
+    $('offset').value = String(offset); $('rate').value = String(rate);
+    $('mode').value = saved.mode === 'spotify' && !config.spotify ? 'manual' : saved.mode;
+    if (!$('dock').hidden) changeMode();
+    else { try { player?.destroy(); } catch {} player = null; mode = $('mode').value; }
+    drawBookmarks(); render(true); saveProgress();
+  }
+  try { cloud = window.attachTabloCloud?.(config, {
+    read: readProgress, apply: applyProgress,
+    account: id => {
+      const previous = accountId ? null : readProgress();
+      stopPlayer(); accountId = id; storageKey = id ? baseStorageKey + ':' + id : baseStorageKey;
+      let local;
+      try { local = cleanProgress(JSON.parse(localStorage.getItem(storageKey))); } catch {}
+      applyProgress(local || (id && previous ? previous : {position:0,mode:'manual',rate:1,offset:0,bookmarks:[]}));
+    }
+  }); } catch { $('cloud-status').textContent = '클라우드 연결을 시작하지 못했어요. 이 브라우저에서 계속 읽을 수 있습니다.'; }
   drawBookmarks();
   $('bookmark').onclick = () => {
     const time = Math.floor(now());
@@ -225,12 +248,12 @@
       if (bookmarks.length >= 100) { note('책갈피는 회차마다 100개까지 저장할 수 있어요.'); return; }
       bookmarks.push(time); bookmarks.sort((a,b) => a-b);
     }
-    drawBookmarks(); $('bookmarks').value = String(time); saveProgress(); note(`${formatTime(time)} 책갈피를 저장했어요.`);
+    drawBookmarks(); $('bookmarks').value = String(time); saveProgress(); cloud?.changed(); note(`${formatTime(time)} 책갈피를 저장했어요.`);
   };
   $('bookmarks').onchange = () => { if ($('bookmarks').value !== '') seek(Number($('bookmarks').value)); };
   $('delete-bookmark').onclick = () => {
     if ($('bookmarks').value === '') { note('삭제할 책갈피를 먼저 선택하세요.'); return; }
-    bookmarks = bookmarks.filter(t => t !== Number($('bookmarks').value)); drawBookmarks(); saveProgress(); note('책갈피를 삭제했어요.');
+    bookmarks = bookmarks.filter(t => t !== Number($('bookmarks').value)); drawBookmarks(); saveProgress(); cloud?.changed(); note('책갈피를 삭제했어요.');
   };
   setInterval(() => { if (!$('dock').hidden) saveProgress(); }, 2000);
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && !$('dock').hidden) saveProgress(); });

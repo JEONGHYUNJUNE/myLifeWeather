@@ -1,7 +1,17 @@
 <section id="reader-intro" aria-label="자동 스크롤">
   <button type="button" id="reader-open">▶ 들으면서 대본 따라가기</button>
   <p class="note" id="reader-precision"></p>
-  <p class="note" id="reader-saved">재생 위치와 책갈피는 이 브라우저에 저장됩니다. 기기 간 동기화는 아직 연결되지 않았어요.</p>
+  <p class="note" id="reader-saved">재생 위치와 책갈피는 이 브라우저에 저장됩니다. 로그인하면 다른 기기에서도 이어볼 수 있어요.</p>
+  <details id="reader-cloud"><summary>☁ 로그인 · 기기 간 동기화</summary>
+    <p class="note">테니스 사이트의 아이디·비밀번호 또는 Google로 로그인하세요. 두 기기에서 같은 로그인 방식과 계정을 사용해 주세요.</p>
+    <form id="reader-login-form">
+      <label>아이디 또는 이메일 <input id="reader-login-id" autocomplete="username" required></label>
+      <label>비밀번호 <input id="reader-password" type="password" autocomplete="current-password" required></label>
+      <button type="submit" id="reader-login">로그인</button><button type="button" id="reader-google">Google로 로그인</button>
+    </form>
+    <div id="reader-cloud-actions" hidden><p id="reader-account"></p><button type="button" id="reader-cloud-pull">클라우드 기록 불러오기</button><button type="button" id="reader-cloud-push">이 기기 기록 올리기</button><button type="button" id="reader-logout">로그아웃</button></div>
+    <p id="reader-cloud-status" role="status">로그인하면 재생 위치와 책갈피를 폰·PC에서 함께 사용할 수 있어요.</p>
+  </details>
 </section>
 <section id="reader-dock" aria-label="대본 자동 스크롤 도구" hidden>
   <div id="reader-player" hidden><div id="reader-player-target"></div></div>

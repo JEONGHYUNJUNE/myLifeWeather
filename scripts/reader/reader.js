@@ -179,6 +179,23 @@
   const togglePlayback = $('play').onclick;
   $('play').onclick = () => { togglePlayback(); saveProgress(); cloud?.changed(); };
   $('follow').onclick = () => setFollow(!follow);
+  const translationToggle = document.getElementById('toggle');
+  function syncTranslation() {
+    const hidden = document.body.classList.contains('hide-ko');
+    for (const button of [translationToggle, $('translation')]) {
+      if (!button) continue;
+      button.textContent = hidden ? '번역 보기' : '번역 숨기기';
+      button.setAttribute('aria-pressed', String(hidden));
+    }
+    // Changing translation visibility changes cue heights; keep the current cue in view.
+    if (follow) render(true);
+  }
+  if (translationToggle) {
+    translationToggle.addEventListener('click', syncTranslation);
+    $('translation').onclick = () => translationToggle.click();
+    syncTranslation();
+  } else $('translation').hidden = true;
+
   $('seek').onclick = () => { const time = parseTime($('time').value); if (time === null) note('분:초(예: 07:25) 또는 초 숫자를 입력해 주세요.'); else seek(time); };
   $('time').onkeydown = e => { if (e.key === 'Enter') $('seek').click(); };
   $('back').onclick = () => seek(Math.max(0,now()-5));

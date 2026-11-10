@@ -1711,6 +1711,7 @@ document.getElementById('search').oninput=function(){const q=this.value.trim().t
     <select id="reader-mode" aria-label="재생 방식"><option value="manual">다른 앱으로 듣기 · 수동 시간</option><option value="youtube">이 페이지에서 YouTube</option><option value="spotify">Spotify · 재생 제한 가능</option></select>
     <button type="button" id="reader-play">시작</button>
     <button type="button" id="reader-follow" aria-pressed="true">따라가기 켜짐</button>
+    <button type="button" id="reader-translation" aria-pressed="false">번역 숨기기</button>
   </div>
   <div class="reader-row"><button type="button" id="reader-bookmark">☆ 현재 시각 책갈피</button><select id="reader-bookmarks" aria-label="저장한 책갈피"><option value="">책갈피 선택</option></select><button type="button" id="reader-delete-bookmark">선택 책갈피 삭제</button></div>
   <details id="reader-settings"><summary>시간·속도 맞추기</summary>
@@ -2053,6 +2054,23 @@ window.attachTabloCloud = function(config, reader) {
   const togglePlayback = $('play').onclick;
   $('play').onclick = () => { togglePlayback(); saveProgress(); cloud?.changed(); };
   $('follow').onclick = () => setFollow(!follow);
+  const translationToggle = document.getElementById('toggle');
+  function syncTranslation() {
+    const hidden = document.body.classList.contains('hide-ko');
+    for (const button of [translationToggle, $('translation')]) {
+      if (!button) continue;
+      button.textContent = hidden ? '번역 보기' : '번역 숨기기';
+      button.setAttribute('aria-pressed', String(hidden));
+    }
+    // Changing translation visibility changes cue heights; keep the current cue in view.
+    if (follow) render(true);
+  }
+  if (translationToggle) {
+    translationToggle.addEventListener('click', syncTranslation);
+    $('translation').onclick = () => translationToggle.click();
+    syncTranslation();
+  } else $('translation').hidden = true;
+
   $('seek').onclick = () => { const time = parseTime($('time').value); if (time === null) note('분:초(예: 07:25) 또는 초 숫자를 입력해 주세요.'); else seek(time); };
   $('time').onkeydown = e => { if (e.key === 'Enter') $('seek').click(); };
   $('back').onclick = () => seek(Math.max(0,now()-5));

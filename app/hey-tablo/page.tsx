@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import episodes from '@/data/hey-tablo/episodes.json';
 import './study.css';
 import playback from '@/data/hey-tablo/playback.json';
+import RefreshButton from './RefreshButton';
 const audio: Record<string, { episodeId: string }> = playback;
 export const metadata: Metadata = {
   title: 'Hey Tablo 영어 노트',
@@ -15,6 +16,7 @@ export default function HeyTabloPage() {
       <p className="tablo-intro">한 문장씩 읽고, 내 이야기로 말해 보세요.<br/>영어 바로 아래 한국어, 필요한 표현은 한곳에.</p>
       <p className="tablo-schedule">매주 화요일 오전 11시 · 새 회차 확인</p>
     </header>
+    <div className="tablo-list-tools"><RefreshButton /></div>
     <section aria-label="에피소드 목록" className="tablo-episodes">{sorted.map((ep,i) => <article key={ep.number}>
       <div className="tablo-card-top"><span>EP. {ep.number}</span>{i===0 && <span className="tablo-badge">최근 학습 노트</span>}</div>
       <h2><a href={`/hey-tablo/${ep.number}`}>{ep.titleKo}</a></h2><p className="tablo-original">{ep.title}</p>

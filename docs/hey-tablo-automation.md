@@ -45,3 +45,13 @@ python3 scripts/import-hey-tablo.py --source /absolute/path/to/bundle --episode 
 - `data/hey-tablo/playback.json`에 회차별 episodeId를 기록한다. Spotify 웹 플레이어에서 `?t=초` 링크를 열고 표시된 재생 위치가 일치하는지 확인한 경우에만 timestampVerified를 true로 설정하고 검증 일자·범위를 남긴다. 확인하지 못한 회차는 false로 둔다.
 - importer가 Spotify 듣기 버튼과 (검증된 회차만) 분·초 재생 서비스 선택창을 단일 HTML에 포함한다. true가 아니면 기존 YouTube 시간 링크를 그대로 유지한다. 앱 실행·자동 재생·음성 내용 일치를 확인하지 않았다면 보장하지 않는다.
 - 표현과 단어의 실제 등장 시각 링크도 포함한다. 다운로드 HTML에서도 선택창이 작동해야 한다.
+
+## 재생 시간에 맞춘 자동 스크롤
+
+- `scripts/study_reader.py`가 `scripts/reader/`의 HTML/CSS/JS를 각 회차 파일 안에 삽입한다. importer에도 연결되어 새 회차에 자동 적용된다. 전체 대본이 없는 회차에는 넣지 않는다. 기존 생성물 갱신은 `python3 scripts/study_reader.py`로 하며 재실행해도 중복되지 않는다.
+- 문장별 시각은 `.pair` 안의 `a.time`에서 읽는다. 새 회차에는 제공 자막의 문장 시작 시각을 넣어야 한다. 46회는 문장 단위, 기존 44·45회는 `.script-section a.chapter-time`을 이용한 구간 단위다. 시간 정보를 추측해서 채우지 않는다.
+- YouTube 내장 플레이어는 `getCurrentTime()`과 재생 상태로 따라간다. Spotify는 iframe API의 `playback_update` 위치(ms)를 사용한다. 외부 앱/다른 탭의 재생 상태는 읽지 않는다. 수동 모드는 사용자가 맞춘 재생 시각 + 실제 경과 시간 × 선택 배속을 사용한다.
+- 시작/일시정지, 현재 시각 입력, ±5초 이동, 대본 시각 ±600초 보정, 처음으로, 따라가기 해제/재개를 지원한다. 손으로 스크롤하거나 검색하면 따라가기를 풀고 오디오 재생은 유지한다. 닫으면 내장 플레이어나 수동 타이머도 멈춘다.
+- YouTube 실제 재생·시간 수신·일시정지를 브라우저에서 확인했다. Spotify는 API 초기화는 되었으나 검수 브라우저에서 재생 오류가 나 실제 진행 동기화는 미확인이다. 재생 제한 안내와 수동 모드를 유지한다. 모바일 실기기의 앱 연동이나 자동 재생을 보장하지 않는다.
+- 검수: 390px 가로 넘침 없음, 07:25 입력 시 해당 문장 선택, +5초 보정 시 대본 07:30, 잘못된 07:99 거절, 45회 11:13 구간 선택 확인. 타임라인 순수 함수 회귀 테스트는 `scripts/reader/reader-core.test.ts`에 있다.
+- API 근거: https://developers.google.com/youtube/iframe_api_reference 및 https://developer.spotify.com/documentation/embeds/references/iframe-api

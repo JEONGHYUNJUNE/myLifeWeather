@@ -10,5 +10,11 @@
     "timestampVerified": true,
     "verifiedAt": "2026-11-05",
     "verification": "Spotify 웹 플레이어에 ?t=923로 진입 시 15:23 표시 확인. 모바일 앱 및 음성 내용 대조 미실시."
+  },
+  "46": {
+    "episodeId": "3OnnBsog9gLLqIcwoMc54S",
+    "timestampVerified": true,
+    "verifiedAt": "2026-11-10",
+    "verification": "Spotify 웹 플레이어 ?t=407 진입 시 6:47 표시 확인. 모바일 앱 및 음성 내용 대조 미실시. 시간은 공식 설명 챕터 기준."
   }
 }

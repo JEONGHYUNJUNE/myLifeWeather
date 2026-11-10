@@ -1,0 +1,18 @@
+{
+  "episode": 46,
+  "checkedAt": "2026-11-10",
+  "videoId": "_c_2NsYL3ic",
+  "sourceKind": "verified-summary",
+  "source": "https://feeds.acast.com/public/shows/heytablo",
+  "publishedAt": "2026-11-10T01:50:00Z",
+  "scope": "Official title and chapter descriptions only. YouTube transcript export unavailable. No audio or spoken-phrase verification. Times are chapter starts; additional learning labelled.",
+  "validation": [
+    "Build passed; 22 tests passed",
+    "390px viewport without horizontal overflow; screenshot inspected",
+    "Search, translation toggle, chapter service chooser passed",
+    "Copy reports success; textarea matches full TXT. Clipboard readback unavailable in browser automation",
+    "HTML URL 200 and byte-identical; browser download event capture timed out",
+    "Spotify ?t=407 displays 6:47; mobile app and audio alignment not checked"
+  ],
+  "transcriptRequestNotified": true
+}

@@ -2,17 +2,19 @@
   "episode": 46,
   "checkedAt": "2026-11-10",
   "videoId": "_c_2NsYL3ic",
-  "sourceKind": "verified-summary",
-  "source": "https://feeds.acast.com/public/shows/heytablo",
-  "publishedAt": "2026-11-10T01:50:00Z",
-  "scope": "Official title and chapter descriptions only. YouTube transcript export unavailable. No audio or spoken-phrase verification. Times are chapter starts; additional learning labelled.",
+  "sourceKind": "user-provided",
+  "scope": "User pasted full Tactiq transcript in chat. 363 bilingual sentence/short-utterance pairs, 16 chapters. Stutters/fillers normalized, obvious text errors corrected. No audio comparison. Times mark supplied cue starts. Gap at 33:01-33:10 explicitly retained without reconstruction. All 30 learning items selected from supplied transcript.",
+  "pairs": 363,
+  "chapters": 16,
   "validation": [
+    "Full HTML and GPT text pair coverage checked",
+    "Copy textarea equals full TXT",
+    "First 00:00 and final 33:32 cues checked",
+    "30 vocabulary rows with supplied-transcript timestamps",
     "Build passed; 22 tests passed",
-    "390px viewport without horizontal overflow; screenshot inspected",
-    "Search, translation toggle, chapter service chooser passed",
-    "Copy reports success; textarea matches full TXT. Clipboard readback unavailable in browser automation",
-    "HTML URL 200 and byte-identical; browser download event capture timed out",
-    "Spotify ?t=407 displays 6:47; mobile app and audio alignment not checked"
+    "390px screenshot inspected; no horizontal overflow",
+    "Translation toggle/search/chapter jump/playback chooser verified",
+    "Copy button reports success with 46316-character payload; clipboard readback not available"
   ],
-  "transcriptRequestNotified": true
+  "previousSpotifyVerification": "?t=407 displays 6:47; mobile app/audio alignment untested"
 }

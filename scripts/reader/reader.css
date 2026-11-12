@@ -5,3 +5,5 @@
 #reader-cloud input{width:100%}
 
 #reader-player-panel[hidden]{display:none!important}#reader-player-toggle{width:100%;margin-bottom:8px;text-align:left;font-size:13px!important;background:#f3f6ef!important}#reader-player.reader-player-collapsed{height:0;overflow:hidden;margin:0;pointer-events:none}
+
+.reader-cue-time{display:inline-block;font-size:12px;margin-bottom:4px;color:#37654c}

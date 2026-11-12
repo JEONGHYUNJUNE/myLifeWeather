@@ -4,11 +4,13 @@
   const $ = id => document.getElementById('reader-' + id);
   const secondsFromLink = link => {
     if (!link) return null;
+    const captionTime = link.getAttribute('data-reader-seconds');
+    if (captionTime !== null && Number.isFinite(Number(captionTime)) && Number(captionTime) >= 0) return Number(captionTime);
     const raw = new URL(link.href).searchParams.get('t');
     return /^\d+s?$/.test(raw || '') ? parseInt(raw, 10) : null;
   };
   const precise = Array.from(document.querySelectorAll('.pair')).map(el => ({el, time: secondsFromLink(el.querySelector('a.time'))})).filter(c => c.time !== null);
-  const cues = (precise.length ? precise : Array.from(document.querySelectorAll('.script-section,.chapter')).map(el => ({el: el.querySelector('.pair') || el, time: secondsFromLink(el.querySelector('a.chapter-time'))})).filter(c => c.time !== null)).sort((a,b) => a.time - b.time);
+  const cues = (precise.length ? precise : Array.from(document.querySelectorAll('.script-section,.chapter')).map(el => ({el: el.querySelector('.pair') || el, time: secondsFromLink(el.querySelector('a.chapter-time'))})).filter(c => c.time !== null)).sort((a,b) => a.time - b.time).filter((cue, index, all) => index === 0 || cue.time !== all[index-1].time);
   if (!cues.length) { $('intro').hidden = true; return; }
   $('precision').textContent = precise.length ? '제공 자막의 문장 시작 시각을 따라갑니다. 재생 시간과 어긋나면 초 단위로 보정하세요.' : '이 회차는 문장별 시각이 없어 구간 시작점 단위로 따라갑니다.';
   if (!config.spotify) $('mode').querySelector('[value="spotify"]').remove();

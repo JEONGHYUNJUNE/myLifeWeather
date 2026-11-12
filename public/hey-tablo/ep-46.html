@@ -1352,6 +1352,8 @@ https://www.youtube.com/watch?v=_c_2NsYL3ic
 #reader-cloud input{width:100%}
 
 #reader-player-panel[hidden]{display:none!important}#reader-player-toggle{width:100%;margin-bottom:8px;text-align:left;font-size:13px!important;background:#f3f6ef!important}#reader-player.reader-player-collapsed{height:0;overflow:hidden;margin:0;pointer-events:none}
+
+.reader-cue-time{display:inline-block;font-size:12px;margin-bottom:4px;color:#37654c}
 </style><section id="reader-dock" aria-label="대본 자동 스크롤 도구" hidden>
   <div id="reader-player-panel" hidden>
     <button type="button" id="reader-player-toggle" aria-expanded="true" aria-controls="reader-player">플레이어 접기 ▴</button>
@@ -1530,11 +1532,13 @@ window.attachTabloCloud = function(config, reader) {
   const $ = id => document.getElementById('reader-' + id);
   const secondsFromLink = link => {
     if (!link) return null;
+    const captionTime = link.getAttribute('data-reader-seconds');
+    if (captionTime !== null && Number.isFinite(Number(captionTime)) && Number(captionTime) >= 0) return Number(captionTime);
     const raw = new URL(link.href).searchParams.get('t');
     return /^\d+s?$/.test(raw || '') ? parseInt(raw, 10) : null;
   };
   const precise = Array.from(document.querySelectorAll('.pair')).map(el => ({el, time: secondsFromLink(el.querySelector('a.time'))})).filter(c => c.time !== null);
-  const cues = (precise.length ? precise : Array.from(document.querySelectorAll('.script-section,.chapter')).map(el => ({el: el.querySelector('.pair') || el, time: secondsFromLink(el.querySelector('a.chapter-time'))})).filter(c => c.time !== null)).sort((a,b) => a.time - b.time);
+  const cues = (precise.length ? precise : Array.from(document.querySelectorAll('.script-section,.chapter')).map(el => ({el: el.querySelector('.pair') || el, time: secondsFromLink(el.querySelector('a.chapter-time'))})).filter(c => c.time !== null)).sort((a,b) => a.time - b.time).filter((cue, index, all) => index === 0 || cue.time !== all[index-1].time);
   if (!cues.length) { $('intro').hidden = true; return; }
   $('precision').textContent = precise.length ? '제공 자막의 문장 시작 시각을 따라갑니다. 재생 시간과 어긋나면 초 단위로 보정하세요.' : '이 회차는 문장별 시각이 없어 구간 시작점 단위로 따라갑니다.';
   if (!config.spotify) $('mode').querySelector('[value="spotify"]').remove();

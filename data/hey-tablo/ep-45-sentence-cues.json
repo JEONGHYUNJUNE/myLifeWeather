@@ -1,0 +1,2887 @@
+{
+  "source": "user-provided-tactiq",
+  "method": "Text aligned to supplied caption line start times; not audio verified. Low-confidence matches reviewed against supplied text.",
+  "cues": [
+    {
+      "index": 0,
+      "en": "Oh my God, there's only two months left in 2026.",
+      "seconds": 0.0,
+      "source": "Oh my god, there's only 2 months left in"
+    },
+    {
+      "index": 1,
+      "en": "Where did the time go?",
+      "seconds": 5.16,
+      "source": "Where did the time go?"
+    },
+    {
+      "index": 2,
+      "en": "Anyways, it's the perfect time to do some self-reflecting.",
+      "seconds": 8.4,
+      "source": "Anyways, it's the perfect time to do"
+    },
+    {
+      "index": 3,
+      "en": "I think my algorithm knows that's what I've been thinking, because this thing keeps on popping up in my feed.",
+      "seconds": 11.04,
+      "source": "some self-reflecting. And I think my"
+    },
+    {
+      "index": 4,
+      "en": "Have you guys seen this?",
+      "seconds": 19.24,
+      "source": "on popping up in my feed. Have you guys"
+    },
+    {
+      "index": 5,
+      "en": "A Japanese professor said, “I'll ask you nine difficult questions that will help you learn more about yourself.”",
+      "seconds": 22.12,
+      "source": "seen this? Japanese professor said,"
+    },
+    {
+      "index": 6,
+      "en": "Hey Tablo!",
+      "seconds": 31.52,
+      "source": ">> Hey Tableau."
+    },
+    {
+      "index": 7,
+      "en": "Welcome to Hey Tablo.",
+      "seconds": 34.16,
+      "source": ">> Welcome to Hey Tableau. You may notice"
+    },
+    {
+      "index": 8,
+      "en": "You may notice that my voice is a little deeper today.",
+      "seconds": 34.16,
+      "source": ">> Welcome to Hey Tableau. You may notice"
+    },
+    {
+      "index": 9,
+      "en": "It's because it's autumn.",
+      "seconds": 40.08,
+      "source": "It's because it's autumn."
+    },
+    {
+      "index": 10,
+      "en": "Actually, I'm just super sick.",
+      "seconds": 42.56,
+      "source": "Actually, I'm just super sick."
+    },
+    {
+      "index": 11,
+      "en": "What's crazy is, as you all know, I was in the US and Canada for the Epik High North America tour for about a month.",
+      "seconds": 45.16,
+      "source": "What's crazy is you know, as you all"
+    },
+    {
+      "index": 12,
+      "en": "We were on sixteen different flights, with shows in fourteen cities, and it was just a really tough schedule.",
+      "seconds": 52.76,
+      "source": "about a month. And we were on 16"
+    },
+    {
+      "index": 13,
+      "en": "But here's the thing: I was never once sick the whole month.",
+      "seconds": 63.52,
+      "source": "tough schedule. But here's the thing."
+    },
+    {
+      "index": 14,
+      "en": "Grueling five o'clock wake-ups, getting on planes and moving between states and countries, and I still did not get sick at all.",
+      "seconds": 71.24,
+      "source": "Okay, grueling like 5:00 wake-ups."
+    },
+    {
+      "index": 15,
+      "en": "But I return home, and as soon as my body hits the bed, I suddenly start feeling sick.",
+      "seconds": 80.48,
+      "source": "did not get sick at all. But I return"
+    },
+    {
+      "index": 16,
+      "en": "A long time ago, I think some researchers were looking into longevity, and apparently one island in Japan had an average age of, like, 120.",
+      "seconds": 90.76,
+      "source": "that thing like a long time ago, like I"
+    },
+    {
+      "index": 17,
+      "en": "So the researchers went there to see what secrets they had for living that long and healthy.",
+      "seconds": 102.84,
+      "source": "like 120. So, the researchers went there"
+    },
+    {
+      "index": 18,
+      "en": "Living healthy lives to, like, 120, right?",
+      "seconds": 111.56,
+      "source": "Living healthy lives to like 120, right?"
+    },
+    {
+      "index": 19,
+      "en": "What they figured out was that the men and women in that village, on that island, all had a daily task that they did, like fishing or preparing food.",
+      "seconds": 114.96000000000001,
+      "source": "And what they figured out was that Uh,"
+    },
+    {
+      "index": 20,
+      "en": "They all had a daily routine, a purpose, and that was it.",
+      "seconds": 129.092,
+      "source": "um, preparing food. They all had like a"
+    },
+    {
+      "index": 21,
+      "en": "That was the only reason—I'm sure diet had something to do with it.",
+      "seconds": 135.292,
+      "source": "was it. That was the only reason I'm"
+    },
+    {
+      "index": 22,
+      "en": "I'm sure they weren't eating fast food and Corn Nuts and drinking carbonated drinks.",
+      "seconds": 137.412,
+      "source": "sure diet had something to I'm sure they"
+    },
+    {
+      "index": 23,
+      "en": "But what they figured out was that if you have a daily purpose, your body just knows to hold on.",
+      "seconds": 144.852,
+      "source": "carbonated drinks, but but what what"
+    },
+    {
+      "index": 24,
+      "en": "I think that's true, because I've lived quite a while, and I think my body now understands my schedule and when it's allowed to be sick and when it's not.",
+      "seconds": 153.572,
+      "source": "knows to like knows to hold on. And I"
+    },
+    {
+      "index": 25,
+      "en": "For a month, my body was probably just like, “Okay, this guy is doing shows back-to-back and he's flying all the time.”",
+      "seconds": 169.892,
+      "source": "sick and when it's not. So, the my body"
+    },
+    {
+      "index": 26,
+      "en": "“It seems like he's going to have to do this for a while, so I want to be sick, but I'm not going to be sick.”",
+      "seconds": 178.012,
+      "source": "flying all the time. It seems like he's,"
+    },
+    {
+      "index": 27,
+      "en": "Then, as soon as I got home and lay down on my bed, my body was like, “Oh, this guy is going to take a break now, so it's time for me to be sick.”",
+      "seconds": 184.452,
+      "source": "I'm not going to be sick.\" And then as"
+    },
+    {
+      "index": 28,
+      "en": "So I'm super sick right now, but I'll get better; don't worry.",
+      "seconds": 196.972,
+      "source": "be sick.\" So, so I'm super sick right"
+    },
+    {
+      "index": 29,
+      "en": "Anyways, have you seen this on your feed?",
+      "seconds": 201.892,
+      "source": "Anyways, this Have you seen this on your"
+    },
+    {
+      "index": 30,
+      "en": "People keep sending me this, and I never did it because, first of all, I don't believe that a Japanese professor even said this.",
+      "seconds": 205.172,
+      "source": "feed? Like people keep sending me this"
+    },
+    {
+      "index": 31,
+      "en": "We don't know where he teaches; we don't know his name.",
+      "seconds": 215.572,
+      "source": "Like we don't know where like he"
+    },
+    {
+      "index": 32,
+      "en": "It just says “Japanese professor” because it seems like he knows what he's talking about, right?",
+      "seconds": 218.332,
+      "source": "teaches, we don't know his name. It just"
+    },
+    {
+      "index": 33,
+      "en": "And it seems legit.",
+      "seconds": 226.372,
+      "source": "about, right? And it seems like legit."
+    },
+    {
+      "index": 34,
+      "en": "From what I gather, these nine questions are hard to answer and will force you to reflect.",
+      "seconds": 229.372,
+      "source": "From what I gather, these nine questions"
+    },
+    {
+      "index": 35,
+      "en": "So, if you're listening or watching the video right now, please do it with me, because I think we all can benefit from self-reflection.",
+      "seconds": 236.93200000000002,
+      "source": "will force you to like reflect. So, if"
+    },
+    {
+      "index": 36,
+      "en": "With two months left in the year, right?",
+      "seconds": 249.85399999999998,
+      "source": "With 2 months left in the year, right?"
+    },
+    {
+      "index": 37,
+      "en": "We need to have a strong 2027, so let's do the self-reflecting now.",
+      "seconds": 252.214,
+      "source": "And we need to have a strong 2027. So,"
+    },
+    {
+      "index": 38,
+      "en": "Okay, first question.",
+      "seconds": 257.934,
+      "source": "Okay."
+    },
+    {
+      "index": 39,
+      "en": "If you had just one day left to live, would you tell anyone?",
+      "seconds": 262.894,
+      "source": "If you had just one day left to live,"
+    },
+    {
+      "index": 40,
+      "en": "Who would you tell?",
+      "seconds": 269.934,
+      "source": "Who would you tell? Oh, that's"
+    },
+    {
+      "index": 41,
+      "en": "Oh, wow, it starts pretty dark.",
+      "seconds": 269.934,
+      "source": "Who would you tell? Oh, that's"
+    },
+    {
+      "index": 42,
+      "en": "So I just found out that I have twenty-four hours to live, right?",
+      "seconds": 274.214,
+      "source": "pretty dark. So, I just found out that I"
+    },
+    {
+      "index": 43,
+      "en": "First of all, I would tell Tukutz and Mithra.",
+      "seconds": 281.534,
+      "source": "First of all,"
+    },
+    {
+      "index": 44,
+      "en": "I would tell them because I need to tell them things that they must do to protect my family and to protect our legacy.",
+      "seconds": 287.454,
+      "source": "I would tell them"
+    },
+    {
+      "index": 45,
+      "en": "I have to also tell Tukutz what he's not allowed to do.",
+      "seconds": 301.934,
+      "source": "to protect our legacy. I have to also"
+    },
+    {
+      "index": 46,
+      "en": "I'll do it in writing.",
+      "seconds": 309.094,
+      "source": "I'll do it in writing."
+    },
+    {
+      "index": 47,
+      "en": "So, like, no AI Tablo songs.",
+      "seconds": 310.654,
+      "source": "So, like no"
+    },
+    {
+      "index": 48,
+      "en": "I'll make some ground rules, but I think I'll tell my members.",
+      "seconds": 312.574,
+      "source": "AI Tablo songs. I'll make some ground"
+    },
+    {
+      "index": 49,
+      "en": "I'll be like, “Yo, so I'm going to die tomorrow.”",
+      "seconds": 318.494,
+      "source": "my members. I'll be like,"
+    },
+    {
+      "index": 50,
+      "en": "“I won't be here; here's what you need to do, and please take care of my family.”",
+      "seconds": 323.014,
+      "source": "Um I won't be here. Here's what you need"
+    },
+    {
+      "index": 51,
+      "en": "But I wouldn't tell my family.",
+      "seconds": 328.854,
+      "source": "but I wouldn't tell my family."
+    },
+    {
+      "index": 52,
+      "en": "I feel like, if I only have twenty-four hours to live, I don't want them to have to spend it being sad, crying, or just worried.",
+      "seconds": 333.014,
+      "source": "I feel like if I only have 24 hours to"
+    },
+    {
+      "index": 53,
+      "en": "I would just want a normal day.",
+      "seconds": 345.374,
+      "source": "just worried. Like I I would just want a"
+    },
+    {
+      "index": 54,
+      "en": "Not even something extravagant where we go somewhere.",
+      "seconds": 351.054,
+      "source": "Y- Not even something like extravagant"
+    },
+    {
+      "index": 55,
+      "en": "I'd just like to wake up and watch a movie with them, or order Coupang Eats and eat pizza, tacos, or tteokbokki.",
+      "seconds": 353.254,
+      "source": "where we go somewhere. I just like to"
+    },
+    {
+      "index": 56,
+      "en": "I would stay up a little bit longer.",
+      "seconds": 371.935,
+      "source": "I would stay up a little bit longer."
+    },
+    {
+      "index": 57,
+      "en": "But, yeah, just have a normal day.",
+      "seconds": 374.495,
+      "source": "But uh"
+    },
+    {
+      "index": 58,
+      "en": "I wouldn't tell them.",
+      "seconds": 375.615,
+      "source": "yeah, just have like a normal day. But I"
+    },
+    {
+      "index": 59,
+      "en": "Instead, I would tell my members what to tell them after I'm gone and why I didn't tell them.",
+      "seconds": 379.135,
+      "source": "Instead, I would tell my members what to"
+    },
+    {
+      "index": 60,
+      "en": "I know what my wife will say.",
+      "seconds": 388.175,
+      "source": "I know what my wife will say. My wife,"
+    },
+    {
+      "index": 61,
+      "en": "If she hears this, she'll be like, “You better tell us.”",
+      "seconds": 390.975,
+      "source": "like if she hears this, she'll be like,"
+    },
+    {
+      "index": 62,
+      "en": "But anyways, if I had twenty-four hours to live, the first thing I would do is wake up hella early.",
+      "seconds": 394.895,
+      "source": "But anyways, if I had 24 hours to live,"
+    },
+    {
+      "index": 63,
+      "en": "I would have to prepare all the things to take care of finances and everything.",
+      "seconds": 401.455,
+      "source": "and I would have to prepare all the"
+    },
+    {
+      "index": 64,
+      "en": "No outstanding bills.",
+      "seconds": 409.055,
+      "source": "no outstanding bills. I will have to,"
+    },
+    {
+      "index": 65,
+      "en": "I would have to write down exactly where everything is.",
+      "seconds": 409.055,
+      "source": "no outstanding bills. I will have to,"
+    },
+    {
+      "index": 66,
+      "en": "Even after I'm gone, my publishing royalties will come in.",
+      "seconds": 417.375,
+      "source": "Um and also like even after I'm gone, my"
+    },
+    {
+      "index": 67,
+      "en": "So I'll have to change that so it goes to my family.",
+      "seconds": 422.815,
+      "source": "will come in. So, I'll have to change"
+    },
+    {
+      "index": 68,
+      "en": "Then my wife will probably figure out that something's wrong.",
+      "seconds": 427.695,
+      "source": "then uh and then my wife will probably"
+    },
+    {
+      "index": 69,
+      "en": "She'll be like, “Why are you going to the bank?”",
+      "seconds": 433.255,
+      "source": "She'll be like, \"Why are you Why are you"
+    },
+    {
+      "index": 70,
+      "en": "“What's going on?”",
+      "seconds": 435.495,
+      "source": "going to the bank? What Like what What's"
+    },
+    {
+      "index": 71,
+      "en": "“What is happening?”",
+      "seconds": 437.055,
+      "source": "going on? What is happening? Why do you"
+    },
+    {
+      "index": 72,
+      "en": "“Why do you have all these papers on your desk?”",
+      "seconds": 437.055,
+      "source": "going on? What is happening? Why do you"
+    },
+    {
+      "index": 73,
+      "en": "“What is going on?”",
+      "seconds": 439.815,
+      "source": "have all these papers on your desk? What"
+    },
+    {
+      "index": 74,
+      "en": "She'll figure it out.",
+      "seconds": 441.495,
+      "source": "is going on?\" She'll figure it out."
+    },
+    {
+      "index": 75,
+      "en": "I would make Haru ditch school to just hang out with me.",
+      "seconds": 445.815,
+      "source": "I would make Haru ditch school"
+    },
+    {
+      "index": 76,
+      "en": "Okay, this is really sad.",
+      "seconds": 449.375,
+      "source": "uh to just hang out with me. Okay, this"
+    },
+    {
+      "index": 77,
+      "en": "Wow, this Japanese professor.",
+      "seconds": 453.655,
+      "source": "Wow. This Japanese professor"
+    },
+    {
+      "index": 78,
+      "en": "Wow, hontō ni, hontō ni neomu hae, hontō ni difficult.",
+      "seconds": 457.455,
+      "source": ">> Wow, hontoni"
+    },
+    {
+      "index": 79,
+      "en": "Producer: But it does tell a lot about you that you put family and friends first.",
+      "seconds": 468.815,
+      "source": ">> But it does tell a lot about yourself"
+    },
+    {
+      "index": 80,
+      "en": "Producer: A lot of people would be like, “I'll go rob a bank.”",
+      "seconds": 474.175,
+      "source": "Like a lot of people will be like, \"I'll"
+    },
+    {
+      "index": 81,
+      "en": "No, I have to do that first.",
+      "seconds": 478.695,
+      "source": ">> No, I have to do that first. Like I"
+    },
+    {
+      "index": 82,
+      "en": "If I only have one day to live, my future doesn't matter anymore, right?",
+      "seconds": 481.855,
+      "source": "If I only have one day to live, I don't"
+    },
+    {
+      "index": 83,
+      "en": "So the only thing that matters is what I can do for the people I leave behind.",
+      "seconds": 486.695,
+      "source": "Right? So, the only thing that matters"
+    },
+    {
+      "index": 84,
+      "en": "That's exactly what I would focus on.",
+      "seconds": 498.817,
+      "source": "yeah, that's I I just that's that's"
+    },
+    {
+      "index": 85,
+      "en": "But I would tell my members, though.",
+      "seconds": 500.737,
+      "source": "exactly what I would focus on. But, I"
+    },
+    {
+      "index": 86,
+      "en": "I don't know how they would react.",
+      "seconds": 506.497,
+      "source": "I I don't know how they would react. Do"
+    },
+    {
+      "index": 87,
+      "en": "Do you think they'll believe me?",
+      "seconds": 506.497,
+      "source": "I I don't know how they would react. Do"
+    },
+    {
+      "index": 88,
+      "en": "They'll just be like, “What the [censored] is he talking about?”",
+      "seconds": 510.977,
+      "source": "They'll just be like, \"What the is"
+    },
+    {
+      "index": 89,
+      "en": "They'll be like, “Ah, it's all good, homie.”",
+      "seconds": 512.057,
+      "source": "he talking about?\" Right? They'll be"
+    },
+    {
+      "index": 90,
+      "en": "“Oh, he's at it again.”",
+      "seconds": 515.017,
+      "source": "They'll be like, \"Oh, he's at it again."
+    },
+    {
+      "index": 91,
+      "en": "“Oh, are you depressed again?”",
+      "seconds": 517.057,
+      "source": "Oh, are you depressed again?\""
+    },
+    {
+      "index": 92,
+      "en": "I don't know, but I would have to tell them because they would have to take care of a lot of things.",
+      "seconds": 523.577,
+      "source": "But, I don't know. But, I would I would"
+    },
+    {
+      "index": 93,
+      "en": "Right before I disappear, I would schedule a tweet or a post showing the document I gave to my members, the rules I set for them, and the things they need to do.",
+      "seconds": 531.537,
+      "source": "And right before I disappear,"
+    },
+    {
+      "index": 94,
+      "en": "So they don't steal all my money, you know, or steal my publishing.",
+      "seconds": 548.097,
+      "source": "to do and they so that they don't you"
+    },
+    {
+      "index": 95,
+      "en": "All of a sudden, you go on the publishing site and search “Fly,” and it says, “Composed, arranged, and written by DJ Tukutz.”",
+      "seconds": 555.137,
+      "source": "publishing. All of a sudden, you go on"
+    },
+    {
+      "index": 96,
+      "en": "“Love Love Love,” composed, arranged, and written by DJ Tukutz and Mithra Jin.",
+      "seconds": 567.897,
+      "source": "Love love love, composed, arranged, and"
+    },
+    {
+      "index": 97,
+      "en": "I have to prevent that from happening.",
+      "seconds": 571.137,
+      "source": "written by DJ Two Cuts and Mithragen. I"
+    },
+    {
+      "index": 98,
+      "en": "So I would schedule a post so that our fans also know.",
+      "seconds": 574.897,
+      "source": "have to prevent that from happening. So,"
+    },
+    {
+      "index": 99,
+      "en": "I know some of our fans are probably wondering whether I would tell them.",
+      "seconds": 582.217,
+      "source": "I'm I know some of our fans are probably"
+    },
+    {
+      "index": 100,
+      "en": "Also, no.",
+      "seconds": 587.657,
+      "source": "Uh also no.",
+      "review": "Provided transcript 00:09:47.657; manually matched"
+    },
+    {
+      "index": 101,
+      "en": "I might go on our fan community and just chat like I normally do, because I'll miss them too, right?",
+      "seconds": 591.457,
+      "source": "I would still just you know, I might go"
+    },
+    {
+      "index": 102,
+      "en": "Or I would post a song for free on YouTube, any song I really wanted to release but couldn't.",
+      "seconds": 599.937,
+      "source": "I'll miss them too, right? So, or I will"
+    },
+    {
+      "index": 103,
+      "en": "That would only take five or ten minutes, right?",
+      "seconds": 608.737,
+      "source": "wanted to release, but I couldn't. That"
+    },
+    {
+      "index": 104,
+      "en": "I'll do that, but I'm not going to be like, “Goodbye.”",
+      "seconds": 613.978,
+      "source": "I'll do that but I wouldn't I'm not"
+    },
+    {
+      "index": 105,
+      "en": "I don't know; I would just want a normal day.",
+      "seconds": 620.938,
+      "source": "Cuz like I don't know. I just I I would"
+    },
+    {
+      "index": 106,
+      "en": "Don't I sound more thoughtful because I'm sick?",
+      "seconds": 625.298,
+      "source": "Don't I sound more thoughtful?"
+    },
+    {
+      "index": 107,
+      "en": "Producer: You like your sick voice?",
+      "seconds": 630.858,
+      "source": ">> You like your sick voice?"
+    },
+    {
+      "index": 108,
+      "en": "No, because I can't raise my voice right now because it hurts.",
+      "seconds": 633.018,
+      "source": ">> No, like cuz I can't raise my voice"
+    },
+    {
+      "index": 109,
+      "en": "My throat hurts because I have the flu and a fever.",
+      "seconds": 634.818,
+      "source": "right now because it hurts. My throat"
+    },
+    {
+      "index": 110,
+      "en": "Because I can't raise my voice, don't I sound more thoughtful and classy?",
+      "seconds": 641.418,
+      "source": "because I can't raise my voice."
+    },
+    {
+      "index": 111,
+      "en": "Producer: And wise.",
+      "seconds": 648.218,
+      "source": ">> And wise."
+    },
+    {
+      "index": 112,
+      "en": "Maybe I should be sick more often.",
+      "seconds": 649.658,
+      "source": ">> Maybe I should be more sick. Like when"
+    },
+    {
+      "index": 113,
+      "en": "When we do our Epik High show, maybe I should only shoot on days when I'm under the weather.",
+      "seconds": 652.018,
+      "source": "when we do Epic Kaz A, maybe I should"
+    },
+    {
+      "index": 114,
+      "en": "Mithra and Tukutz will be like [making noise], and I'll be like, “Can we just be a little quieter here, please?”",
+      "seconds": 659.418,
+      "source": "And Myth and two goods will be like"
+    },
+    {
+      "index": 115,
+      "en": "“There are other people in this restaurant.”",
+      "seconds": 666.458,
+      "source": "a little quieter here, please? There's"
+    },
+    {
+      "index": 116,
+      "en": "“Can we be a little quieter, guys?”",
+      "seconds": 669.778,
+      "source": "restaurant. Can we be"
+    },
+    {
+      "index": 117,
+      "en": "Question two: If you were given a box containing everything you've ever lost, what would you search for first?",
+      "seconds": 673.778,
+      "source": "Question two."
+    },
+    {
+      "index": 118,
+      "en": "“What's in the box?”",
+      "seconds": 684.258,
+      "source": "What's in the box? What's in the box?"
+    },
+    {
+      "index": 119,
+      "en": "“What's in the box?”",
+      "seconds": 684.258,
+      "source": "What's in the box? What's in the box?"
+    },
+    {
+      "index": 120,
+      "en": "Did you get that reference?",
+      "seconds": 687.058,
+      "source": "Did you get that reference? Seven, the"
+    },
+    {
+      "index": 121,
+      "en": "“Seven,” the movie “Seven.”",
+      "seconds": 687.058,
+      "source": "Did you get that reference? Seven, the"
+    },
+    {
+      "index": 122,
+      "en": "I'm assuming this is a physical item because it's a box, right?",
+      "seconds": 690.378,
+      "source": "I'm assuming this is like a physical"
+    },
+    {
+      "index": 123,
+      "en": "It gets too complicated if it's my soul or something, or my innocence, or my integrity.",
+      "seconds": 692.058,
+      "source": "item because it's a box, right? And it"
+    },
+    {
+      "index": 124,
+      "en": "That makes no sense, so let's just say it's physical items only.",
+      "seconds": 708.178,
+      "source": "That That makes no sense. So, let's just"
+    },
+    {
+      "index": 125,
+      "en": "The first thing that pops up in my head is that I want to search for home videos.",
+      "seconds": 711.418,
+      "source": "it's physical items only. The first"
+    },
+    {
+      "index": 126,
+      "en": "If you're of this modern age, you're probably wondering, “What do you mean?”",
+      "seconds": 726.298,
+      "source": "you're if you're of"
+    },
+    {
+      "index": 127,
+      "en": "“Just look for an old phone.”",
+      "seconds": 730.978,
+      "source": "wondering what do you mean? Just, you"
+    },
+    {
+      "index": 128,
+      "en": "We didn't have those, okay?",
+      "seconds": 732.499,
+      "source": "know, look for like an old phone. We"
+    },
+    {
+      "index": 129,
+      "en": "We had maybe a camcorder at one point in our childhoods, when parents made home videos of kids and never organized them.",
+      "seconds": 734.899,
+      "source": "didn't have those. Okay, we had like"
+    },
+    {
+      "index": 130,
+      "en": "Back in those days, nothing was digital, so we had these tiny videotapes inside the camcorder, small versions of VHS.",
+      "seconds": 749.219,
+      "source": "back in those days nothing was digital,"
+    },
+    {
+      "index": 131,
+      "en": "Most of you won't even know what VHS is.",
+      "seconds": 757.139,
+      "source": "you know, small versions of VHS. You"
+    },
+    {
+      "index": 132,
+      "en": "But it was a physical item, and you had to have a player to watch it.",
+      "seconds": 761.379,
+      "source": "you. But it's like it was a physical"
+    },
+    {
+      "index": 133,
+      "en": "You didn't do it through computers and stuff.",
+      "seconds": 769.899,
+      "source": "And you didn't do it through computers"
+    },
+    {
+      "index": 134,
+      "en": "Anyways, it was hard to get a camcorder, especially in Korea at the time.",
+      "seconds": 771.379,
+      "source": "and stuff. Anyways, like because"
+    },
+    {
+      "index": 135,
+      "en": "Videos of my childhood are super rare.",
+      "seconds": 784.699,
+      "source": "videos of my childhood super rare."
+    },
+    {
+      "index": 136,
+      "en": "Even with photos, back in those days you had to take a family picture or a picture of your kid, and you didn't even know if the picture was good or bad.",
+      "seconds": 789.139,
+      "source": "And even photos because back in those"
+    },
+    {
+      "index": 137,
+      "en": "Then you'd take it to a place, and they'd go to a darkroom and give you the photos in a day or so.",
+      "seconds": 801.859,
+      "source": "or bad. And then you take it to like a"
+    },
+    {
+      "index": 138,
+      "en": "I think what happened a lot was that, when you're a baby, your parents are taking hella pictures of you.",
+      "seconds": 807.859,
+      "source": "in like a day or so. So um I think what"
+    },
+    {
+      "index": 139,
+      "en": "But as you get older, it's bothersome to take pictures and go to a photo place to get the physical photos.",
+      "seconds": 816.939,
+      "source": "like taking hella pictures of you, but"
+    },
+    {
+      "index": 140,
+      "en": "Also, because my family moved around so much, from Korea to different countries, I think a lot of our photo albums were thrown out.",
+      "seconds": 828.659,
+      "source": "physical photos. So and also like"
+    },
+    {
+      "index": 141,
+      "en": "So I don't have very many pictures of my childhood.",
+      "seconds": 840.099,
+      "source": "were thrown out. So I don't have very"
+    },
+    {
+      "index": 142,
+      "en": "I don't have very many home videos.",
+      "seconds": 844.379,
+      "source": "Um I don't have very many home videos."
+    },
+    {
+      "index": 143,
+      "en": "The couple of pictures you see online of me making a snowman or doing some weird group dance activity at a picnic are the only photos I have.",
+      "seconds": 848.139,
+      "source": "So like the couple pictures you see"
+    },
+    {
+      "index": 144,
+      "en": "The crazy thing is, one of my friends—this dongsaeng I have—his wife went to my school.",
+      "seconds": 865.061,
+      "source": "Crazy thing is,"
+    },
+    {
+      "index": 145,
+      "en": "I was in high school, and she was in middle school.",
+      "seconds": 877.021,
+      "source": "I was in high school and she was in"
+    },
+    {
+      "index": 146,
+      "en": "I guess she came to see a musical we were doing, and I was in the pit orchestra.",
+      "seconds": 878.301,
+      "source": "middle school. And I guess"
+    },
+    {
+      "index": 147,
+      "en": "After they got married, she was going through her home videos with my dongsaeng.",
+      "seconds": 888.421,
+      "source": "she was going through her home videos"
+    },
+    {
+      "index": 148,
+      "en": "I guess they were moving or something, and they found a video of me playing violin in the pit orchestra.",
+      "seconds": 895.781,
+      "source": "they I guess they were moving or"
+    },
+    {
+      "index": 149,
+      "en": "So they digitized it and sent me the file.",
+      "seconds": 903.541,
+      "source": "So, they sent it to me. They digitized"
+    },
+    {
+      "index": 150,
+      "en": "It was so weird, because this video, this memory, had been missing for decades and decades.",
+      "seconds": 908.981,
+      "source": "it was like it was so weird because this"
+    },
+    {
+      "index": 151,
+      "en": "Just seeing it was like, “Oh, yeah, I played the violin.”",
+      "seconds": 916.861,
+      "source": "and just just seeing it is like, \"Oh,"
+    },
+    {
+      "index": 152,
+      "en": "“Oh, yeah, that's what I looked like.”",
+      "seconds": 921.541,
+      "source": "\"Oh, yeah, that's what I looked like.\""
+    },
+    {
+      "index": 153,
+      "en": "Then the memories flood back.",
+      "seconds": 923.461,
+      "source": "And then like the memories like flood"
+    },
+    {
+      "index": 154,
+      "en": "So I would look for old pictures and old home videos because they're like time capsules.",
+      "seconds": 926.901,
+      "source": "So, I would look for old pictures and"
+    },
+    {
+      "index": 155,
+      "en": "They contain memories of things that I can't replace.",
+      "seconds": 934.781,
+      "source": "they're like time capsules, right? They"
+    },
+    {
+      "index": 156,
+      "en": "A couple of my friends passed away, and I'm sure there are videos of me hanging out with them.",
+      "seconds": 943.421,
+      "source": "you know, a couple of my friends passed"
+    },
+    {
+      "index": 157,
+      "en": "Things like that—I would look for those first.",
+      "seconds": 950.181,
+      "source": "Um, so things like that. So, I would"
+    },
+    {
+      "index": 158,
+      "en": "Then I would also look for all the AirPods I lost.",
+      "seconds": 954.941,
+      "source": "And then I would also look for all the"
+    },
+    {
+      "index": 159,
+      "en": "I guarantee you this box is at least fifty percent AirPods.",
+      "seconds": 960.421,
+      "source": ">> I'm I guarantee you this box is at least"
+    },
+    {
+      "index": 160,
+      "en": "So I would look for all the AirPods.",
+      "seconds": 965.541,
+      "source": "Um, so I would look for all the AirPods"
+    },
+    {
+      "index": 161,
+      "en": "Have you ever thought about how much money, like cash, you must have lost growing up till now?",
+      "seconds": 968.301,
+      "source": "and also I probably, you know, have you"
+    },
+    {
+      "index": 162,
+      "en": "I wonder how much it is.",
+      "seconds": 981.542,
+      "source": "I wonder how much it is. Like every time"
+    },
+    {
+      "index": 163,
+      "en": "Every time you lost a twenty-dollar bill, every time you lost a five-dollar bill—it must be quite a bit.",
+      "seconds": 981.542,
+      "source": "I wonder how much it is. Like every time"
+    },
+    {
+      "index": 164,
+      "en": "So I would look for that too.",
+      "seconds": 992.902,
+      "source": "So,"
+    },
+    {
+      "index": 165,
+      "en": "Okay, question three: What parts of yourself have you lost while trying to become the person others expected you to be?",
+      "seconds": 997.622,
+      "source": "Okay, question three."
+    },
+    {
+      "index": 166,
+      "en": "Wow, what a question.",
+      "seconds": 1009.742,
+      "source": "Wow."
+    },
+    {
+      "index": 167,
+      "en": "What about you guys listening right now?",
+      "seconds": 1013.222,
+      "source": "What about What about you guys listening"
+    },
+    {
+      "index": 168,
+      "en": "Are you still in the process of losing yourself because you're busy being the person others expect you to be, or is this behind you?",
+      "seconds": 1016.382,
+      "source": "Um are you still in the process of"
+    },
+    {
+      "index": 169,
+      "en": "For me, personally, I think the whole “Tablo” phase of my life began from the moment I gave myself a name, Tablo, and gave myself an identity.",
+      "seconds": 1029.702,
+      "source": "For me, personally,"
+    },
+    {
+      "index": 170,
+      "en": "From that point till now, I've been trying to regain the parts of myself that I lost while trying to become the person my parents or adults expected me to be.",
+      "seconds": 1050.022,
+      "source": "from that point till now is me trying to"
+    },
+    {
+      "index": 171,
+      "en": "I have this song called “Over,” Epik High's song “Over,” and it's about being an overachiever.",
+      "seconds": 1063.942,
+      "source": "adults expected me to be. I I have this"
+    },
+    {
+      "index": 172,
+      "en": "The entire first and second verses are basically about this.",
+      "seconds": 1076.662,
+      "source": "the entire like first and second verse"
+    },
+    {
+      "index": 173,
+      "en": "It's about me having to live up to other people's expectations and losing who I may have been or could have been.",
+      "seconds": 1078.622,
+      "source": "is basically about this. It's about me"
+    },
+    {
+      "index": 174,
+      "en": "Luckily, I think I realized that pretty early.",
+      "seconds": 1097.062,
+      "source": "I think I Luckily, I think I realized"
+    },
+    {
+      "index": 175,
+      "en": "I knew that once I became an adult or independent, I would spend the rest of my life trying to reclaim those things, because I was expected to be perfect.",
+      "seconds": 1102.543,
+      "source": "And I knew that"
+    },
+    {
+      "index": 176,
+      "en": "That's definitely what I'm not.",
+      "seconds": 1125.223,
+      "source": "And that's definitely what I'm not."
+    },
+    {
+      "index": 177,
+      "en": "I am as imperfect as anyone can get, and I think that was difficult.",
+      "seconds": 1127.663,
+      "source": "I am like as imperfect as"
+    },
+    {
+      "index": 178,
+      "en": "I also knew early on that I was a creative person and that I enjoyed performing for people, doing things they might enjoy, and seeing them smile.",
+      "seconds": 1136.223,
+      "source": "I think also like I knew early on that I"
+    },
+    {
+      "index": 179,
+      "en": "I think I always had that in me, but I was living in a different era and was raised in an Asian household.",
+      "seconds": 1153.463,
+      "source": "seeing them smile. I think I always had"
+    },
+    {
+      "index": 180,
+      "en": "So I was constantly nudged towards things where I wouldn't be able to do any of that.",
+      "seconds": 1160.863,
+      "source": "raised in a in an Asian household. So"
+    },
+    {
+      "index": 181,
+      "en": "I wouldn't be able to do things to make people smile or perform for people.",
+      "seconds": 1172.583,
+      "source": "any of that. Like I wouldn't be able to"
+    },
+    {
+      "index": 182,
+      "en": "Once I got the opportunity to decide my own fate, I gave myself the name Tablo and decided to pretty much abandon everything I had done until I graduated from college.",
+      "seconds": 1178.223,
+      "source": "perform for people. So I think once I"
+    },
+    {
+      "index": 183,
+      "en": "I just abandoned that path and went down a completely different path.",
+      "seconds": 1197.463,
+      "source": "I just abandoned that path and went a"
+    },
+    {
+      "index": 184,
+      "en": "I was very blessed to have success quite often, although there were times when I lost it.",
+      "seconds": 1203.583,
+      "source": "I was very blessed to you know have"
+    },
+    {
+      "index": 185,
+      "en": "I think I've done a pretty good job of reclaiming the person I am right now.",
+      "seconds": 1211.343,
+      "source": "were times where I lost it but I think"
+    },
+    {
+      "index": 186,
+      "en": "I think this is the closest to who I actually am.",
+      "seconds": 1217.943,
+      "source": "the person I am right now. I think this"
+    },
+    {
+      "index": 187,
+      "en": "But even now, I often have to sacrifice who I can be because I am responsible for others.",
+      "seconds": 1226.905,
+      "source": "But"
+    },
+    {
+      "index": 188,
+      "en": "I'm a part of Epik High; I'm one-third of Epik High.",
+      "seconds": 1243.665,
+      "source": "Like I'm a part of Epik High. I'm like"
+    },
+    {
+      "index": 189,
+      "en": "Some of the stuff I want to do and things I want to try, I sometimes just can't, because they might not benefit my members or the team, or might even hurt my team.",
+      "seconds": 1247.625,
+      "source": "And some of the stuff I want to do and"
+    },
+    {
+      "index": 190,
+      "en": "I want to try crazy things, but sometimes I have to hold myself back.",
+      "seconds": 1263.785,
+      "source": "Right? Like I want to try like crazy"
+    },
+    {
+      "index": 191,
+      "en": "But maybe thank God, because I would so be canceled.",
+      "seconds": 1271.545,
+      "source": "But maybe thank God"
+    },
+    {
+      "index": 192,
+      "en": "Producer: Question four: If you could go anywhere in the world right now, would you choose a place to visit or a person to see?",
+      "seconds": 1280.665,
+      "source": ">> Question four. If you could go anywhere"
+    },
+    {
+      "index": 193,
+      "en": "If I could go anywhere in the world right now—like teleport?",
+      "seconds": 1287.865,
+      "source": ">> If I could go anywhere in the world"
+    },
+    {
+      "index": 194,
+      "en": "Right now, I just want to teleport myself to a sauna.",
+      "seconds": 1289.385,
+      "source": "right now, like teleport? Right now, I"
+    },
+    {
+      "index": 195,
+      "en": "For a month while I was in the States, I so wanted to go to a Korean sauna, but we had literally no time.",
+      "seconds": 1296.865,
+      "source": "You know, for like a month while I was"
+    },
+    {
+      "index": 196,
+      "en": "If I could teleport right now, it's a sauna.",
+      "seconds": 1309.665,
+      "source": "if I I if I could teleport right now,"
+    },
+    {
+      "index": 197,
+      "en": "I want to be naked as soon as I teleport over there.",
+      "seconds": 1311.265,
+      "source": "it's it's it's a sauna. And I want to be"
+    },
+    {
+      "index": 198,
+      "en": "However, when I was on tour, you have no idea how many times I wished I could teleport myself home to see Hye-jung and Haru.",
+      "seconds": 1321.265,
+      "source": ">> However, when I was on the tour"
+    },
+    {
+      "index": 199,
+      "en": "Like, every night.",
+      "seconds": 1331.985,
+      "source": "Like every night."
+    },
+    {
+      "index": 200,
+      "en": "To be honest, this is going to be a wild statement, and my members are probably going to be like, “Why the [censored] did you say that?”",
+      "seconds": 1334.585,
+      "source": "To be honest"
+    },
+    {
+      "index": 201,
+      "en": "But I'm not sure I can ever tour again like that.",
+      "seconds": 1339.905,
+      "source": "like, why the did you say that? But"
+    },
+    {
+      "index": 202,
+      "en": "I'm serious; I don't think I can do a long tour ever again.",
+      "seconds": 1344.625,
+      "source": "like that. Like I'm serious. I don't"
+    },
+    {
+      "index": 203,
+      "en": "Here's the thing with tours in Asia or Australia: at most, it's a week.",
+      "seconds": 1352.066,
+      "source": "Here's the thing with like tours in Asia"
+    },
+    {
+      "index": 204,
+      "en": "But a North America tour, the way we've always done it, is at least a month, because it's a huge place, right?",
+      "seconds": 1363.346,
+      "source": "But"
+    },
+    {
+      "index": 205,
+      "en": "I'm not sure I can ever do that again.",
+      "seconds": 1374.066,
+      "source": "And I'm not sure I can ever do do that"
+    },
+    {
+      "index": 206,
+      "en": "I realized it this time.",
+      "seconds": 1376.706,
+      "source": "again. Like I'm I I I realized it like"
+    },
+    {
+      "index": 207,
+      "en": "I think I'm at a phase in my life where I don't want to be away from my family for longer than ten days.",
+      "seconds": 1381.146,
+      "source": "this time. I think"
+    },
+    {
+      "index": 208,
+      "en": "We'll still go to do concerts, but I think it needs to be a one-off thing where I go and perform in a couple of cities and then come back.",
+      "seconds": 1394.346,
+      "source": "So, I mean, we'll still go to do"
+    },
+    {
+      "index": 209,
+      "en": "I was having a really difficult time on this tour.",
+      "seconds": 1410.946,
+      "source": "Yeah, I was having a really difficult"
+    },
+    {
+      "index": 210,
+      "en": "Anyways, question five: If you had the choice, would you erase your worst memory or experience your best one again?",
+      "seconds": 1412.466,
+      "source": "time on this tour. Anyways,"
+    },
+    {
+      "index": 211,
+      "en": "Okay, let's try to think of what my worst memory is and what my best memory is.",
+      "seconds": 1425.106,
+      "source": "Okay, let's try to think of what my"
+    },
+    {
+      "index": 212,
+      "en": "My best memory?",
+      "seconds": 1428.346,
+      "source": "is and my best memory is. My best"
+    },
+    {
+      "index": 213,
+      "en": "To be honest, I don't think I have a best memory.",
+      "seconds": 1434.186,
+      "source": "To be honest,"
+    },
+    {
+      "index": 214,
+      "en": "The feeling of coming home a couple of days ago was pretty awesome.",
+      "seconds": 1439.906,
+      "source": "think the feeling of coming home a"
+    },
+    {
+      "index": 215,
+      "en": "One time, on another tour, I had gone through hell in a particular airport in a foreign country.",
+      "seconds": 1447.306,
+      "source": "This one time I was like um"
+    },
+    {
+      "index": 216,
+      "en": "Okay, I went through hell.",
+      "seconds": 1458.746,
+      "source": "Okay, I went through hell"
+    },
+    {
+      "index": 217,
+      "en": "When I flew and got to Incheon Airport, that was a great memory as well.",
+      "seconds": 1461.786,
+      "source": "some when I when I flew and and got to"
+    },
+    {
+      "index": 218,
+      "en": "I think my best memory refreshes quite often, because my memory is bad.",
+      "seconds": 1470.347,
+      "source": "Yeah, I think my best memory refreshes"
+    },
+    {
+      "index": 219,
+      "en": "Even if I experience something amazing and awesome, I'll be like, “Whoa,” and I'll forget.",
+      "seconds": 1478.507,
+      "source": "Even if I experience something amazing"
+    },
+    {
+      "index": 220,
+      "en": "Then it'll have to refresh.",
+      "seconds": 1483.148,
+      "source": "I'll forget. And then it'll have to"
+    },
+    {
+      "index": 221,
+      "en": "Some of the best memories I've had—there's a place called Lake Louise in Banff.",
+      "seconds": 1485.227,
+      "source": "refresh. Some best memories I've had,"
+    },
+    {
+      "index": 222,
+      "en": "I was a little kid, and my dad took me there.",
+      "seconds": 1492.908,
+      "source": "I was like a little kid."
+    },
+    {
+      "index": 223,
+      "en": "I remember seeing the beauty of that place.",
+      "seconds": 1495.107,
+      "source": "And I and my dad took me there and I"
+    },
+    {
+      "index": 224,
+      "en": "I think that was the first and only time I was like, “Nature is awesome.”",
+      "seconds": 1505.707,
+      "source": "I think that was the first time and only"
+    },
+    {
+      "index": 225,
+      "en": "That was a great memory.",
+      "seconds": 1510.788,
+      "source": "That was a great memory. I think"
+    },
+    {
+      "index": 226,
+      "en": "Epik High succeeding for the first time, when “Fly” hit number one, was another one.",
+      "seconds": 1513.347,
+      "source": "uh Epik High, you know"
+    },
+    {
+      "index": 227,
+      "en": "Everyone said we would never make it, but we did.",
+      "seconds": 1519.347,
+      "source": "Um and everyone said that it wasn't you"
+    },
+    {
+      "index": 228,
+      "en": "I think that felt good.",
+      "seconds": 1524.587,
+      "source": "I think that felt good. But it's like"
+    },
+    {
+      "index": 229,
+      "en": "But are those the best memories I'm holding on to even now?",
+      "seconds": 1524.587,
+      "source": "I think that felt good. But it's like"
+    },
+    {
+      "index": 230,
+      "en": "Heck no.",
+      "seconds": 1529.307,
+      "source": "onto even now? Heck no."
+    },
+    {
+      "index": 231,
+      "en": "I had some amazing pizza about a week ago.",
+      "seconds": 1532.227,
+      "source": "My fav like I had some amazing pizza"
+    },
+    {
+      "index": 232,
+      "en": "Do you remember?",
+      "seconds": 1537.148,
+      "source": "like a week ago. Do you remember?"
+    },
+    {
+      "index": 233,
+      "en": "Someone brought pizza to the green room after the show, and I was like, “I shouldn't eat this; it's too late.”",
+      "seconds": 1539.148,
+      "source": "Someone brought pizza to the green room"
+    },
+    {
+      "index": 234,
+      "en": "But I took one bite, and it was so good that I ate about three slices.",
+      "seconds": 1542.747,
+      "source": "shouldn't eat this. It's too late.\" But"
+    },
+    {
+      "index": 235,
+      "en": "That was a best memory.",
+      "seconds": 1546.187,
+      "source": "like three. That was a best memory. That"
+    },
+    {
+      "index": 236,
+      "en": "That was a great memory.",
+      "seconds": 1546.187,
+      "source": "like three. That was a best memory. That"
+    },
+    {
+      "index": 237,
+      "en": "I'm sure that if I get over this cold, if I wake up tomorrow and feel fine, that's going to be a best memory too.",
+      "seconds": 1550.747,
+      "source": "Okay, and I'm sure that if I get over"
+    },
+    {
+      "index": 238,
+      "en": "I have a very low bar for “best memory.”",
+      "seconds": 1559.067,
+      "source": "memory, too. Like I have a very low bar"
+    },
+    {
+      "index": 239,
+      "en": "Experiencing my best memories again is going to be meaningless, because I'm just going to be eating that pizza again.",
+      "seconds": 1565.987,
+      "source": "and experiencing my best memories is"
+    },
+    {
+      "index": 240,
+      "en": "What's the point?",
+      "seconds": 1571.668,
+      "source": "What's the What's the point?"
+    },
+    {
+      "index": 241,
+      "en": "But I would never erase my worst memories.",
+      "seconds": 1574.747,
+      "source": "And I but I would never erase my worst"
+    },
+    {
+      "index": 242,
+      "en": "I have some terrible memories, as I'm sure all of you know, both public and private.",
+      "seconds": 1578.507,
+      "source": "I have some terrible memories as I'm"
+    },
+    {
+      "index": 243,
+      "en": "I have terrible memories that I would prefer to avoid, but I would never erase them.",
+      "seconds": 1582.148,
+      "source": "um public and private. I have"
+    },
+    {
+      "index": 244,
+      "en": "Those memories provided fuel for me to keep going even now.",
+      "seconds": 1596.789,
+      "source": "uh those memories seriously"
+    },
+    {
+      "index": 245,
+      "en": "I think it's because I have those terrible, frightening memories that I'm more grateful for all my other memories.",
+      "seconds": 1606.469,
+      "source": "I think it's because I have those"
+    },
+    {
+      "index": 246,
+      "en": "Like I said, I'm grateful that I was able to come home a couple of days ago.",
+      "seconds": 1623.949,
+      "source": "my other memories. Like I'm I like I"
+    },
+    {
+      "index": 247,
+      "en": "I'm grateful every time I get on a plane and get off safely.",
+      "seconds": 1631.549,
+      "source": "I'm grateful every time I get on a plane"
+    },
+    {
+      "index": 248,
+      "en": "I have a fear of flying.",
+      "seconds": 1637.189,
+      "source": "Like I have a fear of flights."
+    },
+    {
+      "index": 249,
+      "en": "I'm grateful when there's turbulence for fifteen seconds and then it stops, and I'm like, “Okay, thank God.”",
+      "seconds": 1639.669,
+      "source": "I'm grateful when there's turbulence for"
+    },
+    {
+      "index": 250,
+      "en": "“We're okay.”",
+      "seconds": 1645.069,
+      "source": "I'm like, \"Okay, thank god. We're okay."
+    },
+    {
+      "index": 251,
+      "en": "“We're not going to die.”",
+      "seconds": 1646.989,
+      "source": "We're not going to die.\""
+    },
+    {
+      "index": 252,
+      "en": "I think it's because I've had terrible experiences and terrible memories that I'm more grateful.",
+      "seconds": 1649.709,
+      "source": "and I I think it's because I've had"
+    },
+    {
+      "index": 253,
+      "en": "If I lose those bad memories, maybe I might be less grateful.",
+      "seconds": 1656.309,
+      "source": "grateful. And if I lose those bad"
+    },
+    {
+      "index": 254,
+      "en": "I'd prefer living a life being grateful for things.",
+      "seconds": 1659.829,
+      "source": "maybe I might be less grateful. And I'd"
+    },
+    {
+      "index": 255,
+      "en": "Question six: Which “what if” still haunts you the most?",
+      "seconds": 1666.269,
+      "source": "Question six."
+    },
+    {
+      "index": 256,
+      "en": "Hmm, I don't really like this question.",
+      "seconds": 1675.909,
+      "source": "I don't really like"
+    },
+    {
+      "index": 257,
+      "en": "Honestly, the choices you made and the life you're living are your life.",
+      "seconds": 1681.109,
+      "source": "Honestly, I because, you know, the the"
+    },
+    {
+      "index": 258,
+      "en": "There is no “what if,” right?",
+      "seconds": 1686.549,
+      "source": "is is your life. Like there is no what"
+    },
+    {
+      "index": 259,
+      "en": "You can't go back and change it, so there's no point in thinking about it.",
+      "seconds": 1688.309,
+      "source": "if, right? You can't You can't go back"
+    },
+    {
+      "index": 260,
+      "en": "But since I'm asked, I do think about what if I hadn't decided to do music and had chosen a different life path.",
+      "seconds": 1691.349,
+      "source": "in thinking about it, but since I'm"
+    },
+    {
+      "index": 261,
+      "en": "Things would have been so different if, for example, I'd got a PhD or gone into film.",
+      "seconds": 1703.189,
+      "source": "life path. You know, things would have"
+    },
+    {
+      "index": 262,
+      "en": "Quite likely, I would have stayed in the States.",
+      "seconds": 1715.23,
+      "source": "quite likely I would have stayed in the"
+    },
+    {
+      "index": 263,
+      "en": "My friends would be different.",
+      "seconds": 1719.63,
+      "source": "And my friends would be different."
+    },
+    {
+      "index": 264,
+      "en": "I would have never met Mithra and “Two Nuts.”",
+      "seconds": 1722.95,
+      "source": "I would have never met Mithra and Two"
+    },
+    {
+      "index": 265,
+      "en": "It's not that bad—I mean, I'm kidding.",
+      "seconds": 1732.31,
+      "source": "you know, it's not"
+    },
+    {
+      "index": 266,
+      "en": "Possibly, I would have never met my wife.",
+      "seconds": 1737.11,
+      "source": "Possibly I I would have never met"
+    },
+    {
+      "index": 267,
+      "en": "I would have never been Haru's dad.",
+      "seconds": 1741.07,
+      "source": "Uh I would have never been Haru's dad."
+    },
+    {
+      "index": 268,
+      "en": "Once I arrive here, the “what if” question just disappears.",
+      "seconds": 1746.07,
+      "source": "And and once I arrive here,"
+    },
+    {
+      "index": 269,
+      "en": "That's the funny thing.",
+      "seconds": 1754.31,
+      "source": "So, that's that's the funny thing. Like"
+    },
+    {
+      "index": 270,
+      "en": "Before I became a dad, when I was younger, in my twenties, I thought about this “what if” a lot.",
+      "seconds": 1756.19,
+      "source": "before I you know, before I became a"
+    },
+    {
+      "index": 271,
+      "en": "I would hear about my college friends who went on to make the world we live in right now and became super rich.",
+      "seconds": 1762.11,
+      "source": "about this what if a lot because I would"
+    },
+    {
+      "index": 272,
+      "en": "I was like, “What if I followed my friend to Google instead of sitting here with Mithra and ‘Two Nuts,’ arguing about whether we should get tteokbokki or ramyeon?”",
+      "seconds": 1778.15,
+      "source": "I was like, what if, you know, what if I"
+    },
+    {
+      "index": 273,
+      "en": "“Maybe my life would have been better.”",
+      "seconds": 1796.59,
+      "source": "Maybe [snorts] my life would have been"
+    },
+    {
+      "index": 274,
+      "en": "I did think those things.",
+      "seconds": 1797.75,
+      "source": "better. I I did think those things."
+    },
+    {
+      "index": 275,
+      "en": "But now that I'm a dad, I always arrive here.",
+      "seconds": 1800.63,
+      "source": "But"
+    },
+    {
+      "index": 276,
+      "en": "I could have chosen a different path.",
+      "seconds": 1812.03,
+      "source": "I could have chosen a different path. I"
+    },
+    {
+      "index": 277,
+      "en": "I may have been more successful.",
+      "seconds": 1812.03,
+      "source": "I could have chosen a different path. I"
+    },
+    {
+      "index": 278,
+      "en": "I may have accomplished more dreams, maybe.",
+      "seconds": 1813.95,
+      "source": "may have been been more successful. I"
+    },
+    {
+      "index": 279,
+      "en": "But I wouldn't have become Haru's dad.",
+      "seconds": 1819.67,
+      "source": "maybe. But I wouldn't have"
+    },
+    {
+      "index": 280,
+      "en": "I wouldn't have met my members.",
+      "seconds": 1825.11,
+      "source": "dad. I wouldn't have become"
+    },
+    {
+      "index": 281,
+      "en": "I wouldn't have gotten to know my audience and our fans.",
+      "seconds": 1829.07,
+      "source": "members. I wouldn't have um gotten to"
+    },
+    {
+      "index": 282,
+      "en": "I wouldn't have experienced any of that.",
+      "seconds": 1831.83,
+      "source": "know my audience and our fans. I"
+    },
+    {
+      "index": 283,
+      "en": "So once I arrive here, I'm like, “Fuck ‘what if.’”",
+      "seconds": 1836.712,
+      "source": "So, once I arrive here, I'm like, \"Fuck"
+    },
+    {
+      "index": 284,
+      "en": "I would live my life exactly the same, minus a couple of things.",
+      "seconds": 1840.912,
+      "source": ">> I would live my life exactly the same."
+    },
+    {
+      "index": 285,
+      "en": "Minus a couple of bad investments.",
+      "seconds": 1847.0720000000001,
+      "source": "Minus a couple bad investments."
+    },
+    {
+      "index": 286,
+      "en": "Question seven: If your life were going to end one year from now—what is this obsession with ending my life?",
+      "seconds": 1851.952,
+      "source": ">> Question seven."
+    },
+    {
+      "index": 287,
+      "en": "If your life were going to end one year from now, which of your current worries would immediately stop mattering?",
+      "seconds": 1861.112,
+      "source": "If your life were going to end 1 year"
+    },
+    {
+      "index": 288,
+      "en": "One current worry that would immediately stop mattering—oh, I know.",
+      "seconds": 1871.792,
+      "source": "one worry that I would current worry"
+    },
+    {
+      "index": 289,
+      "en": "I would immediately stop trying to lose belly fat.",
+      "seconds": 1879.792,
+      "source": "So, like I would immediately stop um"
+    },
+    {
+      "index": 290,
+      "en": "I would immediately quit going to the gym.",
+      "seconds": 1891.392,
+      "source": ">> I would immediately just quit going to"
+    },
+    {
+      "index": 291,
+      "en": "I'm not doing crunches and squats.",
+      "seconds": 1896.312,
+      "source": "I'm not doing crunches and like squats."
+    },
+    {
+      "index": 292,
+      "en": "[Censored] that.",
+      "seconds": 1900.112,
+      "source": "that."
+    },
+    {
+      "index": 293,
+      "en": "No cardio.",
+      "seconds": 1901.432,
+      "source": "No cardio."
+    },
+    {
+      "index": 294,
+      "en": "I'm immediately going to eat whatever I want.",
+      "seconds": 1903.792,
+      "source": "And I'm just I'm immediately just going"
+    },
+    {
+      "index": 295,
+      "en": "No one's going to care that I'm a corpse with perfect abs.",
+      "seconds": 1909.872,
+      "source": "No one's going to care"
+    },
+    {
+      "index": 296,
+      "en": "Question eight: If your child were living the exact life you're living today, what would you advise them to change?",
+      "seconds": 1917.952,
+      "source": "Question eight."
+    },
+    {
+      "index": 297,
+      "en": "I don't know.",
+      "seconds": 1927.992,
+      "source": "I don't know."
+    },
+    {
+      "index": 298,
+      "en": "I don't know.",
+      "seconds": 1929.632,
+      "source": "I don't know."
+    },
+    {
+      "index": 299,
+      "en": "It would just be, “Take better care of your health.”",
+      "seconds": 1930.832,
+      "source": "I It would just be like, you know, take"
+    },
+    {
+      "index": 300,
+      "en": "Which is hilarious, because I just said that if I had one year to live, I'd eat whatever the [censored] I wanted and never go to the gym.",
+      "seconds": 1932.712,
+      "source": "better care of your health. Which is"
+    },
+    {
+      "index": 301,
+      "en": "But that's me with one year to live.",
+      "seconds": 1944.672,
+      "source": "But that's me"
+    },
+    {
+      "index": 302,
+      "en": "I want my child to be healthy.",
+      "seconds": 1946.352,
+      "source": "with 1 year to live. So, I want my child"
+    },
+    {
+      "index": 303,
+      "en": "Above all, that.",
+      "seconds": 1951.672,
+      "source": "Above all I that."
+    },
+    {
+      "index": 304,
+      "en": "I don't really care about the rest.",
+      "seconds": 1953.992,
+      "source": "I don't really care about the rest."
+    },
+    {
+      "index": 305,
+      "en": "I trust that my daughter is intelligent enough, motivated enough, and inspired enough to accomplish what she needs to eventually, as long as she's healthy.",
+      "seconds": 1956.152,
+      "source": "I trust that my daughter is intelligent"
+    },
+    {
+      "index": 306,
+      "en": "So health would be number one.",
+      "seconds": 1972.193,
+      "source": "So, um health would be number one. I"
+    },
+    {
+      "index": 307,
+      "en": "I would advise them who to avoid, the types of people to avoid.",
+      "seconds": 1972.193,
+      "source": "So, um health would be number one. I"
+    },
+    {
+      "index": 308,
+      "en": "I learned the hard way.",
+      "seconds": 1982.753,
+      "source": "Um I learned the hard way."
+    },
+    {
+      "index": 309,
+      "en": "I had my heart broken multiple times by people I trusted.",
+      "seconds": 1985.873,
+      "source": "I had my heart broken multiple times"
+    },
+    {
+      "index": 310,
+      "en": "I have a database now, so I would tell my daughter.",
+      "seconds": 1988.633,
+      "source": "um by people I trusted. And I I know I"
+    },
+    {
+      "index": 311,
+      "en": "But quite likely, if they're living the exact life I'm living today, they're not going to listen to me.",
+      "seconds": 1993.953,
+      "source": "daughter. But quite likely if they are"
+    },
+    {
+      "index": 312,
+      "en": "They'll be like, “What do you know?”",
+      "seconds": 2003.593,
+      "source": "So, they're like, \"What do you know?"
+    },
+    {
+      "index": 313,
+      "en": "“It's my life.”",
+      "seconds": 2004.553,
+      "source": "It's my life.\""
+    },
+    {
+      "index": 314,
+      "en": "“Right, I'll figure it out myself.”",
+      "seconds": 2006.273,
+      "source": ">> Yo, right. I'll figure it out myself."
+    },
+    {
+      "index": 315,
+      "en": "There's no way they're going to listen to me.",
+      "seconds": 2009.713,
+      "source": "There's no way they're going to listen"
+    },
+    {
+      "index": 316,
+      "en": "So why even try?",
+      "seconds": 2013.033,
+      "source": "So, why even try?"
+    },
+    {
+      "index": 317,
+      "en": "Okay, final question, question nine: Have you ever missed a past version of yourself, the person you were before life changed everything?",
+      "seconds": 2015.833,
+      "source": "Okay."
+    },
+    {
+      "index": 318,
+      "en": "No one here is going to believe this.",
+      "seconds": 2031.193,
+      "source": "No one here is going to believe this."
+    },
+    {
+      "index": 319,
+      "en": "No one listening or watching is going to believe this.",
+      "seconds": 2033.5529999999999,
+      "source": "And no one listening or watching is"
+    },
+    {
+      "index": 320,
+      "en": "I used to be quiet.",
+      "seconds": 2037.153,
+      "source": "I used to be quiet."
+    },
+    {
+      "index": 321,
+      "en": "See, I told you.",
+      "seconds": 2040.073,
+      "source": "See, I told you."
+    },
+    {
+      "index": 322,
+      "en": "Immediately, they begin laughing.",
+      "seconds": 2041.633,
+      "source": "I told you you see, immediately they"
+    },
+    {
+      "index": 323,
+      "en": "Everyone in this room is laughing right now.",
+      "seconds": 2043.673,
+      "source": "begin laughing. Everyone in this room is"
+    },
+    {
+      "index": 324,
+      "en": "In sync, they're laughing at the same time.",
+      "seconds": 2049.553,
+      "source": "in sync they're laughing at the same"
+    },
+    {
+      "index": 325,
+      "en": "I see this.",
+      "seconds": 2051.473,
+      "source": "time. I See I see this"
+    },
+    {
+      "index": 326,
+      "en": "I hate self-reflecting.",
+      "seconds": 2056.913,
+      "source": ">> I hate self-reflecting."
+    },
+    {
+      "index": 327,
+      "en": "Nobody believes me.",
+      "seconds": 2060.393,
+      "source": ">> Nobody believes me. No, I swear to God,"
+    },
+    {
+      "index": 328,
+      "en": "No, I swear to God, I used to be quiet.",
+      "seconds": 2060.393,
+      "source": ">> Nobody believes me. No, I swear to God,"
+    },
+    {
+      "index": 329,
+      "en": "Jinjja, I'm serious.",
+      "seconds": 2068.273,
+      "source": ">> Shinjja, I'm serious."
+    },
+    {
+      "index": 330,
+      "en": "Until maybe twelve or thirteen.",
+      "seconds": 2071.793,
+      "source": "Until like I think"
+    },
+    {
+      "index": 331,
+      "en": "See, you guys keep laughing.",
+      "seconds": 2077.353,
+      "source": "See, you guys keep laughing."
+    },
+    {
+      "index": 332,
+      "en": "I used to be quiet.",
+      "seconds": 2081.753,
+      "source": ">> I used to be quiet. When I was a kid, I"
+    },
+    {
+      "index": 333,
+      "en": "When I was a kid, I was quiet to the point where my family was worried there was something wrong with me, apparently, because I wouldn't talk.",
+      "seconds": 2081.753,
+      "source": ">> I used to be quiet. When I was a kid, I"
+    },
+    {
+      "index": 334,
+      "en": "Even at school, I would constantly be by myself.",
+      "seconds": 2093.954,
+      "source": "Like and I even at school, I would I"
+    },
+    {
+      "index": 335,
+      "en": "I wouldn't really hang out with people.",
+      "seconds": 2100.754,
+      "source": "And I wouldn't really like"
+    },
+    {
+      "index": 336,
+      "en": "Everyone thought there was something wrong with me or that I was antisocial.",
+      "seconds": 2106.314,
+      "source": "my you know, everyone thought that I was"
+    },
+    {
+      "index": 337,
+      "en": "Then something happened when I was twelve, thirteen, or fourteen.",
+      "seconds": 2113.994,
+      "source": "And then something happened,"
+    },
+    {
+      "index": 338,
+      "en": "Something happened there, because I started being super loud and super extroverted.",
+      "seconds": 2118.034,
+      "source": "12, 13, 14. Something happened there."
+    },
+    {
+      "index": 339,
+      "en": "But I swear, look at old pictures of me when I was a kid, and I look introverted.",
+      "seconds": 2128.274,
+      "source": "But I I swear, look at old pictures of"
+    },
+    {
+      "index": 340,
+      "en": "In every picture, I look pensive.",
+      "seconds": 2135.994,
+      "source": "I every picture I look pensive."
+    },
+    {
+      "index": 341,
+      "en": "I swear, why won't you believe me?",
+      "seconds": 2139.594,
+      "source": "I swear, why won't you believe me?"
+    },
+    {
+      "index": 342,
+      "en": "I didn't talk as much.",
+      "seconds": 2144.554,
+      "source": ">> I didn't talk as much."
+    },
+    {
+      "index": 343,
+      "en": "Producer: Any memory of you being quiet?",
+      "seconds": 2146.634,
+      "source": ">> have any memory of you being quiet?"
+    },
+    {
+      "index": 344,
+      "en": "I don't know what it was, but when I was a kid, I think the environment in my household was such that I didn't really have anyone I could talk to.",
+      "seconds": 2149.794,
+      "source": ">> I don't know what it was, but I think um"
+    },
+    {
+      "index": 345,
+      "en": "My brother and sister were so much older than me.",
+      "seconds": 2165.954,
+      "source": "My brother and sister were so much older"
+    },
+    {
+      "index": 346,
+      "en": "My brother was scary.",
+      "seconds": 2167.474,
+      "source": "than me. My brother was scary."
+    },
+    {
+      "index": 347,
+      "en": "My parents were scary.",
+      "seconds": 2169.914,
+      "source": "My parents were scary. And I think you"
+    },
+    {
+      "index": 348,
+      "en": "I clearly remember them saying I was stupid a lot.",
+      "seconds": 2172.354,
+      "source": "know, they I clearly remember them"
+    },
+    {
+      "index": 349,
+      "en": "So I think I just retreated into a corner.",
+      "seconds": 2178.354,
+      "source": "So, I think I just like kind of"
+    },
+    {
+      "index": 350,
+      "en": "I was that way in school, and eventually I was plucked out of my school here and sent to Canada, where I couldn't even speak the language.",
+      "seconds": 2181.954,
+      "source": "And I was that way"
+    },
+    {
+      "index": 351,
+      "en": "Once I was there, I couldn't speak to people even if I wanted to.",
+      "seconds": 2194.154,
+      "source": "you know, once I was there,"
+    },
+    {
+      "index": 352,
+      "en": "That's how I became a writer.",
+      "seconds": 2200.314,
+      "source": "That that's how I became like this this"
+    },
+    {
+      "index": 353,
+      "en": "Seriously, I spent most of my time just reading and writing because I didn't express myself in any other way.",
+      "seconds": 2205.956,
+      "source": "Seriously, like I spent most of my time"
+    },
+    {
+      "index": 354,
+      "en": "None of you will believe this because you know me now.",
+      "seconds": 2216.516,
+      "source": "none of you will believe"
+    },
+    {
+      "index": 355,
+      "en": "But the way I sound today because I'm sick, sounding thoughtful, is probably how I was.",
+      "seconds": 2221.716,
+      "source": "But you know the way I sound today"
+    },
+    {
+      "index": 356,
+      "en": "I've kind of missed that past version of myself.",
+      "seconds": 2232.636,
+      "source": "I've missed that past version of myself."
+    },
+    {
+      "index": 357,
+      "en": "I feel like my fans think I'm a clown.",
+      "seconds": 2238.276,
+      "source": ">> I feel like my fans think I'm a clown."
+    },
+    {
+      "index": 358,
+      "en": "Sometimes I'm like, “I need to remind them that I'm an artist, that I'm low-key a poet.”",
+      "seconds": 2244.156,
+      "source": ">> And sometimes I'm like I need to I need"
+    },
+    {
+      "index": 359,
+      "en": "So I try to act like a poet sometimes.",
+      "seconds": 2254.396,
+      "source": "So I try to"
+    },
+    {
+      "index": 360,
+      "en": "I'll go to a bookstore.",
+      "seconds": 2259.836,
+      "source": "And um you know, I'll like I'll go to"
+    },
+    {
+      "index": 361,
+      "en": "I'll have really performative drinks at a coffee house or something.",
+      "seconds": 2265.236,
+      "source": ">> I'll like have, you know"
+    },
+    {
+      "index": 362,
+      "en": "I'll dress like I'm quiet, like a thinker.",
+      "seconds": 2272.756,
+      "source": "And I'll dress like I'm I'm quiet and"
+    },
+    {
+      "index": 363,
+      "en": "But it just doesn't work.",
+      "seconds": 2279.956,
+      "source": "But I"
+    },
+    {
+      "index": 364,
+      "en": "There's an Epik High show episode coming up very soon.",
+      "seconds": 2283.796,
+      "source": "There's a There's an Epic Casey episode"
+    },
+    {
+      "index": 365,
+      "en": "In that episode, all three of us try our best to be more thoughtful, more aesthetic, more performative versions of ourselves.",
+      "seconds": 2291.316,
+      "source": "in that episode"
+    },
+    {
+      "index": 366,
+      "en": "And we fail miserably.",
+      "seconds": 2305.036,
+      "source": "ourselves. And we fail miserably."
+    },
+    {
+      "index": 367,
+      "en": "We try to be very vloggy and very Pinterest.",
+      "seconds": 2309.436,
+      "source": ">> Okay, we try to be very uh vloggy"
+    },
+    {
+      "index": 368,
+      "en": "We try our best to be very Pinterest, but we fail miserably.",
+      "seconds": 2316.796,
+      "source": "We try our best to be very Pinterest."
+    },
+    {
+      "index": 369,
+      "en": "You will see it this week, so make sure you check it out.",
+      "seconds": 2319.676,
+      "source": "But um we fail miserably. And you will"
+    },
+    {
+      "index": 370,
+      "en": "But I swear that's the way I was.",
+      "seconds": 2325.276,
+      "source": "check it out. But,"
+    },
+    {
+      "index": 371,
+      "en": "That's the only past version of myself I miss.",
+      "seconds": 2327.397,
+      "source": "I swear that's the way I was. That's the"
+    },
+    {
+      "index": 372,
+      "en": "As soon as the switch was turned on and I became super extroverted, it didn't stop.",
+      "seconds": 2332.437,
+      "source": "Because, as soon as the switch was"
+    },
+    {
+      "index": 373,
+      "en": "I have been like this for at least thirty years.",
+      "seconds": 2341.877,
+      "source": "Like, I have been like this for at least"
+    },
+    {
+      "index": 374,
+      "en": "But before that, I wasn't, I swear to God.",
+      "seconds": 2349.077,
+      "source": "But, before that I I wasn't. I was like"
+    },
+    {
+      "index": 375,
+      "en": "I hate that whenever I say it, everyone just laughs in my face.",
+      "seconds": 2357.077,
+      "source": ">> I swear, I hate that whenever I say it,"
+    },
+    {
+      "index": 376,
+      "en": "All right, these were the nine questions.",
+      "seconds": 2365.197,
+      "source": "All right, these were the nine"
+    },
+    {
+      "index": 377,
+      "en": "I'm not sure if I answered these properly, because I don't know what this tells me about me.",
+      "seconds": 2366.357,
+      "source": "questions. I'm not sure if I answered"
+    },
+    {
+      "index": 378,
+      "en": "What do you think?",
+      "seconds": 2370.597,
+      "source": "know what this tells me about me. What"
+    },
+    {
+      "index": 379,
+      "en": "For those of you listening, what do you guys think?",
+      "seconds": 2373.797,
+      "source": "do you think? For you were listening,"
+    },
+    {
+      "index": 380,
+      "en": "Does this reveal who I really am?",
+      "seconds": 2375.397,
+      "source": "what do you guys think? Did Does this"
+    },
+    {
+      "index": 381,
+      "en": "Were you answering these questions in your heads as you were listening?",
+      "seconds": 2377.237,
+      "source": "reveal who I really am? Were you Were"
+    },
+    {
+      "index": 382,
+      "en": "Do you feel like the nine questions helped you kind of locate yourself right now?",
+      "seconds": 2381.837,
+      "source": "heads as well as you were listening? Do"
+    },
+    {
+      "index": 383,
+      "en": "Producer: It makes you think about what your priorities are in your life.",
+      "seconds": 2390.157,
+      "source": ">> It makes you think about what your"
+    },
+    {
+      "index": 384,
+      "en": "Yeah, I guess that's the point of this, right?",
+      "seconds": 2393.397,
+      "source": ">> Yeah, I guess that's the point of this,"
+    },
+    {
+      "index": 385,
+      "en": "If I distill my answers down to a sentence, I guess what matters to me is family—and, well, family.",
+      "seconds": 2397.277,
+      "source": "And uh if I distill um my answers down"
+    },
+    {
+      "index": 386,
+      "en": "Because Mythical Entertainment is our family as well.",
+      "seconds": 2406.037,
+      "source": "well, family. Because, Mythical"
+    },
+    {
+      "index": 387,
+      "en": "Epik High, our fans, our audience—it's all one big family.",
+      "seconds": 2410.317,
+      "source": "Um you know, Epic Kai'en, our fans, our"
+    },
+    {
+      "index": 388,
+      "en": "I guess that's all that matters to me in the end.",
+      "seconds": 2416.477,
+      "source": "I guess that's all that matters"
+    },
+    {
+      "index": 389,
+      "en": "Producer: Do you usually think about these things by yourself, or is this the first time you're thinking about them here?",
+      "seconds": 2422.117,
+      "source": ">> Do you usually think about these things"
+    },
+    {
+      "index": 390,
+      "en": "I don't sit there drinking coffee or tea and ponder these philosophical thoughts or dilemmas.",
+      "seconds": 2429.797,
+      "source": ">> I don't like um"
+    },
+    {
+      "index": 391,
+      "en": "What happens is that, at about 2:40 or 3:15 in the morning, I'll suddenly wake up in a cold sweat and be like, “Holy [censored], what if I only have a week to live?”",
+      "seconds": 2442.757,
+      "source": "What happens is that"
+    },
+    {
+      "index": 392,
+      "en": "I swear, it happens to me quite frequently.",
+      "seconds": 2460.038,
+      "source": "I swear, it happens to me quite"
+    },
+    {
+      "index": 393,
+      "en": "Or, “What if I'm living my life the wrong way?”",
+      "seconds": 2462.758,
+      "source": "Or like, \"What if What if I'm living my"
+    },
+    {
+      "index": 394,
+      "en": "“What if I'm not challenging myself enough?”",
+      "seconds": 2465.518,
+      "source": "life the wrong way? What if there's like"
+    },
+    {
+      "index": 395,
+      "en": "“What if I need to relocate to another place, and there's unlimited potential waiting for me there, but I'm stuck here?”",
+      "seconds": 2469.398,
+      "source": "myself enough? What if there's What if I"
+    },
+    {
+      "index": 396,
+      "en": "“I'm stuck here because I think this is the life I'm supposed to live, and this is it.”",
+      "seconds": 2481.118,
+      "source": "I'm stuck here because I I think this is"
+    },
+    {
+      "index": 397,
+      "en": "“What if I'm not being all I can be for my family?”",
+      "seconds": 2487.478,
+      "source": "\"What if there What if I'm not"
+    },
+    {
+      "index": 398,
+      "en": "“What if I leave them nothing?”",
+      "seconds": 2494.278,
+      "source": "What if I leave them nothing?\""
+    },
+    {
+      "index": 399,
+      "en": "I have these three-a.m. thoughts quite often, especially when I'm in a hotel on tour.",
+      "seconds": 2497.278,
+      "source": "And I I have these like"
+    },
+    {
+      "index": 400,
+      "en": "I'll just wake up, and from that point on, I won't be able to sleep until six.",
+      "seconds": 2507.798,
+      "source": "I'll just wake up and like and from that"
+    },
+    {
+      "index": 401,
+      "en": "Sometimes you'll meet me in the lobby, and I'll look really tired.",
+      "seconds": 2511.638,
+      "source": "like 6:00. You know, sometimes you'll"
+    },
+    {
+      "index": 402,
+      "en": "That's when I had those moments, those thoughts.",
+      "seconds": 2515.158,
+      "source": "really tired. That's when I had those"
+    },
+    {
+      "index": 403,
+      "en": "I wake up at 2:40 in the morning, and I'm like, “Oh my God, if there's a box with all the things I've lost, what would I search for first?”",
+      "seconds": 2519.198,
+      "source": "thoughts. I'm like I wake up, it's like"
+    },
+    {
+      "index": 404,
+      "en": "“I don't know, but I gotta piss.”",
+      "seconds": 2533.518,
+      "source": "I don't know, but I got to I got to"
+    },
+    {
+      "index": 405,
+      "en": "Those are the only moments I ask myself these things.",
+      "seconds": 2537.998,
+      "source": ">> Those are the only moments I ask myself"
+    },
+    {
+      "index": 406,
+      "en": "Sometimes I'll have these thoughts right before we start shooting something, or right before a show.",
+      "seconds": 2540.598,
+      "source": "these things. And sometimes I'll have"
+    },
+    {
+      "index": 407,
+      "en": "Now that I think about it, I have these existential, dark thoughts the most on stage while Mithra's rapping.",
+      "seconds": 2547.958,
+      "source": "right before a show, I Oh, now that I"
+    },
+    {
+      "index": 408,
+      "en": "No, I swear to God.",
+      "seconds": 2562.878,
+      "source": "No, I swear to god."
+    },
+    {
+      "index": 409,
+      "en": "This is going to sound crazy if you've seen Epik High's concerts, because I'm super hyped.",
+      "seconds": 2565.198,
+      "source": "Like this this is going to"
+    },
+    {
+      "index": 410,
+      "en": "But what happens is, I'll do my verse.",
+      "seconds": 2572.758,
+      "source": "But um what happens is like I'll do my"
+    },
+    {
+      "index": 411,
+      "en": "It's usually the first verse, right?",
+      "seconds": 2575.56,
+      "source": "Right? It's usually the first verse,"
+    },
+    {
+      "index": 412,
+      "en": "I do my verse, and then it's Mithra's verse.",
+      "seconds": 2577.08,
+      "source": "right? So I do my verse and it's"
+    },
+    {
+      "index": 413,
+      "en": "I'm like, “Mithra, you're in.”",
+      "seconds": 2578.88,
+      "source": "Mithras' verse. I'm like, \"Mithras,"
+    },
+    {
+      "index": 414,
+      "en": "Mithra starts rapping, and everyone's like, “Ah!”",
+      "seconds": 2580.0,
+      "source": "you're in.\" And Mithras starts rapping"
+    },
+    {
+      "index": 415,
+      "en": "I usually take a step back and watch Mithra rap.",
+      "seconds": 2584.88,
+      "source": "you know, I usually take a step back and"
+    },
+    {
+      "index": 416,
+      "en": "Things kind of slow down into slow motion.",
+      "seconds": 2590.8,
+      "source": "And like things like kind of slow down"
+    },
+    {
+      "index": 417,
+      "en": "I look at the audience, and I'm like, “What am I doing?”",
+      "seconds": 2595.56,
+      "source": "And I look at the audience"
+    },
+    {
+      "index": 418,
+      "en": "“Do I matter?”",
+      "seconds": 2599.48,
+      "source": "\"What am I doing? Like, do I matter?"
+    },
+    {
+      "index": 419,
+      "en": "“Does what I'm doing matter?”",
+      "seconds": 2602.12,
+      "source": "Like, is what I'm doing like does it"
+    },
+    {
+      "index": 420,
+      "en": "“What if I'm not doing enough?”",
+      "seconds": 2604.32,
+      "source": "matter? What if I'm not doing enough?\""
+    },
+    {
+      "index": 421,
+      "en": "All these thoughts, right?",
+      "seconds": 2606.16,
+      "source": "And like all these thoughts, right? Like"
+    },
+    {
+      "index": 422,
+      "en": "I look back and see Tukutz, and I'm like, “What am I doing here?”",
+      "seconds": 2608.64,
+      "source": "and I look back and you know, I see two"
+    },
+    {
+      "index": 423,
+      "en": "Then it's time for me to do the hook, so I'm like, “Burj Khalifa!”",
+      "seconds": 2615.64,
+      "source": "And then it's time for me to do the"
+    },
+    {
+      "index": 424,
+      "en": "“What's up?”",
+      "seconds": 2621.4,
+      "source": ">> What's up?\" Right?"
+    },
+    {
+      "index": 425,
+      "en": "But I'll have these thoughts.",
+      "seconds": 2623.88,
+      "source": "But I'll I'll I'll have these thoughts."
+    },
+    {
+      "index": 426,
+      "en": "There's one specific thought I had during the tour while I was performing.",
+      "seconds": 2626.6,
+      "source": "I There's one specific thought I had"
+    },
+    {
+      "index": 427,
+      "en": "Again, Mithra was rapping, and I saw someone in the audience who was maybe Haru's age or even younger.",
+      "seconds": 2632.16,
+      "source": "it was again Mithra rapping and I looked"
+    },
+    {
+      "index": 428,
+      "en": "As soon as I saw her, my first thought wasn't, “Oh, we have a really young fan base now.”",
+      "seconds": 2640.24,
+      "source": "And as soon as I"
+    },
+    {
+      "index": 429,
+      "en": "That wasn't the thought I had.",
+      "seconds": 2647.36,
+      "source": "really young fan base now.\" That wasn't"
+    },
+    {
+      "index": 430,
+      "en": "The thought I had was, “Damn, when this person becomes an adult, I might not even be around.”",
+      "seconds": 2649.52,
+      "source": "the thought I had. The thought I had"
+    },
+    {
+      "index": 431,
+      "en": "“What if I'm not around?”",
+      "seconds": 2656.12,
+      "source": "around. What if I'm not around?\""
+    },
+    {
+      "index": 432,
+      "en": "I swear to God, I have these dark thoughts.",
+      "seconds": 2659.32,
+      "source": "I swear to god, I have these like dark"
+    },
+    {
+      "index": 433,
+      "en": "Then it's time for me to do the hook, so I'm like, “I'm never going down again.”",
+      "seconds": 2663.08,
+      "source": "thoughts. And then it's time for me to"
+    },
+    {
+      "index": 434,
+      "en": "“Love, love, love.”",
+      "seconds": 2669.44,
+      "source": "\"Love love love.\" Uh and then I'm okay."
+    },
+    {
+      "index": 435,
+      "en": "Then I'm okay.",
+      "seconds": 2669.44,
+      "source": "\"Love love love.\" Uh and then I'm okay."
+    },
+    {
+      "index": 436,
+      "en": "But, yeah, I have existential crises quite often.",
+      "seconds": 2674.2,
+      "source": "But"
+    },
+    {
+      "index": 437,
+      "en": "Producer: Maybe it's because you feel happy in those moments and you're afraid of losing it.",
+      "seconds": 2681.16,
+      "source": ">> Maybe it's because you you feel happy in"
+    },
+    {
+      "index": 438,
+      "en": "Yeah, that's actually how I reason myself back to a calm state.",
+      "seconds": 2686.32,
+      "source": ">> Yeah, that's that's actually how I um"
+    },
+    {
+      "index": 439,
+      "en": "I'm like, “It's because I have a lot to lose.”",
+      "seconds": 2691.84,
+      "source": "because I'm like it's it's because I"
+    },
+    {
+      "index": 440,
+      "en": "“I finally have things I care about enough that I don't want to lose them.”",
+      "seconds": 2693.68,
+      "source": "have a lot to lose. I finally have"
+    },
+    {
+      "index": 441,
+      "en": "So maybe that's why.",
+      "seconds": 2700.921,
+      "source": "So, maybe that's why. But,"
+    },
+    {
+      "index": 442,
+      "en": "To close up this self-reflection episode, I want to say that although these viral self-reflection, personality-test, learn-about-yourself things are great and fun to do, don't do them too much.",
+      "seconds": 2703.001,
+      "source": "to close up this self-reflection"
+    },
+    {
+      "index": 443,
+      "en": "I would advise against self-reflecting too much.",
+      "seconds": 2723.241,
+      "source": "I I I would advise against"
+    },
+    {
+      "index": 444,
+      "en": "We are meant to just be in the moment.",
+      "seconds": 2730.681,
+      "source": "we are meant to like we are meant to"
+    },
+    {
+      "index": 445,
+      "en": "We're not meant to observe ourselves from afar.",
+      "seconds": 2733.681,
+      "source": "just be in the moment. We're not meant"
+    },
+    {
+      "index": 446,
+      "en": "I don't think it's that healthy to self-reflect too much, because look at me right now.",
+      "seconds": 2737.121,
+      "source": "observe ourselves from afar. I I I don't"
+    },
+    {
+      "index": 447,
+      "en": "I was self-reflecting, and now I'm kind of sad.",
+      "seconds": 2745.681,
+      "source": "look at me right now. I I was, you know,"
+    },
+    {
+      "index": 448,
+      "en": "Because Rosemary here asked me questions, I'm definitely waking up at three in the morning tonight.",
+      "seconds": 2753.641,
+      "source": "Because you ask me because Rosemary here"
+    },
+    {
+      "index": 449,
+      "en": "What I'm saying is, don't self-reflect too much; don't over-self-reflect.",
+      "seconds": 2765.081,
+      "source": "So, what I'm saying is don't"
+    },
+    {
+      "index": 450,
+      "en": "Sometimes it's better to just be in the moment, run, and keep going forward.",
+      "seconds": 2769.681,
+      "source": "Sometimes just it's better to just be in"
+    },
+    {
+      "index": 451,
+      "en": "Once in a while, self-reflect.",
+      "seconds": 2777.081,
+      "source": "and once in a while once in a while"
+    },
+    {
+      "index": 452,
+      "en": "Hopefully, these nine questions helped you today to reassess your priorities.",
+      "seconds": 2779.921,
+      "source": "self-reflect. Hopefully, these nine"
+    },
+    {
+      "index": 453,
+      "en": "I don't really like thinking about the end or about death.",
+      "seconds": 2786.281,
+      "source": "to reassess your priorities. I don't"
+    },
+    {
+      "index": 454,
+      "en": "But these self-reflection surveys or viral things always contain a question about having only a day, a month, or a year to live.",
+      "seconds": 2792.881,
+      "source": "death, but usually these self-reflecting"
+    },
+    {
+      "index": 455,
+      "en": "“What's the first thing?”",
+      "seconds": 2807.721,
+      "source": "what's the first thing like who's the"
+    },
+    {
+      "index": 456,
+      "en": "“What matters?”",
+      "seconds": 2809.241,
+      "source": "who what matters? Who matters, right?"
+    },
+    {
+      "index": 457,
+      "en": "“Who matters?”",
+      "seconds": 2809.241,
+      "source": "who what matters? Who matters, right?"
+    },
+    {
+      "index": 458,
+      "en": "Although I don't like thinking about it, it does help you reassess and reconfigure your life to go in the direction that best suits your priorities.",
+      "seconds": 2812.521,
+      "source": "And um although I don't like thinking"
+    },
+    {
+      "index": 459,
+      "en": "If your priorities, through these questions, turn out to be family, maybe cut out the things that prevent you from being with family.",
+      "seconds": 2830.323,
+      "source": "if your priorities"
+    },
+    {
+      "index": 460,
+      "en": "Maybe cut out hobbies that keep taking you away from family.",
+      "seconds": 2842.602,
+      "source": "You know, maybe cut out hobbies that"
+    },
+    {
+      "index": 461,
+      "en": "That's why I don't golf.",
+      "seconds": 2847.922,
+      "source": "That's why I don't golf."
+    },
+    {
+      "index": 462,
+      "en": "You know that?",
+      "seconds": 2849.843,
+      "source": "You know that?"
+    },
+    {
+      "index": 463,
+      "en": "I don't golf, and I don't do a bunch of other things.",
+      "seconds": 2852.442,
+      "source": "I I don't golf and I don't do a bunch of"
+    },
+    {
+      "index": 464,
+      "en": "I'm not saying it's wrong to golf, but you know what I mean?",
+      "seconds": 2854.763,
+      "source": "like I'm not saying it's wrong to golf,"
+    },
+    {
+      "index": 465,
+      "en": "I don't have any hobbies that really take me away from my family.",
+      "seconds": 2857.043,
+      "source": "but I you know what I mean? Like I don't"
+    },
+    {
+      "index": 466,
+      "en": "The only hobbies I have are watching movies or going to concerts, and I do that with family.",
+      "seconds": 2862.963,
+      "source": "The only hobbies I have is like watching"
+    },
+    {
+      "index": 467,
+      "en": "Maybe reconfigure your life as 2026 winds down.",
+      "seconds": 2870.402,
+      "source": "maybe like reconfigure your life uh as"
+    },
+    {
+      "index": 468,
+      "en": "When we begin 2027, hopefully we can go into it strong, having reconfigured our lives to be more in tune with what we really value.",
+      "seconds": 2873.723,
+      "source": "2026 winds down. And when we begin 2027,"
+    },
+    {
+      "index": 469,
+      "en": "And that's why I'm never going on a long tour again.",
+      "seconds": 2893.362,
+      "source": "And um"
+    },
+    {
+      "index": 470,
+      "en": "I'm sorry to the fans, but I just can't do it anymore.",
+      "seconds": 2901.283,
+      "source": ">> I'm I'm sorry to the fans, but I just"
+    },
+    {
+      "index": 471,
+      "en": "It's really lonely being in a hotel for a month.",
+      "seconds": 2907.122,
+      "source": "it's really lonely"
+    },
+    {
+      "index": 472,
+      "en": "Maybe it's just me being sick.",
+      "seconds": 2915.203,
+      "source": "Maybe it's just this me being sick."
+    },
+    {
+      "index": 473,
+      "en": "Maybe it's the sickness talking.",
+      "seconds": 2917.043,
+      "source": "Maybe it's the sickness talking."
+    },
+    {
+      "index": 474,
+      "en": "You know what my wife said to me?",
+      "seconds": 2919.882,
+      "source": "You know what? One thing One thing my"
+    },
+    {
+      "index": 475,
+      "en": "I actually said this to my wife when I got back: “I've decided to never go on long tours again.”",
+      "seconds": 2921.963,
+      "source": "wife said to me. I said this to my wife"
+    },
+    {
+      "index": 476,
+      "en": "“This was my last.”",
+      "seconds": 2929.922,
+      "source": "This was my last.\" And she was like,"
+    },
+    {
+      "index": 477,
+      "en": "And she was like, “It's always your last.”",
+      "seconds": 2929.922,
+      "source": "This was my last.\" And she was like,"
+    },
+    {
+      "index": 478,
+      "en": "See you next week.",
+      "seconds": 2938.523,
+      "source": ">> See you next week."
+    },
+    {
+      "index": 479,
+      "en": "Hey Tablo!",
+      "seconds": 2941.484,
+      "source": ">> Hey Tableau."
+    }
+  ]
+}

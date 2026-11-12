@@ -233,9 +233,54 @@
   $('offset').oninput = () => updateOffset(false);
   $('offset').onchange = () => updateOffset(true);
   $('rate').onchange = () => { position=now(); anchor=position; anchorAt=performance.now(); rate=Number($('rate').value); saveProgress(); cloud?.changed(); };
+  // Sentence taps seek the embedded player without opening the external link chooser.
+  function playSentence(pair) {
+    if ($('dock').hidden) return;
+    const time = secondsFromLink(pair.querySelector('a.time'));
+    if (time === null) return;
+    if (mode !== 'manual' && (!player || !ready)) {
+      note('플레이어가 준비되면 문장을 다시 눌러 주세요.');
+      return;
+    }
+    seek(Math.max(0, time - offset));
+    if (mode === 'manual') {
+      setPlaying(true);
+      note('선택한 문장부터 타이머를 시작했어요. 다른 앱의 재생 시각도 직접 맞춰 주세요.');
+    } else {
+      try {
+        mode === 'youtube' ? player.playVideo() : player.resume();
+        note('선택한 문장부터 재생합니다.');
+      } catch { note('재생 버튼을 눌러 이어서 들어 주세요.'); }
+    }
+    saveProgress(); cloud?.changed();
+  }
+  for (const {el} of precise) {
+    for (const text of el.querySelectorAll('.en,.ko')) {
+      text.classList.add('reader-sentence');
+      text.addEventListener('click', e => {
+        if (e.target.closest('a,button,input,select') || window.getSelection()?.toString().trim()) return;
+        playSentence(el);
+      });
+      text.addEventListener('keydown', e => {
+        if ($('dock').hidden || !['Enter', ' '].includes(e.key)) return;
+        e.preventDefault(); playSentence(el);
+      });
+    }
+  }
+  function syncSentenceControls() {
+    for (const text of document.querySelectorAll('.reader-sentence')) {
+      if ($('dock').hidden) {
+        text.removeAttribute('tabindex'); text.removeAttribute('role'); text.removeAttribute('title');
+      } else {
+        text.tabIndex = 0; text.setAttribute('role', 'button');
+        text.title = '이 문장부터 재생 · 따라가기';
+      }
+    }
+  }
+  new MutationObserver(syncSentenceControls).observe($('dock'), {attributes:true, attributeFilter:['hidden']});
   function manualBrowse(e) {
     if ($('dock').hidden || $('dock').contains(e.target) || !follow) return;
-    setFollow(false); note('직접 스크롤 중입니다. 다시 따라가기를 누르면 현재 대본으로 돌아갑니다.');
+    setFollow(false); note('원하는 문장을 누르면 그 부분부터 재생하며 다시 따라갑니다.');
   }
   document.addEventListener('click', e => {
     const link=e.target.closest('a');

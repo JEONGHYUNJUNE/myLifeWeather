@@ -25,3 +25,5 @@
 #reader-player-toggle{background:#f3f6ee!important;border:0!important;border-radius:10px!important;color:#667b65!important}#reader-player-panel{margin-bottom:10px}
 @media(max-width:360px){#reader-dock{padding:10px}.reader-compact-row{gap:6px}.reader-compact-row strong{font-size:12px}.reader-compact-row output{font-size:12px;padding:4px}.reader-compact-row button{font-size:12px!important}.reader-disclosure summary span{margin-left:4px!important}}
 @media(prefers-reduced-motion:reduce){#reader-dock button,#reader-dock select,#reader-dock input{transition:none}}
+
+body.reader-open .reader-sentence{cursor:pointer}body.reader-open .reader-sentence:focus-visible{outline:2px solid #588449;outline-offset:4px;border-radius:4px}@media(hover:hover){body.reader-open .reader-sentence:hover{color:#285941;text-decoration:underline;text-decoration-color:#b4cabb;text-underline-offset:4px}}

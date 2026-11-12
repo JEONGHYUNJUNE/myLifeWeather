@@ -40,6 +40,9 @@
     if (value) cloud?.changed();
     $('play').textContent = playing ? '일시정지' : '시작';
     $('play').disabled = !ready;
+    $('mini-play').textContent = playing ? 'Ⅱ' : '▶';
+    $('mini-play').setAttribute('aria-label', playing ? '일시정지' : '재생 시작');
+    $('mini-play').disabled = !ready;
   }
   function setFollow(value) {
     follow = value;
@@ -54,6 +57,7 @@
   function render(force = false) {
     if ($('dock').hidden) return;
     const current = now(), scriptTime = Math.max(0, current + offset), index = cueIndex(cues, scriptTime);
+    $('mini-clock').textContent = formatTime(current);
     $('clock').textContent = `재생 ${formatTime(current)} · 대본 ${formatTime(scriptTime)}`;
     if (document.activeElement !== $('time')) $('time').value = formatTime(current);
     if (index !== active) {
@@ -95,6 +99,14 @@
       script.src = src; document.head.appendChild(script);
     });
   }
+  $('mini-play').onclick = () => $('play').click();
+  $('dock-toggle').onclick = () => {
+    const expanded = $('dock-toggle').getAttribute('aria-expanded') !== 'true';
+    $('dock-toggle').setAttribute('aria-expanded', String(expanded));
+    $('dock-toggle').textContent = expanded ? '접기 ▾' : '펼치기 ▴';
+    $('dock').classList.toggle('reader-dock-collapsed', !expanded);
+    $('body').inert = !expanded;
+  };
   function setPlayerExpanded(expanded) {
     $('player-toggle').setAttribute('aria-expanded', String(expanded));
     $('player-toggle').textContent = expanded ? '플레이어 접기 ▴' : '플레이어 펼치기 ▾';

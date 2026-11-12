@@ -38,7 +38,7 @@
     if (mode === 'manual') { position = now(); anchor = position; anchorAt = performance.now(); }
     playing = value;
     if (value) cloud?.changed();
-    $('play').textContent = playing ? '일시정지' : '시작';
+    $('play').textContent = playing ? 'Ⅱ 일시정지' : '▶ 시작';
     $('play').disabled = !ready;
     $('mini-play').textContent = playing ? 'Ⅱ' : '▶';
     $('mini-play').setAttribute('aria-label', playing ? '일시정지' : '재생 시작');

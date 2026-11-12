@@ -1356,6 +1356,22 @@ https://www.youtube.com/watch?v=_c_2NsYL3ic
 .reader-cue-time{display:inline-block;font-size:12px;margin-bottom:4px;color:#37654c}
 
 .reader-compact-row{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}.reader-compact-row strong{font-size:13px;white-space:nowrap}.reader-compact-row output{margin-left:auto;font-variant-numeric:tabular-nums;font-size:13px}.reader-compact-row button{flex-shrink:0}#reader-mini-play{background:#285941!important;color:#fff!important;min-width:42px!important}#reader-body{margin-top:8px}#reader-dock.reader-dock-collapsed #reader-body{height:0;overflow:hidden;margin:0;pointer-events:none}#reader-dock.reader-dock-collapsed{overflow:hidden}
+
+/* Compact reading controls: primary playback, secondary tools, clear states. */
+#reader-dock{width:min(540px,calc(100% - 24px));padding:14px;border-color:#d8e2d8;border-radius:22px;background:#fffefa;box-shadow:0 10px 45px #183e3026;overscroll-behavior:contain;box-sizing:border-box}
+#reader-dock button,#reader-dock select,#reader-dock input{min-height:44px;border-radius:12px;border-color:#dbe3dc;padding:10px 12px;font-size:13px;box-sizing:border-box;transition:background .15s,border-color .15s}
+#reader-dock button:hover{background:#edf3ec}#reader-dock button:active{background:#e0eadf}
+.reader-compact-row{gap:10px;min-height:44px}.reader-compact-row strong{font-size:14px;letter-spacing:-.4px}.reader-compact-row output{font-size:14px;font-weight:650;color:#37604a;background:#edf3e9;border-radius:8px;padding:4px 8px}
+#reader-dock-toggle{border:0!important;background:transparent!important;padding:8px!important;color:#557360!important}#reader-mini-play{display:none;border:0!important;border-radius:50%!important;width:44px}#reader-dock.reader-dock-collapsed #reader-mini-play{display:block}#reader-dock.reader-dock-collapsed{padding:8px 12px;border-radius:18px}
+#reader-body{border-top:1px solid #e8ece5;padding-top:12px;margin-top:10px}#reader-dock.reader-dock-collapsed #reader-body{padding:0;border:0}
+.reader-heading{gap:6px;margin:0 0 10px;flex-wrap:nowrap}.reader-heading output{margin:0;color:#6a7b6e;font-size:12px}#reader-close{margin-left:auto;border:0!important;min-height:32px!important;padding:5px 8px!important;color:#6a7b6e!important;background:transparent!important;font-size:12px!important}
+.reader-source{display:flex;align-items:center;gap:12px;margin-bottom:12px}.reader-source label{font-size:12px;color:#6a7b6e;white-space:nowrap}#reader-mode{width:0;flex:1;max-width:100%;background:#f6f7f2}
+.reader-transport{display:grid;grid-template-columns:1fr 2.2fr 1fr;gap:8px;margin-bottom:10px}#reader-play{background:#285941!important;color:#fff!important;border-color:#285941!important;font-weight:650;font-size:15px!important;min-height:48px!important}#reader-back,#reader-forward{background:#f3f5ef;border-color:transparent!important;font-variant-numeric:tabular-nums}
+.reader-toggles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}#reader-follow[aria-pressed="true"]{background:#e8f0e1;color:#315730;border-color:#cddfc1}#reader-follow[aria-pressed="false"]{background:#f7f7f2;border-color:#dbe3dc;color:#59675d}#reader-translation{background:#fff!important;border-color:#dbe3dc!important}
+#reader-dock .reader-disclosure{border:1px solid #e2e7dd;border-radius:12px;background:#f8f9f4;margin:8px 0 0;padding:0;overflow:hidden}#reader-dock .reader-disclosure summary{padding:13px 12px;color:#3e5645;font-size:13px;font-weight:600;cursor:pointer}#reader-dock .reader-disclosure summary span{font-size:11px;font-weight:400;color:#74816f;margin-left:8px}#reader-dock .reader-disclosure .reader-row{padding:0 10px 10px;margin:0;gap:8px}#reader-dock .reader-disclosure .reader-help{padding:0 12px 12px;margin:0;line-height:1.7}#reader-bookmarks{flex:1;width:100px}#reader-delete-bookmark{color:#876457!important}#reader-status{color:#71806f;font-size:11px;line-height:1.6;margin-top:10px}
+#reader-player-toggle{background:#f3f6ee!important;border:0!important;border-radius:10px!important;color:#667b65!important}#reader-player-panel{margin-bottom:10px}
+@media(max-width:360px){#reader-dock{padding:10px}.reader-compact-row{gap:6px}.reader-compact-row strong{font-size:12px}.reader-compact-row output{font-size:12px;padding:4px}.reader-compact-row button{font-size:12px!important}.reader-disclosure summary span{margin-left:4px!important}}
+@media(prefers-reduced-motion:reduce){#reader-dock button,#reader-dock select,#reader-dock input{transition:none}}
 </style><section id="reader-dock" aria-label="대본 자동 스크롤 도구" hidden>
   <div class="reader-compact-row">
     <strong>대본 따라가기</strong><output id="reader-mini-clock">00:00</output>
@@ -1368,15 +1384,21 @@ https://www.youtube.com/watch?v=_c_2NsYL3ic
     <div id="reader-player"><div id="reader-player-target"></div></div>
   </div>
   <div class="reader-heading"><output id="reader-clock">00:00</output><button type="button" id="reader-close" aria-label="자동 스크롤 도구 닫기">닫기</button></div>
-  <div class="reader-row">
-    <select id="reader-mode" aria-label="재생 방식"><option value="manual">다른 앱으로 듣기 · 수동 시간</option><option value="youtube">이 페이지에서 YouTube</option><option value="spotify">Spotify · 재생 제한 가능</option></select>
-    <button type="button" id="reader-play">시작</button>
+  <div class="reader-source">
+    <label for="reader-mode">듣는 곳</label><select id="reader-mode" aria-label="재생 방식"><option value="manual">다른 앱으로 듣기 · 수동 시간</option><option value="youtube">이 페이지에서 YouTube</option><option value="spotify">Spotify · 재생 제한 가능</option></select>
+  </div>
+  <div class="reader-transport">
+    <button type="button" id="reader-back" aria-label="5초 뒤로">−5초</button>
+    <button type="button" id="reader-play">▶ 시작</button>
+    <button type="button" id="reader-forward" aria-label="5초 앞으로">+5초</button>
+  </div>
+  <div class="reader-toggles">
     <button type="button" id="reader-follow" aria-pressed="true">따라가기 켜짐</button>
     <button type="button" id="reader-translation" aria-pressed="false">번역 숨기기</button>
   </div>
-  <div class="reader-row"><button type="button" id="reader-bookmark">☆ 현재 시각 책갈피</button><select id="reader-bookmarks" aria-label="저장한 책갈피"><option value="">책갈피 선택</option></select><button type="button" id="reader-delete-bookmark">선택 책갈피 삭제</button></div>
-  <details id="reader-settings"><summary>시간·속도 맞추기</summary>
-    <div class="reader-row"><label>현재 재생 시각 <input id="reader-time" type="text" inputmode="numeric" value="00:00" placeholder="분:초" aria-label="현재 재생 시각"></label><button type="button" id="reader-seek">이 시각으로 맞추기</button><button type="button" id="reader-back">−5초</button><button type="button" id="reader-forward">+5초</button></div>
+  <details class="reader-disclosure" id="reader-bookmark-panel"><summary>책갈피 <span>저장 · 이어보기</span></summary><div class="reader-row reader-bookmark-row"><button type="button" id="reader-bookmark">☆ 지금 저장</button><select id="reader-bookmarks" aria-label="저장한 책갈피"><option value="">책갈피 선택</option></select><button type="button" id="reader-delete-bookmark">삭제</button></div></details>
+  <details id="reader-settings" class="reader-disclosure"><summary>재생 설정 <span>시간 · 속도 · 대본 보정</span></summary>
+    <div class="reader-row"><label>현재 재생 시각 <input id="reader-time" type="text" inputmode="numeric" value="00:00" placeholder="분:초" aria-label="현재 재생 시각"></label><button type="button" id="reader-seek">이 시각으로 맞추기</button></div>
     <div class="reader-row"><label>대본 보정 <input id="reader-offset" type="number" step="1" min="-600" max="600" value="0" aria-label="대본 보정 초"> 초</label><label id="reader-rate-label">수동 타이머 속도 <select id="reader-rate" aria-label="수동 타이머 속도"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="1.75">1.75×</option><option value="2">2×</option></select></label><button type="button" id="reader-reset">처음으로</button></div>
     <p class="reader-help">현재 시각은 07:25 또는 445(초)로 입력하세요. 대본이 늦으면 보정을 +초, 너무 앞서면 −초로 조절하세요. 페이지 안 재생 속도는 플레이어에서 바꾸세요. 다른 앱의 일시정지·광고는 수동 타이머에도 직접 반영해 주세요.</p>
   </details>
@@ -1575,7 +1597,7 @@ window.attachTabloCloud = function(config, reader) {
     if (mode === 'manual') { position = now(); anchor = position; anchorAt = performance.now(); }
     playing = value;
     if (value) cloud?.changed();
-    $('play').textContent = playing ? '일시정지' : '시작';
+    $('play').textContent = playing ? 'Ⅱ 일시정지' : '▶ 시작';
     $('play').disabled = !ready;
     $('mini-play').textContent = playing ? 'Ⅱ' : '▶';
     $('mini-play').setAttribute('aria-label', playing ? '일시정지' : '재생 시작');

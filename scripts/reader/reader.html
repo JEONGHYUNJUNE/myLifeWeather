@@ -25,15 +25,21 @@
     <div id="reader-player"><div id="reader-player-target"></div></div>
   </div>
   <div class="reader-heading"><output id="reader-clock">00:00</output><button type="button" id="reader-close" aria-label="자동 스크롤 도구 닫기">닫기</button></div>
-  <div class="reader-row">
-    <select id="reader-mode" aria-label="재생 방식"><option value="manual">다른 앱으로 듣기 · 수동 시간</option><option value="youtube">이 페이지에서 YouTube</option><option value="spotify">Spotify · 재생 제한 가능</option></select>
-    <button type="button" id="reader-play">시작</button>
+  <div class="reader-source">
+    <label for="reader-mode">듣는 곳</label><select id="reader-mode" aria-label="재생 방식"><option value="manual">다른 앱으로 듣기 · 수동 시간</option><option value="youtube">이 페이지에서 YouTube</option><option value="spotify">Spotify · 재생 제한 가능</option></select>
+  </div>
+  <div class="reader-transport">
+    <button type="button" id="reader-back" aria-label="5초 뒤로">−5초</button>
+    <button type="button" id="reader-play">▶ 시작</button>
+    <button type="button" id="reader-forward" aria-label="5초 앞으로">+5초</button>
+  </div>
+  <div class="reader-toggles">
     <button type="button" id="reader-follow" aria-pressed="true">따라가기 켜짐</button>
     <button type="button" id="reader-translation" aria-pressed="false">번역 숨기기</button>
   </div>
-  <div class="reader-row"><button type="button" id="reader-bookmark">☆ 현재 시각 책갈피</button><select id="reader-bookmarks" aria-label="저장한 책갈피"><option value="">책갈피 선택</option></select><button type="button" id="reader-delete-bookmark">선택 책갈피 삭제</button></div>
-  <details id="reader-settings"><summary>시간·속도 맞추기</summary>
-    <div class="reader-row"><label>현재 재생 시각 <input id="reader-time" type="text" inputmode="numeric" value="00:00" placeholder="분:초" aria-label="현재 재생 시각"></label><button type="button" id="reader-seek">이 시각으로 맞추기</button><button type="button" id="reader-back">−5초</button><button type="button" id="reader-forward">+5초</button></div>
+  <details class="reader-disclosure" id="reader-bookmark-panel"><summary>책갈피 <span>저장 · 이어보기</span></summary><div class="reader-row reader-bookmark-row"><button type="button" id="reader-bookmark">☆ 지금 저장</button><select id="reader-bookmarks" aria-label="저장한 책갈피"><option value="">책갈피 선택</option></select><button type="button" id="reader-delete-bookmark">삭제</button></div></details>
+  <details id="reader-settings" class="reader-disclosure"><summary>재생 설정 <span>시간 · 속도 · 대본 보정</span></summary>
+    <div class="reader-row"><label>현재 재생 시각 <input id="reader-time" type="text" inputmode="numeric" value="00:00" placeholder="분:초" aria-label="현재 재생 시각"></label><button type="button" id="reader-seek">이 시각으로 맞추기</button></div>
     <div class="reader-row"><label>대본 보정 <input id="reader-offset" type="number" step="1" min="-600" max="600" value="0" aria-label="대본 보정 초"> 초</label><label id="reader-rate-label">수동 타이머 속도 <select id="reader-rate" aria-label="수동 타이머 속도"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="1.75">1.75×</option><option value="2">2×</option></select></label><button type="button" id="reader-reset">처음으로</button></div>
     <p class="reader-help">현재 시각은 07:25 또는 445(초)로 입력하세요. 대본이 늦으면 보정을 +초, 너무 앞서면 −초로 조절하세요. 페이지 안 재생 속도는 플레이어에서 바꾸세요. 다른 앱의 일시정지·광고는 수동 타이머에도 직접 반영해 주세요.</p>
   </details>

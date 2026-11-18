@@ -71,3 +71,10 @@ python3 scripts/import-hey-tablo.py --source /absolute/path/to/bundle --episode 
 - 변경된 기록은 5초 간격으로 동기화한다. 네트워크 오류 시 기기 기록을 유지하고 재시도한다. 페이지 종료 직전 요청은 브라우저가 중단할 수 있으므로 클라우드 저장됨 표시를 확인한다.
 - 서버 revision이 다르면 자동 덮어쓰기를 멈추고 불러오기/올리기 선택을 안내한다. `supabase/migrations/20261110_hey_tablo_progress.sql`을 대상 DB에 한 번 적용했다. 일반 테니스 마이그레이션 전체를 실행하지 않는다.
 - RLS는 auth.uid()가 자신의 user_id인 레코드만 읽고 쓰도록 제한한다. SQL 검수는 `supabase/tests/hey_tablo_progress.sql`의 롤백 트랜잭션을 사용한다.
+
+## 47회 완성본 (2026-11-18)
+- 사용자 제공 Tactiq 자막으로 기존 예비 노트를 교체. 영한 280쌍, 19개 구간, 실제 자막 표현 15개·단어 15개, 퀴즈 5개.
+- 번들: 작업 checkout의 형제 디렉터리 `Hey-Tablo-Ep47`. `source.txt`, `pairs.tsv`, `learning.tsv`, `build.py`, `aligned.json`, `learning.json`, HTML/TXT를 보관한다.
+- 각 pair의 `data-reader-seconds`에 제공 자막의 소수점 시작 시각을 보존한다. 모든 시각을 원본 자막과 검사했고, 문장 탭으로 재생/따라가기, 접힌 툴바, 번역 토글을 적용했다.
+- 01:07 누락 표현과 33:14 불명확 구절은 표시하며 임의 복원하지 않는다. 34분대 반복 숫자는 읽기 좋게 줄인다. 음성 대조를 수행했다고 주장하지 않는다.
+- Spotify `5iGeB1VDVQFxBxYclG6tX7` 제목 일치와 `?t=600`의 10:00 표시를 확인했다. 모바일 앱 및 음성 내용 대조는 미실시.

@@ -4,8 +4,8 @@ import json
 import re
 
 
-def add_playback(page, episode, video_id, root):
-    config_path = root / 'data/hey-tablo/playback.json'
+def add_playback(page, episode, video_id, root, show="hey-tablo"):
+    config_path = root / f'data/{show}/playback.json'
     config = json.loads(config_path.read_text()) if config_path.exists() else {}
     audio = config.get(str(episode))
     if not audio:

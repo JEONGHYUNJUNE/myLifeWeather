@@ -1,0 +1,48 @@
+<section id="reader-intro" aria-label="자동 스크롤">
+  <button type="button" id="reader-open">▶ 들으면서 대본 따라가기</button>
+  <p class="note" id="reader-precision"></p>
+  <p class="note" id="reader-saved">재생 위치와 책갈피는 이 브라우저에 저장됩니다. 로그인하면 다른 기기에서도 이어볼 수 있어요.</p>
+  <details id="reader-cloud"><summary>☁ 로그인 · 기기 간 동기화</summary>
+    <p class="note">테니스 사이트의 아이디·비밀번호 또는 Google로 로그인하세요. 두 기기에서 같은 로그인 방식과 계정을 사용해 주세요.</p>
+    <form id="reader-login-form">
+      <label>아이디 또는 이메일 <input id="reader-login-id" autocomplete="username" required></label>
+      <label>비밀번호 <input id="reader-password" type="password" autocomplete="current-password" required></label>
+      <button type="submit" id="reader-login">로그인</button><button type="button" id="reader-google">Google로 로그인</button>
+    </form>
+    <div id="reader-cloud-actions" hidden><p id="reader-account"></p><button type="button" id="reader-cloud-pull">클라우드 기록 불러오기</button><button type="button" id="reader-cloud-push">이 기기 기록 올리기</button><button type="button" id="reader-logout">로그아웃</button></div>
+    <p id="reader-cloud-status" role="status">로그인하면 재생 위치와 책갈피를 폰·PC에서 함께 사용할 수 있어요.</p>
+  </details>
+</section>
+<section id="reader-dock" aria-label="대본 자동 스크롤 도구" hidden>
+  <div class="reader-compact-row">
+    <strong>대본 따라가기</strong><output id="reader-mini-clock">00:00</output>
+    <button type="button" id="reader-mini-play" aria-label="재생 시작">▶</button>
+    <button type="button" id="reader-dock-toggle" aria-expanded="true" aria-controls="reader-body">접기 ▾</button>
+  </div>
+  <div id="reader-body">
+  <div id="reader-player-panel" hidden>
+    <button type="button" id="reader-player-toggle" aria-expanded="true" aria-controls="reader-player">플레이어 접기 ▴</button>
+    <div id="reader-player"><div id="reader-player-target"></div></div>
+  </div>
+  <div class="reader-heading"><output id="reader-clock">00:00</output><button type="button" id="reader-close" aria-label="자동 스크롤 도구 닫기">닫기</button></div>
+  <div class="reader-source">
+    <label for="reader-mode">듣는 곳</label><select id="reader-mode" aria-label="재생 방식"><option value="manual">다른 앱으로 듣기 · 수동 시간</option><option value="youtube">이 페이지에서 YouTube</option><option value="spotify">Spotify · 재생 제한 가능</option></select>
+  </div>
+  <div class="reader-transport">
+    <button type="button" id="reader-back" aria-label="5초 뒤로">−5초</button>
+    <button type="button" id="reader-play">▶ 시작</button>
+    <button type="button" id="reader-forward" aria-label="5초 앞으로">+5초</button>
+  </div>
+  <div class="reader-toggles">
+    <button type="button" id="reader-follow" aria-pressed="true">따라가기 켜짐</button>
+    <button type="button" id="reader-translation" aria-pressed="false">번역 숨기기</button>
+  </div>
+  <details class="reader-disclosure" id="reader-bookmark-panel"><summary>책갈피 <span>저장 · 이어보기</span></summary><div class="reader-row reader-bookmark-row"><button type="button" id="reader-bookmark">☆ 지금 저장</button><select id="reader-bookmarks" aria-label="저장한 책갈피"><option value="">책갈피 선택</option></select><button type="button" id="reader-delete-bookmark">삭제</button></div></details>
+  <details id="reader-settings" class="reader-disclosure"><summary>재생 설정 <span>시간 · 속도 · 대본 보정</span></summary>
+    <div class="reader-row"><label>현재 재생 시각 <input id="reader-time" type="text" inputmode="numeric" value="00:00" placeholder="분:초" aria-label="현재 재생 시각"></label><button type="button" id="reader-seek">이 시각으로 맞추기</button></div>
+    <div class="reader-row"><label>대본 보정 <input id="reader-offset" type="number" step="1" min="-600" max="600" value="0" aria-label="대본 보정 초"> 초</label><label id="reader-rate-label">수동 타이머 속도 <select id="reader-rate" aria-label="수동 타이머 속도"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="1.75">1.75×</option><option value="2">2×</option></select></label><button type="button" id="reader-reset">처음으로</button></div>
+    <p class="reader-help">현재 시각은 07:25 또는 445(초)로 입력하세요. 대본이 늦으면 보정을 +초, 너무 앞서면 −초로 조절하세요. 페이지 안 재생 속도는 플레이어에서 바꾸세요. 다른 앱의 일시정지·광고는 수동 타이머에도 직접 반영해 주세요.</p>
+  </details>
+  <p id="reader-status" role="status">듣는 앱의 시간을 맞춘 뒤 시작하세요.</p>
+  </div>
+</section>

@@ -5,8 +5,8 @@ import re
 from pathlib import Path
 
 
-def add_sentence_cues(page, episode, video_id, root):
-    cue_path = root / f'data/hey-tablo/ep-{episode}-sentence-cues.json'
+def add_sentence_cues(page, episode, video_id, root, show="hey-tablo"):
+    cue_path = root / f'data/{show}/ep-{episode}-sentence-cues.json'
     if not cue_path.exists():
         return page
     cues = json.loads(cue_path.read_text())['cues']
@@ -32,13 +32,13 @@ def add_sentence_cues(page, episode, video_id, root):
         raise ValueError(f'Episode {episode}: sentence cue count mismatch')
     return page
 
-def add_reader(page, episode, video_id, root):
+def add_reader(page, episode, video_id, root, show="hey-tablo"):
     page = re.sub(r'<!--READER-START-->.*?<!--READER-END-->', '', page, flags=re.S)
     if 'class="pair"' not in page:
         return page
-    page = add_sentence_cues(page, episode, video_id, root)
+    page = add_sentence_cues(page, episode, video_id, root, show=show)
     asset = Path(__file__).parent / 'reader'
-    config_path = root / 'data/hey-tablo/playback.json'
+    config_path = root / f'data/{show}/playback.json'
     audio = json.loads(config_path.read_text()).get(str(episode), {}) if config_path.exists() else {}
     config = {'youtube': video_id, 'spotify': audio.get('episodeId'), 'cloud': json.loads((root/'data/hey-tablo/supabase-public.json').read_text())}
     style = '<style>' + (asset / 'reader.css').read_text() + '</style>'
@@ -53,7 +53,11 @@ def add_reader(page, episode, video_id, root):
 
 if __name__ == '__main__':
     root = Path(__file__).resolve().parents[1]
-    for ep in json.loads((root/'data/hey-tablo/episodes.json').read_text()):
-        path = root / f'public/hey-tablo/ep-{ep["number"]}.html'
-        path.write_text(add_reader(path.read_text(), ep['number'], ep['videoId'], root))
-        print(ep['number'])
+    for show in ('hey-tablo', 'minasue-way'):
+        manifest = root / f'data/{show}/episodes.json'
+        if not manifest.exists():
+            continue
+        for ep in json.loads(manifest.read_text()):
+            path = root / f'public/{show}/ep-{ep["number"]}.html'
+            path.write_text(add_reader(path.read_text(), ep['number'], ep['videoId'], root, show=show))
+            print(show, ep['number'])

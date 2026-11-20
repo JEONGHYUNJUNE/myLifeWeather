@@ -78,3 +78,12 @@ python3 scripts/import-hey-tablo.py --source /absolute/path/to/bundle --episode 
 - 각 pair의 `data-reader-seconds`에 제공 자막의 소수점 시작 시각을 보존한다. 모든 시각을 원본 자막과 검사했고, 문장 탭으로 재생/따라가기, 접힌 툴바, 번역 토글을 적용했다.
 - 01:07 누락 표현과 33:14 불명확 구절은 표시하며 임의 복원하지 않는다. 34분대 반복 숫자는 읽기 좋게 줄인다. 음성 대조를 수행했다고 주장하지 않는다.
 - Spotify `5iGeB1VDVQFxBxYclG6tX7` 제목 일치와 `?t=600`의 10:00 표시를 확인했다. 모바일 앱 및 음성 내용 대조는 미실시.
+
+## minasue way (2026-11-20)
+- 목록 `/hey-tablo/minasue-way`, 회차 `/hey-tablo/minasue-way/4`. 기존 `/hey-tablo/**` 인증 복귀 범위를 유지한다.
+- 사용자 확인으로 최미나수의 공식 채널 `UCSNZMSZ6HHrElyvXhEOPsLw`를 추가했다. 새 프로그램의 주간 자동 확인은 아직 요청되지 않았으므로 기존 자동화는 Hey Tablo만 유지한다.
+- 2026-11-19 공개 4회 `l0txIZgJdxk`, 영어 제목 `I Need to Learn to Shut Up`, 한국어 표시 제목 `다들 결혼하는데 나만 그대로일 때`.
+- 현재 공식 설명과 목차 기반 예비 노트. 전체 대본 없음, 따라가기 없음. 사용자 Tactiq 자막을 받으면 전체 영한 대본과 15개 표현·15개 단어·5개 퀴즈를 추가한다. 설명 속 5개 표현은 영상 발언으로 표시하지 않는다.
+- 번들: 작업 checkout 형제 `Mina-Sue-Ep4`. 공통 importer에 `--show minasue-way --show-title 'minasue way'`를 추가한다. 현재 번들 입력 파일명은 importer 호환을 위해 `Hey-Tablo-Ep4-Study.html`/`Hey-Tablo-Ep4-GPT.txt`지만 출력·목록·복사 프롬프트는 minasue way로 분리된다.
+- 데이터 `data/minasue-way/episodes.json`, 출력 `public/minasue-way/ep-N.html`/`.txt`. playback과 sentence-cues도 show별 디렉터리에서 찾는다. 공통 reader와 클라우드 저장은 videoId로 기록을 구분한다.
+- 공식 영상 설명 목차 11개 시각을 확인했다. 본문 발언 시각을 추정하지 않았다. Spotify 회차 링크는 미확인으로 표시하지 않았다.

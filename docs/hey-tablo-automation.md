@@ -27,7 +27,7 @@ python3 scripts/import-hey-tablo.py --source /absolute/path/to/bundle --episode 
 ## 검수와 배포
 
 - 작업 시작 시 최신 origin/main과 저장소 지침, 작업 트리 변경을 확인한다. 이 채팅의 작업 checkout은 `/Users/hj/.codex/visualizations/2026/10/31/01a1918d-c572-7973-884c-7eb985387275/myLifeWeather-heytablo`이다. 없으면 원본 프로젝트 또는 깨끗한 checkout을 사용한다.
-- `npm run build`, `npm test`, `git diff --check`를 실행한다. 모바일 레이아웃, 영어/한국어 순서, 끝 문장, 번역 숨김, 검색, GPT 전체 복사, HTML 다운로드를 확인한다.
+- `npm run build`, `npm test`, `git diff --check`를 실행한다. 모바일 레이아웃, 영어/한국어 순서, 끝 문장, 번역 숨김, 검색, GPT 전체 복사를 확인한다.
 - 관련 파일만 commit하고 origin/main에 push한다. 사용자가 이 기능과 회차 추가 배포를 승인했다. 다른 작업자의 변경을 덮거나 force push하지 않는다. 원격 변경이 있으면 먼저 반영하고 영향을 받는 검증을 다시 한다.
 - GitHub 커밋 상태의 Vercel 성공과 실제 `/hey-tablo/N`의 HTTP 상태·회차·최종 문장을 확인한 뒤에만 배포 완료로 기록한다. 실패하면 기존 공개 회차를 유지하고 실패 지점만 보고한다.
 - 새 학습 노트가 배포됐거나 새 사용자 조치가 있을 때만 알린다. 새 영상이 없으면 조용히 종료한다. 복사 요청에는 첨부만 주지 말고 채팅 안에 복사 가능한 텍스트를 제공한다.
@@ -96,3 +96,5 @@ python3 scripts/import-hey-tablo.py --source /absolute/path/to/bundle --episode 
 - 마이페이지는 단어/표현 필터, 검색, 뜻 가리기 복습, 예문, 출처 링크, 삭제, 현재 화면의 마지막 삭제 되돌리기를 지원한다. 계정 변경 시 이전 계정의 화면과 되돌리기를 비운다. 저장 실패를 성공으로 표시하지 않는다.
 - 공유 JS/CSS 변경 시 `python3 scripts/study_reader.py`와 `python3 scripts/build-my-notes.py`를 모두 실행한다. 페이지는 인증 정보를 포함하지 않는 HTML이고 개인 항목은 로그인 후 Supabase에서 읽는다.
 - 현재 따라가기 문장의 영어/한국어만 font-weight:700으로 강조한다. 모바일 표 글자 크기 및 검색창 폭을 보완했다.
+
+- 회차 목록의 진입 버튼은 “학습 시작”으로 표시한다. 목록과 본문에 HTML 저장·다운로드 버튼을 표시하지 않는다.

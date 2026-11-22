@@ -17,7 +17,7 @@ export default function HeyTabloPage() {
       <p className="tablo-schedule">매주 화요일 오전 11시 · 새 회차 확인</p>
     </header>
     <nav className="show-tabs" aria-label="팟캐스트 선택"><a aria-current="page" href="/hey-tablo">Hey Tablo</a><a href="/hey-tablo/minasue-way">minasue way</a></nav>
-    <div className="tablo-list-tools"><RefreshButton /></div>
+    <div className="tablo-list-tools"><a className="tablo-refresh" href="/hey-tablo/my-notes">내 노트 · 마이페이지</a><RefreshButton /></div>
     <section aria-label="에피소드 목록" className="tablo-episodes">{sorted.map((ep,i) => <article key={ep.number}>
       <div className="tablo-card-top"><span>EP. {ep.number}</span>{i===0 && <span className="tablo-badge">최근 학습 노트</span>}</div>
       <h2><a href={`/hey-tablo/${ep.number}`}>{ep.titleKo}</a></h2><p className="tablo-original">{ep.title}</p>

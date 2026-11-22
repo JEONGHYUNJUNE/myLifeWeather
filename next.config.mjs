@@ -14,7 +14,7 @@ const buildId =
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  outputFileTracingIncludes: { "/hey-tablo/minasue-way/[episode]": ["./public/minasue-way/*.html"], "/hey-tablo/[episode]": ["./public/hey-tablo/*.html"] },
+  outputFileTracingIncludes: { "/hey-tablo/my-notes": ["./public/english-notes/my-notes.html"], "/hey-tablo/minasue-way/[episode]": ["./public/minasue-way/*.html"], "/hey-tablo/[episode]": ["./public/hey-tablo/*.html"] },
   async headers() {
     return [{ source: "/documents/trip/mantra-booking-confirmation.pdf", headers: [
       { key: "Cache-Control", value: "private, no-store, max-age=0" },

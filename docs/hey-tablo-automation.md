@@ -89,3 +89,10 @@ python3 scripts/import-hey-tablo.py --source /absolute/path/to/bundle --episode 
 - 문장별 시각은 제공 자막 시작 시각을 소수점까지 보존하며 395개 모두 원문 시각과 검증했다. 마지막 46:02~46:08 세 문장은 현재 YouTube와 Spotify 길이 40:44를 초과하므로 별도 구간에 보존하고 따라가기에서는 제외했다. 08:41 불명확 구절을 표시하며 비공개 채널 이름은 복원하지 않는다.
 - Spotify 공식 show `3KKFvLyq3xUAQXFbkOJwsJ`, 4회 `6Hr7G2pgBBBLQrXXRAzRW7`. 브라우저에서 ?t=600의 10:00 표시와 slider 600000을 확인했다. 실제 Spotify 재생과 모바일 앱 시각 일치는 미확인.
 - 390px 가로 넘침 없음, 접힌 툴바에서 문장 탭 후 해당 시각 이동과 따라가기 재개, 새로고침 후 20:10 이어보기, 하단 번역 토글을 확인했다. 복사 텍스트와 TXT가 동일하며 별도 세 문장도 포함한다.
+
+## 개인 단어·표현 노트 (2026-11-22)
+- `/hey-tablo/my-notes`: 기존 영어 노트 인증을 공유하는 마이페이지. 별도의 `english_notes_items` 테이블에 UID와 회차/종류/표현 키로 저장한다. RLS는 본인의 SELECT/INSERT/DELETE만 허용하며 중복 저장은 무시한다. 테니스 테이블과 독립적이다.
+- 회차의 `#vocab` 첫 표는 표현, 두 번째는 단어이다. 새 회차도 이 구조를 유지한다. 인라인 details의 뉘앙스/영어 예문/번역 또는 구형 `article.example`에서 저장 내용을 추출한다. 44회 표현은 `notes-examples.json`의 창작 예문을 사용한다.
+- 마이페이지는 단어/표현 필터, 검색, 뜻 가리기 복습, 예문, 출처 링크, 삭제, 현재 화면의 마지막 삭제 되돌리기를 지원한다. 계정 변경 시 이전 계정의 화면과 되돌리기를 비운다. 저장 실패를 성공으로 표시하지 않는다.
+- 공유 JS/CSS 변경 시 `python3 scripts/study_reader.py`와 `python3 scripts/build-my-notes.py`를 모두 실행한다. 페이지는 인증 정보를 포함하지 않는 HTML이고 개인 항목은 로그인 후 Supabase에서 읽는다.
+- 현재 따라가기 문장의 영어/한국어만 font-weight:700으로 강조한다. 모바일 표 글자 크기 및 검색창 폭을 보완했다.

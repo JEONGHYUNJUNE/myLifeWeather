@@ -6,12 +6,15 @@ window.attachTabloCloud = function(config, reader) {
   const client = window.supabase.createClient(config.cloud.url, config.cloud.anonKey, {
     auth: {storageKey: 'chung-heytablo-auth-v1', flowType: 'pkce', detectSessionInUrl: true}
   });
+  const listeners = new Set();
+  const notesAuth = {client, getUser: () => user, subscribe: callback => {listeners.add(callback); return () => listeners.delete(callback);}};
+  window.EnglishNotesAuth = notesAuth;
   let signup = false;
   const accountEmail = id => id + '@english-notes.chung-website.vercel.app';
   let user = null, revision = 0, baseline = '', busy = false, loaded = false, conflict = false, generation = 0, lastPush = 0, backup = null;
   const signature = state => JSON.stringify(state);
   async function pull() {
-    if (!user || busy) return;
+    if (!reader || !user || busy) return;
     const token = generation; busy = true; loaded = false;
     try {
       const {data,error} = await client.from('hey_tablo_progress').select('state,revision').eq('user_id',user.id).eq('video_id',config.youtube).maybeSingle();
@@ -31,7 +34,7 @@ window.attachTabloCloud = function(config, reader) {
     finally { if (token === generation) busy = false; }
   }
   async function flush(force = false) {
-    if (!user || !loaded || busy || conflict) return;
+    if (!reader || !user || !loaded || busy || conflict) return;
     const state = reader.read(), serial = signature(state);
     if (serial === baseline || (!force && Date.now()-lastPush < 5000)) return;
     const token = generation; busy = true; lastPush = Date.now();
@@ -50,12 +53,14 @@ window.attachTabloCloud = function(config, reader) {
     if (next?.id === user?.id) return;
     generation++; busy = false; loaded = false; conflict = false; revision = 0; baseline = '';
     user = next;
-    reader.account(user?.id || null);
+    reader?.account(user?.id || null);
+    for (const listener of listeners) listener(user);
     $('login-form').hidden = !!user; $('cloud-actions').hidden = !user;
     $('account').textContent = user ? `${user.user_metadata?.display_name || user.email?.split('@')[0] || '내 계정'} 님 · 로그인됨` : '';
     document.querySelector('.reader-auth-tabs').hidden = !!user;
     $('signup-hint').hidden = !!user || !signup;
-    if (user) { await pull(); await flush(true); }
+    if (user && reader) { await pull(); await flush(true); }
+    else if (user) say('로그인됐어요. 내 단어와 표현을 모아 복습해 보세요.');
     else say('로그인하면 재생 위치와 책갈피를 폰·PC에서 함께 사용할 수 있어요.');
   }
   function authMode(join) {
@@ -98,9 +103,10 @@ window.attachTabloCloud = function(config, reader) {
     } finally { $('login').disabled = $('auth-login').disabled = $('auth-signup').disabled = false; }
   };
   $('logout').onclick = async () => { await flush(true); const {error} = await client.auth.signOut({scope:'local'}); if(error) say('로그아웃에 실패했어요. 다시 시도해 주세요.'); };
+  $('cloud-pull').hidden = $('cloud-push').hidden = !reader;
   $('cloud-pull').onclick = pull;
   $('cloud-push').onclick = async () => {
-    if (!user || busy) return;
+    if (!reader || !user || busy) return;
     // Explicit user choice can replace the server snapshot, including a pre-login local backup.
     const local = backup || reader.read();
     await pull();

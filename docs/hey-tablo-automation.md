@@ -65,7 +65,7 @@ python3 scripts/import-hey-tablo.py --source /absolute/path/to/bundle --episode 
 - 2초 간격, 탐색·일시정지·닫기·페이지 숨김/이탈 시 저장한다. 처음으로는 위치와 보정만 초기화하고 책갈피는 유지한다.
 - 비로그인 기록은 브라우저에만 저장된다. 로그인 후에는 기존 onsTennis Supabase 프로젝트의 별도 `hey_tablo_progress` 테이블에 동기화한다. 테니스 테이블은 읽거나 수정하지 않는다.
 - Supabase JS 2.108.2 MIT 배포본은 `scripts/reader/vendor`에 보관하고 HTML에 포함한다. 설정은 공개용 publishable key만 담은 `data/hey-tablo/supabase-public.json`이다. 서비스 역할 키를 넣지 않는다.
-- 아이디는 테니스와 같은 `아이디@ot-tennis.app`으로 로그인한다. Google도 지원하며 두 기기에서 같은 인증 계정을 사용해야 한다. 테니스 앱의 별도 프로필 연결 기능으로 묶인 서로 다른 auth UID는 여기서 동일 계정으로 합치지 않는다.
+- 영어 노트 전용 가입: 이름, 영문·숫자·밑줄 아이디 3~24자, 비밀번호 8자 이상 및 확인. Supabase Auth의 별도 `아이디@english-notes.chung-website.vercel.app` 네임스페이스를 쓰며 기존 Supabase 프로젝트와 progress RLS를 재사용한다. 이름은 user_metadata.display_name에 저장한다. 이메일 인증은 기존 mailer_autoconfirm 설정을 사용하며 다른 서비스의 인증 설정은 바꾸지 않는다. 신규 Google/테니스 로그인 버튼은 제거했다. 기존 로그인 세션과 UID별 기록은 보존되며 새 계정으로 자동 병합하지 않는다. 이메일이 없는 계정이므로 이메일 비밀번호 찾기는 제공하지 않는다. 비밀번호는 Supabase Auth로 직접 보내고 앱에서 따로 저장하지 않는다.
 - 청 웹사이트의 `/hey-tablo/**`만 Google 복귀 허용 목록에 추가했다. 기존 테니스 site_url은 유지한다. Google 로그인은 청 웹사이트에서 사용한다.
 - 로컬 저장 키도 로그인 사용자별로 분리한다. 클라우드를 우선 불러오고 불러오기 전 기기 기록은 명시적인 '이 기기 기록 올리기'로 복원 가능하다. 편집 후에는 현재 기록을 올린다.
 - 변경된 기록은 5초 간격으로 동기화한다. 네트워크 오류 시 기기 기록을 유지하고 재시도한다. 페이지 종료 직전 요청은 브라우저가 중단할 수 있으므로 클라우드 저장됨 표시를 확인한다.

@@ -6,6 +6,8 @@ window.attachTabloCloud = function(config, reader) {
   const client = window.supabase.createClient(config.cloud.url, config.cloud.anonKey, {
     auth: {storageKey: 'chung-heytablo-auth-v1', flowType: 'pkce', detectSessionInUrl: true}
   });
+  let signup = false;
+  const accountEmail = id => id + '@english-notes.chung-website.vercel.app';
   let user = null, revision = 0, baseline = '', busy = false, loaded = false, conflict = false, generation = 0, lastPush = 0, backup = null;
   const signature = state => JSON.stringify(state);
   async function pull() {
@@ -50,27 +52,50 @@ window.attachTabloCloud = function(config, reader) {
     user = next;
     reader.account(user?.id || null);
     $('login-form').hidden = !!user; $('cloud-actions').hidden = !user;
-    $('account').textContent = user ? `로그인: ${user.email?.replace('@ot-tennis.app','') || '내 계정'}` : '';
+    $('account').textContent = user ? `${user.user_metadata?.display_name || user.email?.split('@')[0] || '내 계정'} 님 · 로그인됨` : '';
+    document.querySelector('.reader-auth-tabs').hidden = !!user;
+    $('signup-hint').hidden = !!user || !signup;
     if (user) { await pull(); await flush(true); }
     else say('로그인하면 재생 위치와 책갈피를 폰·PC에서 함께 사용할 수 있어요.');
   }
+  function authMode(join) {
+    signup = join;
+    $('name-label').hidden = $('confirm-label').hidden = $('signup-hint').hidden = !join;
+    $('name').required = $('password-confirm').required = join;
+    $('password').minLength = join ? 8 : 1;
+    $('password').autocomplete = join ? 'new-password' : 'current-password';
+    $('password').value = $('password-confirm').value = '';
+    $('login').textContent = join ? '가입하고 저장하기' : '로그인';
+    $('auth-login').setAttribute('aria-pressed', String(!join));
+    $('auth-signup').setAttribute('aria-pressed', String(join));
+    say(join ? '이름·아이디·비밀번호로 영어 노트 계정을 만드세요.' : '영어 노트에서 만든 아이디로 로그인하세요.');
+  }
+  $('auth-login').onclick = () => authMode(false);
+  $('auth-signup').onclick = () => authMode(true);
   $('login-form').onsubmit = async e => {
-    e.preventDefault(); $('login').disabled = true; say('로그인 중…');
+    e.preventDefault();
     const id = $('login-id').value.trim().toLowerCase();
+    const password = $('password').value, name = $('name').value.trim();
+    if (!/^[a-z0-9_]{3,24}$/.test(id)) { say('아이디는 영문·숫자·밑줄 3~24자로 입력해 주세요.'); return; }
+    if (signup && (!name || name.length > 40)) { say('이름을 1~40자로 입력해 주세요.'); return; }
+    if (signup && password.length < 8) { say('비밀번호를 8자 이상으로 입력해 주세요.'); return; }
+    if (signup && password !== $('password-confirm').value) { say('비밀번호가 서로 달라요. 다시 확인해 주세요.'); return; }
+    $('login').disabled = $('auth-login').disabled = $('auth-signup').disabled = true;
+    say(signup ? '계정을 만드는 중…' : '로그인 중…');
     try {
-      const {error} = await client.auth.signInWithPassword({email:id.includes('@') ? id : id+'@ot-tennis.app',password:$('password').value});
-      if (error) throw error;
-      $('password').value = '';
-    } catch { say('로그인하지 못했어요. 테니스 아이디·비밀번호와 네트워크 연결을 확인해 주세요.'); }
-    finally { $('login').disabled = false; }
-  };
-  $('google').onclick = async () => {
-    if (location.origin !== 'https://chung-website.vercel.app') {
-      say('Google 로그인은 청 웹사이트에서 이용해 주세요.');
-      return;
-    }
-    const {error} = await client.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname}});
-    if(error) say('Google 로그인 연결에 실패했어요. 다시 시도해 주세요.');
+      const result = signup
+        ? await client.auth.signUp({email:accountEmail(id),password,options:{data:{display_name:name,username:id,app:'english-notes'}}})
+        : await client.auth.signInWithPassword({email:accountEmail(id),password});
+      if (result.error) throw result.error;
+      if (signup && !result.data?.session) { say('가입이 완료되지 않았어요. 인증 설정 확인이 필요합니다.'); return; }
+      $('password').value = $('password-confirm').value = '';
+      await sessionChanged(result.data.session);
+    } catch (error) {
+      if (signup && ['user_already_exists','email_exists'].includes(error.code)) say('이미 사용 중인 아이디예요. 다른 아이디를 입력해 주세요.');
+      else if (error.status === 429) say('요청이 많아요. 잠시 후 다시 시도해 주세요.');
+      else if (signup && error.code === 'weak_password') say('더 안전한 비밀번호를 사용해 주세요.');
+      else say(signup ? '가입하지 못했어요. 아이디·비밀번호와 네트워크 연결을 확인해 주세요.' : '로그인하지 못했어요. 영어 노트 아이디·비밀번호를 확인해 주세요.');
+    } finally { $('login').disabled = $('auth-login').disabled = $('auth-signup').disabled = false; }
   };
   $('logout').onclick = async () => { await flush(true); const {error} = await client.auth.signOut({scope:'local'}); if(error) say('로그아웃에 실패했어요. 다시 시도해 주세요.'); };
   $('cloud-pull').onclick = pull;

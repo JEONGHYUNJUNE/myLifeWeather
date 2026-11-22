@@ -3,12 +3,16 @@
   <p class="note" id="reader-precision"></p>
   <p class="note" id="reader-saved">재생 위치와 책갈피는 이 브라우저에 저장됩니다. 로그인하면 다른 기기에서도 이어볼 수 있어요.</p>
   <details id="reader-cloud"><summary>☁ 로그인 · 기기 간 동기화</summary>
-    <p class="note">테니스 사이트의 아이디·비밀번호 또는 Google로 로그인하세요. 두 기기에서 같은 로그인 방식과 계정을 사용해 주세요.</p>
+    <p class="note">영어 노트 전용 계정으로 재생 위치와 책갈피를 저장하세요.</p>
+    <div class="reader-auth-tabs" role="group" aria-label="계정 메뉴"><button type="button" id="reader-auth-login" aria-pressed="true">로그인</button><button type="button" id="reader-auth-signup" aria-pressed="false">처음이라면 가입하기</button></div>
     <form id="reader-login-form">
-      <label>아이디 또는 이메일 <input id="reader-login-id" autocomplete="username" required></label>
+      <label id="reader-name-label" hidden>이름 <input id="reader-name" autocomplete="name" maxlength="40" placeholder="불러드릴 이름"></label>
+      <label>아이디 <input id="reader-login-id" autocomplete="username" autocapitalize="none" spellcheck="false" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]{3,24}" placeholder="영문·숫자·밑줄 3~24자" required></label>
       <label>비밀번호 <input id="reader-password" type="password" autocomplete="current-password" required></label>
-      <button type="submit" id="reader-login">로그인</button><button type="button" id="reader-google">Google로 로그인</button>
+      <label id="reader-confirm-label" hidden>비밀번호 확인 <input id="reader-password-confirm" type="password" autocomplete="new-password"></label>
+      <button type="submit" id="reader-login">로그인</button>
     </form>
+    <p class="note" id="reader-signup-hint" hidden>이메일 없이 가입해요. 비밀번호는 8자 이상으로 설정하고 안전하게 기억해 주세요. 이메일을 통한 비밀번호 찾기는 지원하지 않아요.</p>
     <div id="reader-cloud-actions" hidden><p id="reader-account"></p><button type="button" id="reader-cloud-pull">클라우드 기록 불러오기</button><button type="button" id="reader-cloud-push">이 기기 기록 올리기</button><button type="button" id="reader-logout">로그아웃</button></div>
     <p id="reader-cloud-status" role="status">로그인하면 재생 위치와 책갈피를 폰·PC에서 함께 사용할 수 있어요.</p>
   </details>

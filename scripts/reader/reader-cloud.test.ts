@@ -4,7 +4,7 @@ import {runInNewContext} from 'node:vm';
 
 function setup(remote: any = {state:{position:445,mode:'manual',offset:0,rate:1,bookmarks:[445]},revision:3}) {
   const elements: Record<string,any> = {};
-  const element = (id:string) => elements[id] ||= {textContent:'',value:'',hidden:false};
+  const element = (id:string) => elements[id] ||= {textContent:'',value:'',hidden:false,setAttribute:vi.fn()};
   let state = {position:10,mode:'manual',offset:0,rate:1,bookmarks:[] as number[]};
   let fail = false;
   const authCallback: {current?:Function} = {};
@@ -16,9 +16,9 @@ function setup(remote: any = {state:{position:445,mode:'manual',offset:0,rate:1,
       remote = {state:args.p_state,revision:(remote?.revision || 0)+1};
       return {data:{saved:true,revision:remote.revision}};
     }),
-    auth: {onAuthStateChange: (fn:Function) => {authCallback.current=fn;}, getSession:async()=>({data:{session:{user:{id:'user-a',email:'a@ot-tennis.app'}}}})}
+    auth: {signUp:vi.fn(async (args:any)=>({data:{session:{user:{id:'new-user',email:args.email,user_metadata:args.options.data}}}})), signInWithPassword:vi.fn(async (args:any)=>({data:{session:{user:{id:'new-user',email:args.email}}}})), onAuthStateChange: (fn:Function) => {authCallback.current=fn;}, getSession:async()=>({data:{session:{user:{id:'user-a',email:'a@ot-tennis.app'}}}})}
   };
-  const sandbox:any = {window:{supabase:{createClient:()=>client},addEventListener:()=>{}},document:{getElementById:element,addEventListener:()=>{}},setTimeout:(f:Function)=>f(),setInterval:()=>{},Date,location:{origin:'https://chung-website.vercel.app',pathname:'/hey-tablo/46'}};
+  const sandbox:any = {window:{supabase:{createClient:()=>client},addEventListener:()=>{}},document:{querySelector:element,getElementById:element,addEventListener:()=>{}},setTimeout:(f:Function)=>f(),setInterval:()=>{},Date,location:{origin:'https://chung-website.vercel.app',pathname:'/hey-tablo/46'}};
   runInNewContext(readFileSync('scripts/reader/reader-core.js','utf8'),sandbox);
   runInNewContext(readFileSync('scripts/reader/reader-cloud.js','utf8'),sandbox);
   const apply=vi.fn((s:any)=>{state=s;});
@@ -45,5 +45,30 @@ describe('cloud reading progress',()=>{
     t.offline(true); t.change({position:600}); await t.handle.flush(true);
     expect(t.get().position).toBe(600); expect(t.remote().state.position).toBe(445);
     t.offline(false); await t.handle.flush(true); expect(t.remote().state.position).toBe(600);
+  });
+});
+
+describe('English notes accounts',()=>{
+  it('registers a separate account with a name and never uses the tennis email namespace',async()=>{
+    const t=setup(null); await new Promise(r=>setTimeout(r,0));
+    t.element('reader-auth-signup').onclick();
+    t.element('reader-name').value='지수'; t.element('reader-login-id').value='Study_123';
+    t.element('reader-password').value=t.element('reader-password-confirm').value='example-password';
+    await t.element('reader-login-form').onsubmit({preventDefault(){}});
+    expect(t.client.auth.signUp).toHaveBeenCalledWith({email:'study_123@english-notes.chung-website.vercel.app',password:'example-password',options:{data:{display_name:'지수',username:'study_123',app:'english-notes'}}});
+    expect(t.element('reader-account').textContent).toContain('지수');
+    expect(t.element('reader-password').value).toBe('');
+  });
+  it('rejects mismatched passwords before sending registration',async()=>{
+    const t=setup(); t.element('reader-auth-signup').onclick();
+    t.element('reader-name').value='지수';t.element('reader-login-id').value='study_123';
+    t.element('reader-password').value='example-password';t.element('reader-password-confirm').value='different';
+    await t.element('reader-login-form').onsubmit({preventDefault(){}});
+    expect(t.client.auth.signUp).not.toHaveBeenCalled();
+  });
+  it('logs in only with the dedicated account namespace',async()=>{
+    const t=setup();t.element('reader-login-id').value='Study_123';t.element('reader-password').value='example-password';
+    await t.element('reader-login-form').onsubmit({preventDefault(){}});
+    expect(t.client.auth.signInWithPassword).toHaveBeenCalledWith({email:'study_123@english-notes.chung-website.vercel.app',password:'example-password'});
   });
 });

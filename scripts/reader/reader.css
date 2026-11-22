@@ -27,3 +27,5 @@
 @media(prefers-reduced-motion:reduce){#reader-dock button,#reader-dock select,#reader-dock input{transition:none}}
 
 body.reader-open .reader-sentence{cursor:pointer}body.reader-open .reader-sentence:focus-visible{outline:2px solid #588449;outline-offset:4px;border-radius:4px}@media(hover:hover){body.reader-open .reader-sentence:hover{color:#285941;text-decoration:underline;text-decoration-color:#b4cabb;text-underline-offset:4px}}
+
+.reader-auth-tabs{display:flex;gap:8px;margin:12px 0}.reader-auth-tabs button[aria-pressed="true"]{background:#285c49!important;color:white;border-color:#285c49!important}#reader-cloud button:disabled{opacity:.6;cursor:wait}

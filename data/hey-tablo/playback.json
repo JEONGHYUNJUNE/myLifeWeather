@@ -22,5 +22,10 @@
     "timestampVerified": true,
     "verification": "공식 Spotify 회차 제목 일치 확인. 웹 플레이어 ?t=600 진입 시 10:00 및 재생 위치 600000ms 표시 확인. 모바일 앱·음성 대조 미실시.",
     "verifiedAt": "2026-11-18"
+  },
+  "48": {
+    "episodeId": "7L6M3z75Yn8gMWpRGFnTEn",
+    "timestampVerified": false,
+    "verification": "2026-11-24 공식 Spotify 프로그램에서 제목·회차 일치 확인. 시간 이동 및 실제 재생 미검증."
   }
 }

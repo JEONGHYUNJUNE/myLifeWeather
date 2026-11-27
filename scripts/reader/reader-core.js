@@ -31,5 +31,9 @@
       bookmarks: Array.isArray(value.bookmarks) ? [...new Set(value.bookmarks.filter(n => Number.isFinite(n) && n >= 0 && n <= 86400).map(Math.floor))].sort((a,b) => a-b).slice(0,100) : []
     };
   };
-  root.TabloReaderCore = { parseTime, formatTime, cueIndex, advance, cleanProgress };
+  // A freshly created iframe reports zero before seeking to the saved position.
+  // Ignore those initialization events so they cannot overwrite a resume point.
+  const acceptPlayerPosition = (value, pendingResume) => Number.isFinite(value) && value >= 0 &&
+    (pendingResume === null || Math.abs(value - pendingResume) < 3);
+  root.TabloReaderCore = { parseTime, formatTime, cueIndex, advance, cleanProgress, acceptPlayerPosition };
 })(typeof window !== 'undefined' ? window : globalThis);

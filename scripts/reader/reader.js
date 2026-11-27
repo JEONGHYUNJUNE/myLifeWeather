@@ -1,6 +1,6 @@
 (() => {
   const config = READER_CONFIG;
-  const {parseTime, formatTime, cueIndex, advance, cleanProgress} = window.TabloReaderCore;
+  const {parseTime, formatTime, cueIndex, advance, cleanProgress, acceptPlayerPosition} = window.TabloReaderCore;
   const $ = id => document.getElementById('reader-' + id);
   const secondsFromLink = link => {
     if (!link) return null;
@@ -19,13 +19,20 @@
   let active = -1, lastScroll = -1, youtubeAPI, spotifyAPI, loadTimer;
   const baseStorageKey = 'hey-tablo:reader:v1:' + config.youtube;
   let storageKey = baseStorageKey, accountId = null, cloud = null;
-  let bookmarks = [], restored = false;
+  let bookmarks = [], restored = false, pendingResume = null;
+  const preferenceKey = baseStorageKey + ':preferences';
+  let preferences = {open: false, expanded: false, playerExpanded: true, hideTranslation: false};
+  try { const saved = JSON.parse(localStorage.getItem(preferenceKey));
+    for (const key of Object.keys(preferences)) if (typeof saved?.[key] === 'boolean') preferences[key] = saved[key];
+  } catch {}
+  function savePreferences() { try { localStorage.setItem(preferenceKey, JSON.stringify(preferences)); } catch {} }
+
   const readProgress = () => ({position: now(), mode, offset, rate, bookmarks: [...bookmarks]});
   function saveProgress() {
     try {
       localStorage.setItem(storageKey, JSON.stringify(readProgress()));
-      $('saved').textContent = `${formatTime(now())}까지 이 브라우저에 저장됨 · 클라우드 상태는 로그인 메뉴에서 확인`;
-      $('open').textContent = now() >= 1 ? `▶ ${formatTime(now())}부터 이어보기` : '▶ 들으면서 대본 따라가기';
+      $('saved').textContent = `${formatTime(now())}까지 자동 저장 · 다음에도 여기서 이어서`;
+      $('open').textContent = now() >= 1 ? `▶ ${formatTime(now())}부터 이어 읽기` : '듣고 따라 읽기';
     } catch { $('saved').textContent = '브라우저 저장이 차단되어 있어요. 페이지를 닫으면 재생 위치를 기억하지 못합니다.'; }
   }
   function drawBookmarks() {
@@ -38,7 +45,7 @@
     if (mode === 'manual') { position = now(); anchor = position; anchorAt = performance.now(); }
     playing = value;
     if (value) cloud?.changed();
-    $('play').textContent = playing ? 'Ⅱ 일시정지' : '▶ 시작';
+    $('play').textContent = playing ? 'Ⅱ 일시정지' : '▶ 이어 듣기';
     $('play').disabled = !ready;
     $('mini-play').textContent = playing ? 'Ⅱ' : '▶';
     $('mini-play').setAttribute('aria-label', playing ? '일시정지' : '재생 시작');
@@ -47,7 +54,7 @@
   function setFollow(value) {
     follow = value;
     $('follow').setAttribute('aria-pressed', String(value));
-    $('follow').textContent = value ? '따라가기 켜짐' : '다시 따라가기';
+    $('follow').textContent = value ? '따라가기 켜짐' : '현재 문장으로';
     if (value) {
       const search = document.getElementById('search');
       if (search && search.value) { search.value = ''; search.dispatchEvent(new Event('input')); }
@@ -58,6 +65,7 @@
     if ($('dock').hidden) return;
     const current = now(), scriptTime = Math.max(0, current + offset), index = cueIndex(cues, scriptTime);
     $('mini-clock').textContent = formatTime(current);
+    $('mini-title').textContent = follow ? (mode === 'manual' ? '수동 · 따라 읽기' : mode === 'youtube' ? 'YouTube · 따라 읽기' : 'Spotify · 따라 읽기') : '자유롭게 읽는 중';
     $('clock').textContent = `재생 ${formatTime(current)} · 대본 ${formatTime(scriptTime)}`;
     if (document.activeElement !== $('time')) $('time').value = formatTime(current);
     if (index !== active) {
@@ -77,6 +85,7 @@
   function seek(value) {
     if (!Number.isFinite(value) || value < 0) { note('00:00 형식 또는 초 숫자로 입력해 주세요.'); return; }
     position = value; anchor = value; anchorAt = performance.now();
+    pendingResume = mode !== 'manual' && value > 0 ? value : null;
     if (ready && player) {
       try { mode === 'youtube' ? player.seekTo(value, true) : player.seek(Math.floor(value)); }
       catch { note('플레이어에서 직접 시간을 바꾸거나 수동 모드를 사용하세요.'); }
@@ -100,28 +109,31 @@
     });
   }
   $('mini-play').onclick = () => $('play').click();
-  $('dock-toggle').onclick = () => {
-    const expanded = $('dock-toggle').getAttribute('aria-expanded') !== 'true';
+  function setDockExpanded(expanded) {
     $('dock-toggle').setAttribute('aria-expanded', String(expanded));
-    $('dock-toggle').textContent = expanded ? '접기 ▾' : '펼치기 ▴';
+    $('dock-toggle').textContent = expanded ? '접기 ⌄' : '설정 ⌃';
     $('dock').classList.toggle('reader-dock-collapsed', !expanded);
     $('body').inert = !expanded;
-  };
+    preferences.expanded = expanded; savePreferences();
+  }
+  $('dock-toggle').onclick = () => setDockExpanded(!preferences.expanded);
   function setPlayerExpanded(expanded) {
     $('player-toggle').setAttribute('aria-expanded', String(expanded));
     $('player-toggle').textContent = expanded ? '플레이어 접기 ▴' : '플레이어 펼치기 ▾';
     $('player').classList.toggle('reader-player-collapsed', !expanded);
     $('player').inert = !expanded;
   }
-  $('player-toggle').onclick = () => setPlayerExpanded($('player-toggle').getAttribute('aria-expanded') !== 'true');
+  $('player-toggle').onclick = () => { preferences.playerExpanded = !preferences.playerExpanded; setPlayerExpanded(preferences.playerExpanded); savePreferences(); };
   async function changeMode() {
     position = now(); stopPlayer();
     const previous = player; player = null;
     try { previous?.destroy(); } catch {}
     const token = ++generation; clearTimeout(loadTimer);
     mode = $('mode').value; ready = mode === 'manual';
+    pendingResume = mode !== 'manual' && position > 0 ? position : null;
+    saveProgress();
     $('player-panel').hidden = ready;
-    setPlayerExpanded(true);
+    setPlayerExpanded(preferences.playerExpanded);
     $('rate-label').hidden = !ready;
     $('player').innerHTML = '<div id="reader-player-target"></div>';
     setPlaying(false);
@@ -167,7 +179,7 @@
           });
           controller.addListener('playback_update', e => {
             if (token !== generation) return;
-            if (Number.isFinite(e.data.position)) position = e.data.position / 1000;
+            if (acceptPlayerPosition(e.data.position / 1000, pendingResume)) { position = e.data.position / 1000; pendingResume = null; }
             setPlaying(!e.data.isPaused && !e.data.isBuffering);
             render();
           });
@@ -179,18 +191,20 @@
   }
   $('open').onclick = () => {
     $('dock').hidden = false; document.body.classList.add('reader-open');
+    preferences.open = true; savePreferences(); setDockExpanded(preferences.expanded); setFollow(true);
     if (mode !== 'manual' && !player) changeMode();
-    $('play').focus(); render(true);
+    $('mini-play').focus({preventScroll:true}); render(true);
     if (restored && mode === 'manual') note('저장한 시각부터 이어갑니다. 듣는 앱도 같은 시각으로 맞춘 뒤 시작하세요.');
   };
   $('close').onclick = () => {
     stopPlayer(); ++generation; clearTimeout(loadTimer);
     try { player?.destroy(); } catch {} player = null;
     $('dock').hidden = true; document.body.classList.remove('reader-open');
+    preferences.open = false; savePreferences();
     if (active >= 0) cues[active].el.classList.remove('reader-active'); active = -1;
     $('open').focus();
   };
-  $('mode').onchange = changeMode;
+  $('mode').onchange = () => { changeMode(); saveProgress(); cloud?.changed(); };
   $('play').onclick = () => {
     if (mode === 'manual') { setPlaying(!playing); if (playing) setFollow(true); note(playing ? '수동 타이머로 대본을 따라가는 중입니다.' : '타이머를 멈췄어요. 다른 앱의 재생도 직접 멈춰 주세요.'); }
     else if (player && ready) {
@@ -204,6 +218,7 @@
   const translationToggle = document.getElementById('toggle');
   function syncTranslation() {
     const hidden = document.body.classList.contains('hide-ko');
+    preferences.hideTranslation = hidden; savePreferences();
     for (const button of [translationToggle, $('translation')]) {
       if (!button) continue;
       button.textContent = hidden ? '번역 보기' : '번역 숨기기';
@@ -215,6 +230,7 @@
   if (translationToggle) {
     translationToggle.addEventListener('click', syncTranslation);
     $('translation').onclick = () => translationToggle.click();
+    document.body.classList.toggle('hide-ko', preferences.hideTranslation);
     syncTranslation();
   } else $('translation').hidden = true;
 
@@ -301,8 +317,8 @@
       mode = saved.mode === 'spotify' && !config.spotify ? 'manual' : saved.mode;
       bookmarks = saved.bookmarks; restored = true;
       $('mode').value = mode; $('offset').value = String(offset); $('rate').value = String(rate);
-      $('open').textContent = `▶ ${formatTime(position)}부터 이어보기`;
-      $('saved').textContent = `${formatTime(position)}까지 이 브라우저에 저장됨 · 클라우드 상태는 로그인 메뉴에서 확인`;
+      $('open').textContent = `▶ ${formatTime(position)}부터 이어 읽기`;
+      $('saved').textContent = `${formatTime(position)}까지 자동 저장 · 다음에도 여기서 이어서`;
     }
   } catch { /* Corrupt or unavailable storage must not prevent reading. */ }
   function applyProgress(saved) {
@@ -326,6 +342,8 @@
     }
   }); } catch { $('cloud-status').textContent = '클라우드 연결을 시작하지 못했어요. 이 브라우저에서 계속 읽을 수 있습니다.'; }
   drawBookmarks();
+  setDockExpanded(preferences.expanded);
+  if (preferences.open && restored) $('open').click();
   $('bookmark').onclick = () => {
     const time = Math.floor(now());
     if (!bookmarks.includes(time)) {
@@ -334,6 +352,7 @@
     }
     drawBookmarks(); $('bookmarks').value = String(time); saveProgress(); cloud?.changed(); note(`${formatTime(time)} 책갈피를 저장했어요.`);
   };
+  $('quick-bookmark').onclick = () => { $('bookmark').click(); $('quick-bookmark').textContent = '✓ 저장했어요'; setTimeout(() => { $('quick-bookmark').textContent = '＋ 책갈피'; }, 1800); };
   $('bookmarks').onchange = () => { if ($('bookmarks').value !== '') seek(Number($('bookmarks').value)); };
   $('delete-bookmark').onclick = () => {
     if ($('bookmarks').value === '') { note('삭제할 책갈피를 먼저 선택하세요.'); return; }
@@ -346,7 +365,7 @@
   setInterval(() => {
     if ($('dock').hidden) return;
     if (mode === 'youtube' && ready && player?.getCurrentTime) {
-      const value=player.getCurrentTime(); if ([0,1,2].includes(player.getPlayerState()) && Number.isFinite(value)) position=value;
+      const value=player.getCurrentTime(); if ([0,1,2].includes(player.getPlayerState()) && acceptPlayerPosition(value, pendingResume)) { position=value; pendingResume=null; }
     }
     render();
   },200);

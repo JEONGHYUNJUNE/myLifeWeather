@@ -4,3 +4,10 @@
 .show-tabs{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0}.show-tabs a{border:1px solid #bdc8bf;border-radius:999px;padding:10px 18px;text-decoration:none;color:#345747}.show-tabs a[aria-current="page"]{background:#294f3c;color:white}
 
 .tablo-list-tools{gap:8px;flex-wrap:wrap}.tablo-list-tools a{text-decoration:none}
+
+/* Compact podcast library, with listening as the primary action. */
+.tablo-home{max-width:920px}.tablo-home header{padding:32px 0 12px}.tablo-home h1{font-size:clamp(34px,6vw,48px);margin:12px 0 18px}.tablo-intro{font-size:16px}.tablo-schedule{margin-top:14px}
+.show-tabs{background:#edf2e8;padding:5px;border-radius:16px;gap:4px}.show-tabs a{flex:1;text-align:center;border:0;border-radius:12px;font-size:14px;font-weight:600}.show-tabs a[aria-current="page"]{box-shadow:0 3px 10px #294f3c15}
+.tablo-list-tools{justify-content:space-between}.tablo-refresh{border-color:#dce4d6;background:transparent;font-size:13px}
+.tablo-episodes{gap:14px}.tablo-episodes article{border-radius:20px;padding:24px;box-shadow:none}.tablo-description{margin-top:12px}.tablo-actions{gap:12px;flex-wrap:wrap}.tablo-read{padding:14px 18px;border-radius:12px;flex:1;text-align:center}.tablo-actions>a:not(.tablo-read){font-size:12px;color:#526c59}.tablo-badge{background:#e6efde;color:#3a603c}.tablo-date{line-height:1.7}
+@media(max-width:480px){.tablo-home{padding:18px 16px 48px}.tablo-home header{padding-top:22px}.tablo-episodes article{padding:20px}.tablo-home h2{font-size:22px}.tablo-actions{gap:14px}.tablo-read{flex-basis:100%}.tablo-actions>a:not(.tablo-read){margin-left:auto}}

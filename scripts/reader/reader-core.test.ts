@@ -4,7 +4,7 @@ import { runInNewContext } from 'node:vm';
 
 const sandbox: Record<string, any> = {};
 runInNewContext(readFileSync('scripts/reader/reader-core.js', 'utf8'), sandbox);
-const { parseTime, formatTime, cueIndex, advance, cleanProgress } = sandbox.TabloReaderCore;
+const { parseTime, formatTime, cueIndex, advance, cleanProgress, acceptPlayerPosition } = sandbox.TabloReaderCore;
 
 describe('timed transcript clock', () => {
   it('accepts seconds and valid colon timestamps without silently accepting malformed times', () => {
@@ -41,3 +41,18 @@ describe('saved reading progress', () => {
     for (const value of [null, {}, {position:-1}, {position:Infinity}, {position:'445'}, {position:90000}]) expect(cleanProgress(value)).toBeNull();
   });
 });
+
+ describe('resume position protection', () => {
+ it('ignores iframe initialization zero until saved position is reached', () => {
+ expect(acceptPlayerPosition(0, 600)).toBe(false);
+ expect(acceptPlayerPosition(5, 600)).toBe(false);
+ expect(acceptPlayerPosition(600, 600)).toBe(true);
+ expect(acceptPlayerPosition(599.5, 600)).toBe(true);
+ });
+ it('allows normal seeking and restart after restoration', () => {
+ expect(acceptPlayerPosition(0, null)).toBe(true);
+ expect(acceptPlayerPosition(240, null)).toBe(true);
+ expect(acceptPlayerPosition(NaN, null)).toBe(false);
+ expect(acceptPlayerPosition(-1, null)).toBe(false);
+ });
+ });

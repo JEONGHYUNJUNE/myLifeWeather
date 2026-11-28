@@ -4,5 +4,10 @@
     "timestampVerified": true,
     "verifiedAt": "2026-11-20",
     "verification": "Official Spotify show embed confirms title and duration (2444.416s). Browser ?t=600 displayed 10:00 and slider 600000 on 2026-11-20. App launch, audio alignment and actual Spotify playback not verified."
+  },
+  "5": {
+    "episodeId": "5JQzt49QtusJM4yp22mkeO",
+    "timestampVerified": false,
+    "verification": "Official Spotify show lists MY HEALTHY GIRL ERA, 43m25s. Verified 2026-11-28; playback and timestamp alignment not tested."
   }
 }
